@@ -18,10 +18,8 @@ function App() {
         </div>
         <h1>IRON HEART</h1>
         <button
-          onClick={() => {
+          onClick={async () => {
             setCount((count) => count + 1);
-            console.log("FETCHING DATA");
-            getTxtFileDataAsArray();
           }}
         >
           count is {count}

@@ -5,7 +5,7 @@ export const getTxtFileDataAsArray = (inputData?: never) => {
   const parsedData = fetch(dataSet)
     .then((r) => r.text())
     .then((text) => {
-      console.log("text decoded:", text);
+      return text.split(",");
     });
 
   return parsedData;
