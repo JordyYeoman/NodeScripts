@@ -1,7 +1,7 @@
 import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import ChartDaddy from "./components/charting/chart";
-
+import { getTxtFileDataAsArray } from "./utils/readFromFile";
 function App() {
   const [count, setCount] = useState(0);
 
@@ -17,7 +17,13 @@ function App() {
           </a>
         </div>
         <h1>IRON HEART</h1>
-        <button onClick={() => setCount((count) => count + 1)}>
+        <button
+          onClick={() => {
+            setCount((count) => count + 1);
+            console.log("FETCHING DATA");
+            getTxtFileDataAsArray();
+          }}
+        >
           count is {count}
         </button>
         <ChartDaddy />
