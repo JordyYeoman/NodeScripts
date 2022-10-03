@@ -10,7 +10,7 @@ import {
 } from "chart.js";
 import { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
-import { getTxtFileDataAsArray } from "../../utils/readFromFile";
+import { generateData, getTxtFileDataAsArray } from "../../utils/readFromFile";
 
 ChartJS.register(
   CategoryScale,
@@ -36,10 +36,14 @@ export const options = {
 };
 
 // const dataSet = ["1", "2", "3", "4", "5"];
-const labels = ["January", "February", "March", "April", "May", "June", "July"];
+const labels = generateData(600);
 
-function ChartDaddy() {
+const ChartDaddy = () => {
   const [dataSet, setDataSet] = useState<any>([]);
+  const handleNewData = (data: any[]) => {
+    setDataSet(data);
+  };
+
   const data = {
     labels,
     datasets: [
@@ -51,19 +55,19 @@ function ChartDaddy() {
       },
     ],
   };
-  console.log("YO: ", data);
+
   useEffect(() => {
     getTxtFileDataAsArray().then((data) => {
-      setDataSet(data);
+      handleNewData(data);
     });
-  }, [data]);
+  }, []);
 
   return (
     <div style={styles.wrapDaddy}>
       <Line options={options} data={data} />
     </div>
   );
-}
+};
 
 export default ChartDaddy;
 
