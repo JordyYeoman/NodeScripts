@@ -77,8 +77,9 @@ button:focus-visible {
 }
 
 .App {
-  height: 100%;
   display: block;
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
 }
 
 .mainContent {
