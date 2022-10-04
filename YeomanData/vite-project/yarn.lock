@@ -495,11 +495,6 @@
   dependencies:
     "js-tokens" "^3.0.0 || ^4.0.0"
 
-"low-pass-filter@^1.0.0":
-  "integrity" "sha512-EG9kSMqILY1tSv+hYlWY7DRGbw3Qw6OTEP0E+71Z5fE5U3zjnE0wqSc4kSss3CSMH5Wq76npYM/kFZk8SRZNFg=="
-  "resolved" "https://registry.npmjs.org/low-pass-filter/-/low-pass-filter-1.0.0.tgz"
-  "version" "1.0.0"
-
 "magic-string@^0.26.2":
   "integrity" "sha512-yXUIYOOQnEHKHOftp5shMWpB9ImfgfDJpapa38j/qMtTj5QHWucvxP4lUtuRmHT9vAzvtpHkWKXW9xBwimXeNg=="
   "resolved" "https://registry.npmjs.org/magic-string/-/magic-string-0.26.5.tgz"

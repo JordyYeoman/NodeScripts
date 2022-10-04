@@ -8,12 +8,11 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 import { useAppContext } from "../../AppWrapper";
 import { generateData, getTxtFileDataAsArray } from "../../utils/dataUtils";
 import { calculateMovingAverage } from "../../utils/MovingWindowAverage";
-import { lowPassFilter } from "low-pass-filter";
 
 ChartJS.register(
   CategoryScale,
@@ -47,10 +46,11 @@ export const options = {
   },
 };
 
-// const dataSet = ["1", "2", "3", "4", "5"];
-const labels = generateData(5000);
+const labels = generateData(15000);
 
 const ChartDaddy = () => {
+  const [startSplice, setStartSplice] = useState<number>(0);
+  const [endSplice, setEndSplice] = useState<number>(0);
   // Get the value and setter from the consumer hook
   const { ironHeartData, setIronHeartData } = useAppContext();
   const handleNewData = (data: number[], dataSet?: number) => {
@@ -71,7 +71,7 @@ const ChartDaddy = () => {
 
   useEffect(() => {
     if (ironHeartData === 0) {
-      getTxtFileDataAsArray().then((data) => {
+      getTxtFileDataAsArray(0, 100).then((data) => {
         handleNewData(data.map((dataPoint) => parseFloat(dataPoint)));
       });
     }
@@ -79,6 +79,14 @@ const ChartDaddy = () => {
 
   return (
     <div style={styles.wrapDaddy}>
+      <input
+        type="number"
+        id="qty"
+        value={startSplice}
+        onChange={(inputVal) => {
+          setStartSplice(parseInt(inputVal ?? ""));
+        }}
+      />
       {/* <ToggleChartSection
         title={"Raw"}
         options={options}
@@ -160,13 +168,7 @@ const ToggleChartSection = ({
         data = data;
         break;
       case ChartFilter.LowPassFilter:
-        let lowPassData = lowPassFilter(
-          data?.datasets[0]?.data,
-          22050,
-          44100,
-          1
-        );
-        data.datasets[0].data = lowPassData;
+        data.datasets[0].data = data;
         return <Line options={options} data={data} />;
       case ChartFilter.DiscreteFourierTransform:
         data = data;

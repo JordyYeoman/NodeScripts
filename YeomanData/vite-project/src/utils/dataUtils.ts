@@ -12,7 +12,7 @@ export const generateData = (dataSetSize?: number) => {
 };
 
 // Return text file data as array
-export const getTxtFileDataAsArray = async (inputDataSrc?: string) => {
+export const getTxtFileDataAsArray = async (startDataPoint?: number, endDataPoint?: number, inputDataSrc?: string) => {
   console.log("-------------------------------------");
   console.log("-------------------------------------");
   console.log("--------| Parsing DataSet |----------");
@@ -20,10 +20,7 @@ export const getTxtFileDataAsArray = async (inputDataSrc?: string) => {
   console.log("-------------------------------------");
   let dataBoi = await fetch(dataSet);
   let textOfDataBoi = await dataBoi.text();
-  let newDataSet: Array<any> = textOfDataBoi.trim().split(",");
-  // Grab only the first 10K elements
-  let testData = newDataSet.splice(50000, 55000);
-  // console.log("testData: ", testData);
-  return testData;
-  // return textOfDataBoi.split(",");
+  let newDataSet: Array<any> = textOfDataBoi.trim().split(",").filter((x) => parseInt(x) !== 0);
+  
+  return newDataSet.splice(startDataPoint ?? 0, endDataPoint ?? newDataSet.length > 5000 ? 5000 : newDataSet.length);
 };
