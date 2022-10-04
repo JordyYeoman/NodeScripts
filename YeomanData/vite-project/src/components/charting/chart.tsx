@@ -12,6 +12,8 @@ import { useContext, useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 import { useAppContext } from "../../AppWrapper";
 import { generateData, getTxtFileDataAsArray } from "../../utils/dataUtils";
+import { calculateMovingAverage } from "../../utils/MovingWindowAverage";
+import { lowPassFilter } from "low-pass-filter";
 
 ChartJS.register(
   CategoryScale,
@@ -51,7 +53,7 @@ const labels = generateData(5000);
 const ChartDaddy = () => {
   // Get the value and setter from the consumer hook
   const { ironHeartData, setIronHeartData } = useAppContext();
-  const handleNewData = (data: any[], dataSet?: number) => {
+  const handleNewData = (data: number[], dataSet?: number) => {
     setIronHeartData(data);
   };
 
@@ -70,44 +72,116 @@ const ChartDaddy = () => {
   useEffect(() => {
     if (ironHeartData === 0) {
       getTxtFileDataAsArray().then((data) => {
-        handleNewData(data);
+        handleNewData(data.map((dataPoint) => parseFloat(dataPoint)));
       });
     }
   }, []);
 
   return (
     <div style={styles.wrapDaddy}>
-      <ShowHideChart title={"Raw"} options={options} data={data} />
-      <ShowHideChart
+      {/* <ToggleChartSection
+        title={"Raw"}
+        options={options}
+        data={data}
+        filterType={ChartFilter.MovingWindowAverage}
+      /> */}
+      <ToggleChartSection
         title={"Moving Window Average"}
         options={options}
         data={data}
+        filterType={ChartFilter.MovingWindowAverage}
       />
-      <ShowHideChart title={"High Pass Filter"} options={options} data={data} />
-      <ShowHideChart title={"Low Pass Filter"} options={options} data={data} />
-      <ShowHideChart
+      {/* <ToggleChartSection
+        title={"High Pass Filter"}
+        options={options}
+        data={data}
+        filterType={ChartFilter.MovingWindowAverage}
+      /> */}
+      <ToggleChartSection
+        title={"Low Pass Filter"}
+        options={options}
+        data={data}
+        filterType={ChartFilter.LowPassFilter}
+      />
+      {/* <ToggleChartSection
         title={"Discrete Fourier Transform"}
         options={options}
         data={data}
+        filterType={ChartFilter.MovingWindowAverage}
       />
-      <ShowHideChart title={"LPF + HPF"} options={options} data={data} />
-      <ShowHideChart title={"LPF + HPF + DFT"} options={options} data={data} />
+      <ToggleChartSection
+        title={"LPF + HPF"}
+        options={options}
+        data={data}
+        filterType={ChartFilter.MovingWindowAverage}
+      />
+      <ToggleChartSection
+        title={"LPF + HPF + DFT"}
+        options={options}
+        data={data}
+        filterType={ChartFilter.MovingWindowAverage}
+      /> */}
     </div>
   );
 };
 
 export default ChartDaddy;
 
-const ShowHideChart = ({
+export enum ChartFilter {
+  MovingWindowAverage,
+  HighPassFilter,
+  LowPassFilter,
+  DiscreteFourierTransform,
+  LowPassAndHighPassFilters,
+  LowPassHighPassAndDiscreteFourierTransform,
+}
+
+const ToggleChartSection = ({
   title,
   options,
   data,
+  filterType,
 }: {
   title: string;
   options: any;
   data: any;
+  filterType: ChartFilter;
 }) => {
   const [open, setOpen] = useState<boolean>(false);
+
+  const getLineChartForType = () => {
+    switch (filterType) {
+      case ChartFilter.MovingWindowAverage:
+        let newData = calculateMovingAverage(data?.datasets[0]?.data, 15);
+        data.datasets[0].data = newData;
+        return <Line options={options} data={data} />;
+      case ChartFilter.HighPassFilter:
+        // let newData =
+        data = data;
+        break;
+      case ChartFilter.LowPassFilter:
+        let lowPassData = lowPassFilter(
+          data?.datasets[0]?.data,
+          22050,
+          44100,
+          1
+        );
+        data.datasets[0].data = lowPassData;
+        return <Line options={options} data={data} />;
+      case ChartFilter.DiscreteFourierTransform:
+        data = data;
+        break;
+      case ChartFilter.LowPassAndHighPassFilters:
+        data = data;
+        break;
+      case ChartFilter.LowPassHighPassAndDiscreteFourierTransform:
+        data = data;
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <>
       <div style={styles.headingContainer}>
@@ -121,13 +195,7 @@ const ShowHideChart = ({
           IsOpen: {open ? "Open" : "Closed"}
         </button>
       </div>
-      {open ? (
-        <>
-          <Line options={options} data={data} />
-        </>
-      ) : (
-        <></>
-      )}
+      {open ? <>{getLineChartForType()}</> : <></>}
     </>
   );
 };

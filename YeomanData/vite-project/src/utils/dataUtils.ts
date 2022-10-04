@@ -23,7 +23,7 @@ export const getTxtFileDataAsArray = async (inputDataSrc?: string) => {
   let newDataSet: Array<any> = textOfDataBoi.trim().split(",");
   // Grab only the first 10K elements
   let testData = newDataSet.splice(50000, 55000);
-  console.log("testData: ", testData);
+  // console.log("testData: ", testData);
   return testData;
   // return textOfDataBoi.split(",");
 };
