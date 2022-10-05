@@ -17,7 +17,7 @@ export function calculateMovingAverage(data: number[], window: number) {
   for (var i = 0; i < steps; ++i) {
     sum -= data[i];
     sum += data[i + window];
-    result.push(sum / window);
+    result.push(Math.floor(sum / window));
   }
   return result;
 }

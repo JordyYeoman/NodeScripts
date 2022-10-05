@@ -1,5 +1,12 @@
 import dataSet from "../assets/IRONHEART_BETA.txt";
 
+export const generateLabels = (dataSetSize: number) => {
+  let labels: number[] = [];
+  if (!dataSetSize || isNaN(dataSetSize)) return [1, 2, 3];
+  [...Array(Math.abs(dataSetSize)).keys()].map((i) => labels.push(i));
+  return labels;
+};
+
 export const generateData = (dataSetSize?: number) => {
   let dummyData: any = [];
   let loopSize = dataSetSize ?? 500;
@@ -12,7 +19,11 @@ export const generateData = (dataSetSize?: number) => {
 };
 
 // Return text file data as array
-export const getTxtFileDataAsArray = async (startDataPoint?: number, endDataPoint?: number, inputDataSrc?: string) => {
+export const getTxtFileDataAsArray = async (
+  startDataPoint?: number,
+  endDataPoint?: number,
+  inputDataSrc?: string
+) => {
   console.log("-------------------------------------");
   console.log("-------------------------------------");
   console.log("--------| Parsing DataSet |----------");
@@ -20,7 +31,13 @@ export const getTxtFileDataAsArray = async (startDataPoint?: number, endDataPoin
   console.log("-------------------------------------");
   let dataBoi = await fetch(dataSet);
   let textOfDataBoi = await dataBoi.text();
-  let newDataSet: Array<any> = textOfDataBoi.trim().split(",").filter((x) => parseInt(x) !== 0);
-  
-  return newDataSet.splice(startDataPoint ?? 0, endDataPoint ?? newDataSet.length > 5000 ? 5000 : newDataSet.length);
+  let newDataSet: Array<any> = textOfDataBoi
+    .trim()
+    .split(",")
+    .filter((x) => parseInt(x) !== 0);
+
+  return newDataSet.splice(
+    startDataPoint ?? 0,
+    endDataPoint ?? newDataSet.length > 5000 ? 5000 : newDataSet.length
+  );
 };
