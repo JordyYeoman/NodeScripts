@@ -16,21 +16,22 @@ const userSchema: Schema = new Schema({
   email: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
   password: {
     type: String,
-    required: true
+    required: true,
   },
   avatar: {
-    type: String
+    type: String,
   },
   date: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
-const User: Model<IUser> = model("User", userSchema);
+// const User: Model<IUser> = model("User", userSchema);
+const User: any = model("User", userSchema);
 
 export default User;

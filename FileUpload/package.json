@@ -1,8 +1,8 @@
 {
-  "name": "mongoose-express-ts",
+  "name": "File Upload Server",
   "version": "1.0.0",
-  "description": "Mongoose Node.js Express TypeScript application boilerplate with best practices for API development.",
-  "author": "Paul Cham",
+  "description": "MET Stack for File Upload",
+  "author": "Jordy Yeoman",
   "license": "MIT",
   "scripts": {
     "tsc": "tsc",
@@ -10,10 +10,10 @@
     "deploy": "node dist/src/server.js",
     "watch-deploy": "nodemon dist/src/server.js",
     "server": "concurrently \"npm run watch-tsc\" \"npm run watch-deploy\"",
-    "start": "npm run deploy",
-    "heroku-postbuild": "npm run tsc"
+    "start": "npm run deploy"
   },
   "dependencies": {
+    "@types/express-serve-static-core": "^4.17.31",
     "bcryptjs": "^2.4.3",
     "config": "^3.1.0",
     "express": "^4.16.4",
@@ -23,7 +23,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.5.7",
     "request": "^2.88.0",
-    "typescript": "^3.4.5"
+    "typescript": "^4.8.4"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
