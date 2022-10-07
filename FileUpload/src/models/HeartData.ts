@@ -3,25 +3,12 @@ import { IUser } from "./User";
 
 /**
  * Interface to model the HeartData Schema for TypeScript.
- * @param user:ref => User._id
- * @param firstName:string
- * @param lastName:string
- * @param username:string
+ * @param data:string[]
+ * @param date:Date
  */
-export interface IProfile extends Document {
-  user: IUser["_id"];
-  firstName: string;
-  lastName: string;
-  username: string;
-}
-
 const heartDataSchema: Schema = new Schema({
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
-  },
   data: {
-    type: String,
+    type: Array<String>,
     default: "",
   },
   date: {
@@ -31,6 +18,6 @@ const heartDataSchema: Schema = new Schema({
 });
 
 // const Profile: Model<IProfile> = model("Profile", profileSchema);
-const Profile: any = model("HeartData", heartDataSchema);
+const HeartData: any = model("HeartData", heartDataSchema);
 
-export default Profile;
+export default HeartData;
