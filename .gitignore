@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# File upload
+node_modules
+dist
+package-lock.json
+default.json
+*/default.json
