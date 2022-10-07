@@ -2,7 +2,6 @@ import config from "config";
 import { ConnectionOptions, connect } from "mongoose";
 
 const connectDB = async () => {
-  console.log(config);
   try {
     const mongoURI: string = config.get("mongoURI");
     const options: ConnectionOptions = {

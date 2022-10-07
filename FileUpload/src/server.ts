@@ -1,10 +1,11 @@
-import bodyParser from "body-parser";
 import express from "express";
-
 import connectDB from "../config/database";
 import auth from "./routes/api/auth";
 import user from "./routes/api/user";
+import cors from "cors";
 import profile from "./routes/api/profile";
+import morgan from "morgan";
+import fileUpload from "./routes/api/fileUpload";
 
 const app = express();
 
@@ -12,9 +13,16 @@ const app = express();
 connectDB();
 
 // Express configuration
+app.use(morgan("dev"));
+// TODO
+// app.use(
+//   cors({
+//     origin: [],
+//   })
+// );
 app.set("port", process.env.PORT || 5000);
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.json({ limit: "100mb" }));
+app.use(express.urlencoded({ limit: "100mb", extended: true }));
 
 // @route   GET /
 // @desc    Test Base API
@@ -26,6 +34,7 @@ app.get("/", (_req, res) => {
 app.use("/api/auth", auth);
 app.use("/api/user", user);
 app.use("/api/profile", profile);
+app.use("/api/fileUpload", fileUpload);
 
 const port = app.get("port");
 const server = app.listen(port, () =>
