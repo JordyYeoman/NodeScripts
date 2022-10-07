@@ -2,6 +2,7 @@ import config from "config";
 import { ConnectionOptions, connect } from "mongoose";
 
 const connectDB = async () => {
+  console.log(config);
   try {
     const mongoURI: string = config.get("mongoURI");
     const options: ConnectionOptions = {
@@ -11,7 +12,7 @@ const connectDB = async () => {
       useUnifiedTopology: true,
     };
     await connect(mongoURI, options);
-    console.log("MongoDB Connected...");
+    console.log("MongoDB Online and Ready...");
   } catch (err) {
     console.error(err.message);
     // Exit process with failure
