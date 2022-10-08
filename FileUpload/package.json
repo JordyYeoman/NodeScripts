@@ -1,5 +1,5 @@
 {
-  "name": "File Upload Server",
+  "name": "file_upload_server",
   "version": "1.0.0",
   "description": "MET Stack for File Upload",
   "author": "Jordy Yeoman",
@@ -33,7 +33,6 @@
     "@types/config": "0.0.34",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.16.1",
-    "@types/express-fileupload": "^1.4.1",
     "@types/gravatar": "^1.8.0",
     "@types/jsonwebtoken": "^8.3.2",
     "@types/mongoose": "^5.5.0",

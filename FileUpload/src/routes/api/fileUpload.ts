@@ -13,9 +13,17 @@ import HeartData from "../../models/HeartData";
 import { chunkFileAndUpload } from "../../utils/FileUploadHelper";
 import fs from "fs";
 import multer from "multer";
+import { fileFilter } from "../../utils/multerConfig";
 
 const router: Router = Router();
-const upload = multer({ dest: "data/" });
+const upload = multer({
+  dest: "data/",
+  filename: function (req, file, cb) {
+    //req.body is empty...
+    //How could I get the new_file_name property sent from client here?
+    cb(null, file.originalname + "-" + Date.now() + ".pdf");
+  },
+});
 
 // @route   GET api/auth
 // @desc    Get authenticated user given the token
@@ -33,20 +41,14 @@ router.get("/", auth, async (req: Request, res: Response) => {
 // router.post("/", auth, async (req: Request, res: Response) => {
 router.post(
   "/",
-  upload.single("uploaded_file"),
-  async (req: Request, res: Response) => {
+  upload.single("UPLOADED_FILE"),
+  (req: Request, res: Response) => {
     console.log("ENDPOINT HIT");
     try {
-      // console.log("req.body", req.body);
-      // console.log("req.files", req.files);
+      console.log("req.file", req.file);
       // 1. Upload file to DigitalOcean 'droplet' for file storage (location of server)
       const date = Date.now();
       const filePath = `data/ironheart/${date}.txt`;
-      fs.writeFile(filePath, "Some other lyric", "ascii", (err: unknown) => {
-        if (err) {
-          console.log("ERROR OCCURED: ", err);
-        }
-      });
 
       // 2. Save location of the uploaded file to the mongodb database
       // let response = await HeartData.create({
