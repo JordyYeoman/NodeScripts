@@ -15,9 +15,10 @@ connectDB();
 // Express configuration
 app.use(morgan("dev"));
 // TODO
+app.use(cors());
 // app.use(
-//   cors({
-//     origin: [],
+//   fileUpload({
+//     createParentPath: true,
 //   })
 // );
 app.set("port", process.env.PORT || 5000);

@@ -11,8 +11,11 @@ import Request from "../../types/Request";
 import User, { IUser } from "../../models/User";
 import HeartData from "../../models/HeartData";
 import { chunkFileAndUpload } from "../../utils/FileUploadHelper";
+import fs from "fs";
+import multer from "multer";
 
 const router: Router = Router();
+const upload = multer({ dest: "data/" });
 
 // @route   GET api/auth
 // @desc    Get authenticated user given the token
@@ -27,21 +30,37 @@ router.get("/", auth, async (req: Request, res: Response) => {
   }
 });
 
-router.post("/", auth, async (req: Request, res: Response) => {
-  try {
-    console.log("req.body: ", req.body);
-    //
-    let chunkArr = chunkFileAndUpload("src/assets/data/IRONHEART_BETA.txt");
-    console.log("chunkArr: ", chunkArr);
-    HeartData.create({
-      data: chunkArr,
-      date: Date.now(),
-    });
-    res.json({ msg: "Rock n Roll" });
-  } catch (err) {
-    console.error(err.message);
-    res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).send("Server Error");
+// router.post("/", auth, async (req: Request, res: Response) => {
+router.post(
+  "/",
+  upload.single("uploaded_file"),
+  async (req: Request, res: Response) => {
+    console.log("ENDPOINT HIT");
+    try {
+      // console.log("req.body", req.body);
+      // console.log("req.files", req.files);
+      // 1. Upload file to DigitalOcean 'droplet' for file storage (location of server)
+      const date = Date.now();
+      const filePath = `data/ironheart/${date}.txt`;
+      fs.writeFile(filePath, "Some other lyric", "ascii", (err: unknown) => {
+        if (err) {
+          console.log("ERROR OCCURED: ", err);
+        }
+      });
+
+      // 2. Save location of the uploaded file to the mongodb database
+      // let response = await HeartData.create({
+      //   location: filePath,
+      //   date: date,
+      // });
+      // console.log("res after saving?? ", response);
+      // 3. Add ability to download/request that data on the fly from the web app
+      res.json({ msg: "Rock n Roll", fileLocation: filePath });
+    } catch (err) {
+      console.error(err.message);
+      res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).send("Server Error");
+    }
   }
-});
+);
 
 export default router;

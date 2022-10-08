@@ -17,7 +17,6 @@ export default function (req: Request, res: Response, next: NextFunction) {
       .json({ msg: "No token, authorization denied" });
   }
   // Verify token
-  console.log("token: ", token);
   try {
     const payload: Payload | any = jwt.verify(token, config.get("jwtSecret"));
     req.userId = payload.userId;

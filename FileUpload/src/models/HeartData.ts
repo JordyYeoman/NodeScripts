@@ -7,8 +7,8 @@ import { IUser } from "./User";
  * @param date:Date
  */
 const heartDataSchema: Schema = new Schema({
-  data: {
-    type: Array<String>,
+  location: {
+    type: String,
     default: "",
   },
   date: {
