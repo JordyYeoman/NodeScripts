@@ -16,14 +16,15 @@ import multer from "multer";
 import { fileFilter } from "../../utils/multerConfig";
 
 const router: Router = Router();
-const upload = multer({
-  dest: "data/",
+
+var storage = multer.diskStorage({
+  destination: "data/ironheart",
   filename: function (req, file, cb) {
-    //req.body is empty...
-    //How could I get the new_file_name property sent from client here?
-    cb(null, file.originalname + "-" + Date.now() + ".pdf");
+    cb(null, "DATA_ENTRY-" + Date.now() + ".txt");
   },
 });
+
+var upload = multer({ storage: storage });
 
 // @route   GET api/auth
 // @desc    Get authenticated user given the token
@@ -41,23 +42,20 @@ router.get("/", auth, async (req: Request, res: Response) => {
 // router.post("/", auth, async (req: Request, res: Response) => {
 router.post(
   "/",
-  upload.single("UPLOADED_FILE"),
-  (req: Request, res: Response) => {
-    console.log("ENDPOINT HIT");
+  [auth, upload.single("UPLOADED_FILE")],
+  async (req: Request, res: Response) => {
     try {
-      console.log("req.file", req.file);
       // 1. Upload file to DigitalOcean 'droplet' for file storage (location of server)
-      const date = Date.now();
-      const filePath = `data/ironheart/${date}.txt`;
+      // Handled by Multer .upload.single()
 
       // 2. Save location of the uploaded file to the mongodb database
-      // let response = await HeartData.create({
-      //   location: filePath,
-      //   date: date,
-      // });
-      // console.log("res after saving?? ", response);
-      // 3. Add ability to download/request that data on the fly from the web app
-      res.json({ msg: "Rock n Roll", fileLocation: filePath });
+      await HeartData.create({
+        location: req.file.path,
+        // Extract date value from Multer
+        date: req.file.filename.split("-")[1].split(".")[0],
+      });
+
+      res.json({ msg: "Rock n Roll", fileLocation: req.file.path });
     } catch (err) {
       console.error(err.message);
       res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).send("Server Error");
