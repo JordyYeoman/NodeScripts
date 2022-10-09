@@ -69,4 +69,22 @@ router.post(
   }
 );
 
+router.get("/allData", async (req: Request, res: Response) => {
+  try {
+    // 1. Upload file to DigitalOcean 'droplet' for file storage (location of server)
+    // Handled by Multer .upload.single()
+
+    // 2. Save location of the uploaded file to the mongodb database
+    let data = await HeartData.find({}).limit(1);
+
+    // 3. Chunk data to upload to mongoDB
+    // console.log(req.file);
+    // chunkFileAndUpload(req.file, date);
+
+    res.json({ data: data[0].data });
+  } catch (err) {
+    console.error(err.message);
+    res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).send("Server Error");
+  }
+});
 export default router;
