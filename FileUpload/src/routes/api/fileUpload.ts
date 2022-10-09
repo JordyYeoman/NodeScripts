@@ -14,6 +14,7 @@ import { chunkFileAndUpload } from "../../utils/FileUploadHelper";
 import fs from "fs";
 import multer from "multer";
 import { fileFilter } from "../../utils/multerConfig";
+import HeartBackup from "../../models/HeartBackup";
 
 const router: Router = Router();
 
@@ -48,12 +49,17 @@ router.post(
       // 1. Upload file to DigitalOcean 'droplet' for file storage (location of server)
       // Handled by Multer .upload.single()
 
+      const date = req.file.filename.split("-")[1].split(".")[0];
       // 2. Save location of the uploaded file to the mongodb database
-      await HeartData.create({
+      await HeartBackup.create({
         location: req.file.path,
         // Extract date value from Multer
-        date: req.file.filename.split("-")[1].split(".")[0],
+        date: date,
       });
+
+      // 3. Chunk data to upload to mongoDB
+      console.log(req.file);
+      chunkFileAndUpload(req.file, date);
 
       res.json({ msg: "Rock n Roll", fileLocation: req.file.path });
     } catch (err) {
