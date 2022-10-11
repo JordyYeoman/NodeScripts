@@ -2,6 +2,7 @@ import { useState } from "react";
 import { AppWrapper } from "./AppWrapper";
 import reactLogo from "./assets/react.svg";
 import ChartDaddy from "./components/charting/chart";
+import Navbar from "./components/Navbar";
 function App() {
   const [count, setCount] = useState(0);
   const [fileToUpload, setFileToUpload] = useState(null);
@@ -51,6 +52,7 @@ function App() {
 
   return (
     <AppWrapper>
+      <Navbar />
       <div className="App">
         <div className="mainContent">
           <h1 style={styles.heading}>IRON HEART</h1>
