@@ -4,7 +4,7 @@ import { Router, Response } from "express";
 import { check, validationResult } from "express-validator/check";
 import HttpStatusCodes from "http-status-codes";
 import jwt from "jsonwebtoken";
-
+import { compressToUTF16, decompressFromUTF16 } from "async-lz-string";
 import auth from "../../middleware/auth";
 import Payload from "../../types/Payload";
 import Request from "../../types/Request";
@@ -15,6 +15,7 @@ import fs from "fs";
 import multer from "multer";
 import { fileFilter } from "../../utils/multerConfig";
 import HeartBackup from "../../models/HeartBackup";
+import { decompress } from "../../utils/Compression";
 
 const router: Router = Router();
 
@@ -71,17 +72,9 @@ router.post(
 
 router.get("/allData", async (req: Request, res: Response) => {
   try {
-    // 1. Upload file to DigitalOcean 'droplet' for file storage (location of server)
-    // Handled by Multer .upload.single()
-
-    // 2. Save location of the uploaded file to the mongodb database
-    let data = await HeartData.find({}).limit(1);
-
-    // 3. Chunk data to upload to mongoDB
-    // console.log(req.file);
-    // chunkFileAndUpload(req.file, date);
-
-    res.json({ data: data[0].data });
+    let compressedChunk = await HeartData.find({}).limit(1);
+    let decompressedData = await decompress(compressedChunk[0].data);
+    res.json({ data: decompressedData });
   } catch (err) {
     console.error(err.message);
     res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).send("Server Error");

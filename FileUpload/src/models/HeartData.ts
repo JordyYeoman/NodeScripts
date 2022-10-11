@@ -9,8 +9,8 @@ import { IUser } from "./User";
 const heartDataSchema: Schema = new Schema(
   {
     data: {
-      type: Array<String>,
-      default: [""],
+      type: String,
+      default: "",
     },
     date: {
       type: Date,

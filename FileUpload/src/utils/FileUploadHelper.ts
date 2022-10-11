@@ -1,12 +1,13 @@
 import { models } from "mongoose";
 import HeartData from "../models/HeartData";
 import { sleep } from "./Sleep";
+import { compress } from "./Compression";
 
 var fs = require("fs");
 
 export const chunkFileAndUpload = (file: Express.Multer.File, date: string) => {
-  var data = [""];
-  var chunkCount = 0;
+  var data: string = "";
+  var chunkCount: number = 0;
 
   var readStream = fs.createReadStream(file.path, {
     highWaterMark: 25 * 1024, // Gives around 5k data points per array
@@ -15,11 +16,12 @@ export const chunkFileAndUpload = (file: Express.Multer.File, date: string) => {
 
   readStream
     .on("data", async function (chunk: string) {
-      data = chunk
-        .split(" ")
-        .join()
-        .replace(/[\r\n]/gm, "")
-        .split(",");
+      data = await compress(
+        chunk
+          .split(" ")
+          .join()
+          .replace(/[\r\n]/gm, "")
+      );
       // Perform chunk logic
 
       let sizeEstimate = JSON.stringify(data).length * 8 * 0.000001; // Get a good approximation of string array size in Mb's to be sent to server
@@ -40,7 +42,7 @@ export const chunkFileAndUpload = (file: Express.Multer.File, date: string) => {
           console.log(err, ": Unable to save to database");
         });
       // reset data
-      data = [""];
+      data = "";
       chunkCount++;
     })
     .on("end", function () {
