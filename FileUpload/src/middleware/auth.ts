@@ -9,7 +9,9 @@ import Request from "../types/Request";
 export default function (req: Request, res: Response, next: NextFunction) {
   // Get token from header
   const token = req.header("x-auth-token");
-
+  const cookies = req.cookies;
+  console.log("WTF ARE COOKIES??", cookies);
+  console.log("WTF ARE TOKENS??", token);
   // Check if no token
   if (!token) {
     return res

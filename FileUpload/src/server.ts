@@ -5,6 +5,7 @@ import user from "./routes/api/user";
 import cors from "cors";
 import profile from "./routes/api/profile";
 import morgan from "morgan";
+import cookieParser from "cookie-parser";
 import fileUpload from "./routes/api/fileUpload";
 
 const app = express();
@@ -15,7 +16,11 @@ connectDB();
 // Express configuration
 app.use(morgan("dev"));
 // TODO
-app.use(cors());
+app.use(
+  cors({
+    credentials: true,
+  })
+);
 // app.use(
 //   fileUpload({
 //     createParentPath: true,
@@ -23,6 +28,7 @@ app.use(cors());
 // );
 app.set("port", process.env.PORT || 5000);
 // app.use(express.json({ limit: "100mb" }));
+app.use(cookieParser());
 app.use(express.urlencoded({ limit: "100mb", extended: true }));
 
 // @route   GET /

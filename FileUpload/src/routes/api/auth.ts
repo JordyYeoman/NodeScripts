@@ -9,6 +9,7 @@ import auth from "../../middleware/auth";
 import Payload from "../../types/Payload";
 import Request from "../../types/Request";
 import User, { IUser } from "../../models/User";
+import { TypePredicateKind } from "typescript";
 
 const router: Router = Router();
 
@@ -71,14 +72,21 @@ router.post(
       const payload: Payload = {
         userId: user.id,
       };
-
+      const expiry = config.get("jwtExpiration") as string;
       jwt.sign(
         payload,
         config.get("jwtSecret"),
         { expiresIn: config.get("jwtExpiration") },
         (err, token) => {
           if (err) throw err;
-          res.json({ token });
+          generateToken(
+            "token",
+            token,
+            expiry,
+            res,
+            HttpStatusCodes.OK,
+            err ?? "OK"
+          );
         }
       );
     } catch (err) {
@@ -139,8 +147,7 @@ router.post(
           secret,
           { expiresIn: expiry }
         );
-        // Return result
-        res.status(HttpStatusCodes.OK).json({ result, token });
+        generateToken("token", token, expiry, res, HttpStatusCodes.OK, result);
       });
     } catch (err) {
       console.error(err.message);
@@ -150,3 +157,24 @@ router.post(
 );
 
 export default router;
+
+const generateToken = (
+  name: string,
+  jwtToken: string,
+  tokenExpiration: string,
+  res: Response,
+  statusCode: any,
+  result: any
+) => {
+  // Http Only cookie options
+  const options = {
+    httpOnly: true,
+    expires: new Date(Date.now() + tokenExpiration),
+  };
+
+  // Return result
+  res
+    .status(statusCode)
+    .cookie(name, jwtToken, options)
+    .json({ result, jwtToken });
+};

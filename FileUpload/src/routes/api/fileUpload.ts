@@ -70,7 +70,7 @@ router.post(
   }
 );
 
-router.get("/allData", async (req: Request, res: Response) => {
+router.get("/allData", auth, async (req: Request, res: Response) => {
   try {
     let compressedChunk = await HeartData.find({}).limit(1);
     let decompressedData = await decompress(compressedChunk[0].data);
