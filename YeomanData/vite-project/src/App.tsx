@@ -19,8 +19,7 @@ function App() {
       method: "POST",
       body: formData,
       headers: {
-        "x-auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzNmOWQzYjFmYWYzYTlmZWI5MTY2NjMiLCJpYXQiOjE2NjUxOTM4MjYsImV4cCI6MTY2NTE5NzQyNn0.A1CxFR9MdpRC6MvkmYf0z-TscPob8xy-LZGoL2RLx5w",
+        "x-auth-token": "",
         "Access-Control-Allow-Origin": "*",
       },
     })
@@ -37,8 +36,7 @@ function App() {
     fetch("http://localhost:5000/api/fileUpload/allData", {
       method: "GET",
       headers: {
-        "x-auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzNmOWQzYjFmYWYzYTlmZWI5MTY2NjMiLCJpYXQiOjE2NjUxOTM4MjYsImV4cCI6MTY2NTE5NzQyNn0.A1CxFR9MdpRC6MvkmYf0z-TscPob8xy-LZGoL2RLx5w",
+        "x-auth-token": "",
         "Access-Control-Allow-Origin": "*",
       },
     })
