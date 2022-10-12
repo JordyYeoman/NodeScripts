@@ -80,7 +80,7 @@ router.post(
         (err, token) => {
           if (err) throw err;
           generateToken(
-            "token",
+            "ironheartAlpha",
             token,
             expiry,
             res,
@@ -147,7 +147,14 @@ router.post(
           secret,
           { expiresIn: expiry }
         );
-        generateToken("token", token, expiry, res, HttpStatusCodes.OK, result);
+        generateToken(
+          "ironheartAlpha",
+          token,
+          expiry,
+          res,
+          HttpStatusCodes.OK,
+          result
+        );
       });
     } catch (err) {
       console.error(err.message);
@@ -170,6 +177,8 @@ const generateToken = (
   const options = {
     httpOnly: true,
     expires: new Date(Date.now() + tokenExpiration),
+    sameSite: "none",
+    secure: true,
   };
 
   // Return result
