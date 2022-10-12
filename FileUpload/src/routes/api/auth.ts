@@ -184,6 +184,7 @@ const generateToken = (
   // Return result
   res
     .status(statusCode)
+    // @ts-ignore: Unreachable code error
     .cookie(name, jwtToken, options)
     .json({ result, jwtToken });
 };

@@ -16,9 +16,9 @@ const heartDataSchema: Schema = new Schema(
       type: Date,
       default: Date.now,
     },
-    chunk: {
-      type: Number,
-      default: 0,
+    chunkTime: {
+      type: String,
+      default: "",
     },
     sizeEstimate: {
       type: Number,

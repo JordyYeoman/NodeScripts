@@ -29,3 +29,5 @@ dist
 package-lock.json
 default.json
 */default.json
+*.txt
+*/.txt

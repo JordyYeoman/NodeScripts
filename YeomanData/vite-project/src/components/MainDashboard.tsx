@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAppContext } from "../AppWrapper";
 import ChartDaddy from "../components/charting/chart";
-import { getApiHeaders } from "../utils/auth";
+import { getUploadHeaders } from "../utils/auth";
 
 function MainDashboard() {
   const { user } = useAppContext();
@@ -12,18 +12,15 @@ function MainDashboard() {
   };
   const uploadFile = () => {
     const formData = new FormData();
-    console.log("FILETOUPLOAD: ", fileToUpload);
     if (!fileToUpload) return;
 
     formData.append("UPLOADED_FILE", fileToUpload);
+    console.log("File to upload: ", fileToUpload);
 
     fetch("http://localhost:5000/api/fileUpload/", {
       method: "POST",
       body: formData,
-      headers: {
-        "x-auth-token": "",
-        "Access-Control-Allow-Origin": "*",
-      },
+      headers: getUploadHeaders(),
     })
       .then((response) => response.json())
       .then((result) => {
@@ -33,22 +30,6 @@ function MainDashboard() {
         console.error("Error:", error);
       });
   };
-
-  const getChartDataTest = () => {
-    fetch("http://localhost:5000/api/fileUpload/allData", {
-      method: "GET",
-      headers: getApiHeaders(),
-    })
-      .then((response) => response.json())
-      .then((result) => {
-        console.log("Success:", result);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  };
-
-  console.log("User bra", user);
 
   return (
     <div className="mainContent">
@@ -62,9 +43,6 @@ function MainDashboard() {
             >
               count is {count}
             </button>
-            <button onClick={getChartDataTest}>
-              get Chart Data from Mongo
-            </button>
             <div>
               <label htmlFor="uploaded_file">Upload data: </label>
               <input
@@ -77,6 +55,7 @@ function MainDashboard() {
               <button onClick={uploadFile}>Upload File</button>
             </div>
           </div>
+          <RetrieveDataComponent />
           <ChartDaddy />
         </>
       ) : (
@@ -93,4 +72,33 @@ const styles = {
     display: "flex",
     justifyContent: "space-between",
   },
+};
+
+const getChartDataTest = () => {
+  fetch("http://localhost:5000/api/fileUpload/allData", {
+    method: "GET",
+    headers: getApiHeaders(),
+  })
+    .then((response) => response.json())
+    .then((result) => {
+      console.log("Success:", result);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+};
+
+const RetrieveDataComponent = () => {
+  //   const [dataRange, setDataRange] = useState<>;
+  // Current Data Should be a section of 5 sets of data
+  // You should be able to step through each dataset.
+  // IE - If you have 0-4, you can then go get 5-9, 10-14 etc etc...
+  return (
+    <div>
+      <div>Get Data From Mongo</div>
+      <div>
+        <button onClick={getChartDataTest}>Get Chart Data from DB</button>
+      </div>
+    </div>
+  );
 };

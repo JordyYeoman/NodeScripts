@@ -96,7 +96,7 @@ const ChartDaddy = () => {
 
   return (
     <div style={styles.wrapDaddy}>
-      <div>
+      {/* <div>
         <h4 style={styles.heading}>Data range selection:</h4>
       </div>
       <div style={styles.inputContainer}>
@@ -121,7 +121,7 @@ const ChartDaddy = () => {
         >
           Step
         </button>
-      </div>
+      </div> */}
       <ToggleChartSection
         title={"Raw"}
         options={options}

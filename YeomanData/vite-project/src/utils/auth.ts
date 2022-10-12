@@ -9,3 +9,12 @@ export const getApiHeaders = () => {
   );
   return myHeaders;
 };
+
+export const getUploadHeaders = () => {
+  var myHeaders = new Headers();
+  myHeaders.append(
+    "x-auth-token",
+    localStorage.getItem("IronHeart.alpha.V0.003") ?? ""
+  );
+  return myHeaders;
+};

@@ -14,11 +14,15 @@ export const AppContext: AppContextType = createContext({});
 export function AppWrapper({ children }: any) {
   const [data, setIronHeartData] = useState<any>(0);
   const [user, setUser] = useState<any>({ isAuthenticated: false });
+  const [currentData, setCurrentData] = useState<any>({});
+
   let sharedState = {
     user,
     setUser,
     ironHeartData: data, // <------ Expose Value to Consumer
     setIronHeartData, // <------ Expose Setter to Consumer
+    currentData,
+    setCurrentData,
   };
 
   return (

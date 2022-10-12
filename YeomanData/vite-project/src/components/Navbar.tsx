@@ -2,6 +2,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useAppContext } from "../AppWrapper";
 import { getApiHeaders } from "../utils/auth";
 import ironHeartIcon from "../assets/ironmanicon.png";
+import { useEffect } from "react";
 
 interface IFormInputs {
   email: string;
@@ -47,6 +48,16 @@ function Navbar() {
         console.error("Error:", error);
       });
   };
+
+  useEffect(() => {
+    // Check localStorage for cookie
+    if (localStorage.getItem("IronHeart.alpha.V0.003")) {
+      setUser({
+        ...user,
+        isAuthenticated: true,
+      });
+    }
+  }, []);
 
   return (
     <div style={styles.navWrapper}>
@@ -108,7 +119,6 @@ const styles = {
     left: "-44px",
   },
   navWrapper: {
-    width: "100%",
     height: "auto",
     backgroundColor: "#181818",
     paddingLeft: "2.5rem",

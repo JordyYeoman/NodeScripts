@@ -6,16 +6,19 @@ import { IUser } from "./User";
  * @param data:string[]
  * @param date:Date
  */
-const heartBackupSchema: Schema = new Schema({
-  location: {
-    type: String,
-    default: "",
+const heartBackupSchema: Schema = new Schema(
+  {
+    location: {
+      type: String,
+      default: "",
+    },
+    date: {
+      type: Date,
+      default: Date.now,
+    },
   },
-  date: {
-    type: Date,
-    default: Date.now,
-  },
-});
+  { collection: "heartBackup" }
+);
 
 // const Profile: Model<IProfile> = model("Profile", profileSchema);
 const HeartBackup: any = model("HeartBackup", heartBackupSchema);

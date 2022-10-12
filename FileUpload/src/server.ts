@@ -22,11 +22,6 @@ app.use(
     origin: true,
   })
 );
-// app.use(
-//   fileUpload({
-//     createParentPath: true,
-//   })
-// );
 app.set("port", process.env.PORT || 5000);
 // app.use(express.json({ limit: "100mb" }));
 app.use(cookieParser());
