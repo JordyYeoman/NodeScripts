@@ -9,7 +9,7 @@ function LeftOverlayBar() {
         return (
           <div
             key={index}
-            className="font-dogica-pixel-bold -rotate-90 text-[6px] w-[100px]"
+            className="font-dogica-pixel-bold -rotate-90 text-[6px] w-[100px] tracking-normal transition duration-300 hover:tracking-widest"
           >
             {el}
           </div>

@@ -50,18 +50,24 @@ function PrimeAnalytics() {
     }));
   };
 
+  console.log("Time Filter: ", timeFilter.year);
+
   return (
     <div className="flex w-full relative">
       <LeftOverlayBar />
       <Card classes={"w-1/4 self-start flex flex-wrap"}>
         <div className="w-full h-6 text-sm font-bold uppercase">Filter</div>
         {Years.map((year) => {
+          console.log("Year: ", year);
+          console.log("timeFilter.year", parseInt(timeFilter.year));
           return (
             <SmallCard
               attr={"year"}
               name={year}
               key={year}
-              classes={"ml-0 m-1"}
+              classes={`ml-0 m-1 ${
+                parseInt(timeFilter.year) === year ? "bg-zinc-600" : ""
+              }`}
               action={handleClick}
             >
               {year}
@@ -74,7 +80,9 @@ function PrimeAnalytics() {
               attr={"month"}
               name={month}
               key={month}
-              classes={"ml-0 m-1"}
+              classes={`ml-0 m-1 ${
+                timeFilter.month === month ? "bg-zinc-600" : ""
+              }`}
               action={handleClick}
             >
               {month}
@@ -87,7 +95,9 @@ function PrimeAnalytics() {
               attr={"day"}
               name={day}
               key={day}
-              classes={"ml-0 m-1"}
+              classes={`ml-0 m-1 ${
+                timeFilter.day === day ? "bg-zinc-600" : ""
+              }`}
               action={handleClick}
             >
               {day}

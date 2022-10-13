@@ -64,7 +64,7 @@ function Navbar() {
       {user?.isAuthenticated ? (
         <>
           <img
-            className="absolute -top-[0.15rem] h-full -right-8 grayscale opacity-80"
+            className="transition duration-250 cursor-pointer absolute -top-[0.15rem] h-full -right-8 grayscale opacity-80 hover:grayscale-0"
             src={ironHeartIcon}
             alt="IronHeart Icon"
           />
@@ -92,8 +92,34 @@ function Navbar() {
           </form>
         </>
       )}
-      <h1 className="text-2xl font-black text-zinc-600 small-shadow">
-        IRON HEART
+      <h1 className="text-2xl font-black small-shadow">
+        <span className="text-zinc-600 transition duration-250 hover:text-zinc-200 cursor-pointer">
+          I
+        </span>
+        <span className="text-zinc-600 transition duration-250 hover:text-zinc-200 cursor-pointer">
+          R
+        </span>
+        <span className="text-zinc-600 transition duration-250 hover:text-zinc-200 cursor-pointer">
+          O
+        </span>
+        <span className="text-zinc-600 transition duration-250 hover:text-zinc-200 cursor-pointer">
+          N
+        </span>{" "}
+        <span className="text-zinc-600 transition duration-250 hover:text-zinc-200 cursor-pointer">
+          H
+        </span>
+        <span className="text-zinc-600 transition duration-250 hover:text-zinc-200 cursor-pointer">
+          E
+        </span>
+        <span className="text-zinc-600 transition duration-250 hover:text-zinc-200 cursor-pointer">
+          A
+        </span>
+        <span className="text-zinc-600 transition duration-250 hover:text-zinc-200 cursor-pointer">
+          R
+        </span>
+        <span className="text-zinc-600 transition duration-250 hover:text-zinc-200 cursor-pointer">
+          T
+        </span>
       </h1>
     </div>
   );
