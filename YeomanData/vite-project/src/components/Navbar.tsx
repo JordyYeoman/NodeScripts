@@ -60,7 +60,7 @@ function Navbar() {
   }, []);
 
   return (
-    <div className="flex relative px-3 py-2">
+    <div className="flex relative px-3 py-2 overflow-hidden">
       {user?.isAuthenticated ? (
         <>
           <img

@@ -144,8 +144,8 @@ input:focus-visible {
 
 .App {
   display: block;
-  padding-left: 0.75rem;
-  padding-right: 0.75rem;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
   position: relative;
   height: auto;
   z-index: 1;
@@ -156,17 +156,17 @@ input:focus-visible {
   /* // Background Grid Styling */
   height: 100%;
   display: inline-block;
-  opacity: 0.075;
+  opacity: 0.035;
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  background-color: #00e0ff;
+  background-color: #000f1c;
   background-image: linear-gradient(hsla(0, 0%, 100%, 0.5) 2px, transparent 0),
     linear-gradient(90deg, hsla(0, 0%, 100%, 0.5) 2px, transparent 0),
     linear-gradient(hsla(0, 0%, 100%, 0.28) 1px, transparent 0),
     linear-gradient(90deg, hsla(0, 0%, 100%, 0.28) 1px, transparent 0);
-  background-size: 10px 10px, 10px 10px, 20px 20px, 20px 20px;
+  background-size: 15px 15px, 15px 15px, 15px 15px, 15px 15px;
   background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
   content: "";
   z-index: -1;
