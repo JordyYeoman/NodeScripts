@@ -1,3 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Dogica";
+  src: local("Dogica"), url("./fonts/dogica.ttf") format("truetype");
+}
+@font-face {
+  font-family: "DogicaBold";
+  src: local("DogicaBold"), url("./fonts/dogicabold.ttf") format("truetype");
+}
+@font-face {
+  font-family: "DogicaPixel";
+  src: local("DogicaPixel"), url("./fonts/dogicapixel.ttf") format("truetype");
+}
+@font-face {
+  font-family: "DogicaPixelBold";
+  src: local("DogicaPixelBold"),
+    url("./fonts/dogicapixelbold.ttf") format("truetype");
+}
+
+.font-dogica {
+  font-family: "Dogica";
+}
+.font-dogica-bold {
+  font-family: "DogicaBold";
+}
+.font-dogica-pixel {
+  font-family: "DogicaPixel";
+}
+.font-dogica-pixel-bold {
+  font-family: "DogicaPixelBold";
+}
+
+.small-shadow {
+  text-shadow: -2px -2px 1px #1b1b1b;
+}
+
 :root {
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
   font-size: 16px;
@@ -14,6 +53,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+  position: relative;
 }
 
 a {
@@ -31,6 +71,8 @@ body {
   min-height: 100vh;
   height: 100%;
   width: 100%;
+  position: relative;
+  z-index: 1;
 }
 
 h1 {
@@ -102,8 +144,32 @@ input:focus-visible {
 
 .App {
   display: block;
-  padding-left: 2.5rem;
-  padding-right: 2.5rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  position: relative;
+  height: auto;
+  z-index: 1;
+  padding-top: 1.5rem;
+}
+
+.App::before {
+  /* // Background Grid Styling */
+  height: 100%;
+  display: inline-block;
+  opacity: 0.075;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #00e0ff;
+  background-image: linear-gradient(hsla(0, 0%, 100%, 0.5) 2px, transparent 0),
+    linear-gradient(90deg, hsla(0, 0%, 100%, 0.5) 2px, transparent 0),
+    linear-gradient(hsla(0, 0%, 100%, 0.28) 1px, transparent 0),
+    linear-gradient(90deg, hsla(0, 0%, 100%, 0.28) 1px, transparent 0);
+  background-size: 10px 10px, 10px 10px, 20px 20px, 20px 20px;
+  background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
+  content: "";
+  z-index: -1;
 }
 
 .mainContent {

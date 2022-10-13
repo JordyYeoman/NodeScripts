@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { useAppContext } from "../AppWrapper";
 import ChartDaddy from "../components/charting/chart";
-import { getUploadHeaders } from "../utils/auth";
+import { getApiHeaders, getUploadHeaders } from "../utils/auth";
+import Card from "./molecules/Card";
+import PrimeAnalytics from "./organisms/PrimeAnalytics";
 
 function MainDashboard() {
   const { user } = useAppContext();
@@ -33,6 +35,7 @@ function MainDashboard() {
 
   return (
     <div className="mainContent">
+      <PrimeAnalytics />
       {user?.isAuthenticated ? (
         <>
           <div style={styles.utils}>

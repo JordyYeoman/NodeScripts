@@ -60,10 +60,14 @@ function Navbar() {
   }, []);
 
   return (
-    <div style={styles.navWrapper}>
+    <div className="flex relative px-3 py-2">
       {user?.isAuthenticated ? (
         <>
-          <img style={styles.icon} src={ironHeartIcon} alt="IronHeart Icon" />
+          <img
+            className="absolute -top-[0.15rem] h-full -right-8 grayscale opacity-80"
+            src={ironHeartIcon}
+            alt="IronHeart Icon"
+          />
         </>
       ) : (
         <>
@@ -88,7 +92,9 @@ function Navbar() {
           </form>
         </>
       )}
-      <h1 style={styles.heading}>IRON HEART</h1>
+      <h1 className="text-2xl font-black text-zinc-600 small-shadow">
+        IRON HEART
+      </h1>
     </div>
   );
 }
@@ -96,13 +102,6 @@ function Navbar() {
 export default Navbar;
 
 const styles = {
-  heading: {
-    fontWeight: "900",
-    fontSize: 72,
-    textShadow: "5px 2.5px rgba(0, 192, 250,0.8)",
-    marginTop: 0,
-    marginBottom: 0,
-  },
   loginText: {
     padding: 0,
     width: "auto",
@@ -130,7 +129,6 @@ const styles = {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-around",
-    marginBottom: "2.5rem",
   },
   inputContainer: {
     display: "flex",
