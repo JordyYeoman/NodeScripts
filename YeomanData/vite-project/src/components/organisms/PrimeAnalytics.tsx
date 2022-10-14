@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { TimeFilter } from "src/types/interfaces";
+import { getApiHeaders, getUploadHeaders } from "../../utils/auth";
 import Coordinates from "../atoms/Coordinates";
 import DayFilter from "../atoms/DayFilter";
 import FilterButton from "../atoms/FilterButton";
@@ -8,7 +9,6 @@ import YearFilter from "../atoms/YearFilter";
 import ChartDaddy from "../charting/chart";
 import Card from "../molecules/Card";
 import LeftOverlayBar from "../molecules/LeftOverlayBar";
-import SmallCard from "../molecules/SmallCard";
 
 function PrimeAnalytics() {
   const [timeFilter, setTimeFilter] = useState<TimeFilter>({
@@ -40,7 +40,7 @@ function PrimeAnalytics() {
       <LeftOverlayBar />
       <Card
         classes={
-          "w-1/4 md:min-h-[800px] self-start flex flex-col items-start justify-start"
+          "w-1/4 md:min-h-[900px] self-start flex flex-col items-start justify-start"
         }
       >
         <div className="w-full h-6 text-sm font-bold uppercase flex items-center">
@@ -72,12 +72,12 @@ function PrimeAnalytics() {
             <DayFilter timeFilter={timeFilter} action={handleClick} />
           )}
         </div>
+        <div className="w-full pt-2 h-6 text-sm font-bold uppercase flex items-center">
+          Sources
+          <div></div>
+        </div>
       </Card>
-      <Card
-        classes={
-          "w-full md:min-h-[800px] md:h-[800px] ml-2 self-start font-dogica-bold"
-        }
-      >
+      <Card classes={"w-full md:min-h-[900px] md:h-[900px] ml-2 self-start"}>
         <ChartDaddy />
       </Card>
       <div className="absolute -top-5 -right-2 w-24 h-24">
@@ -88,3 +88,78 @@ function PrimeAnalytics() {
 }
 
 export default PrimeAnalytics;
+
+const DataSources = () => {
+  const handleFile = (event: any) => {
+    setFileToUpload(event?.target?.files[0]);
+  };
+  const [fileToUpload, setFileToUpload] = useState(null);
+  const uploadFile = () => {
+    const formData = new FormData();
+    if (!fileToUpload) return;
+
+    formData.append("UPLOADED_FILE", fileToUpload);
+    console.log("File to upload: ", fileToUpload);
+
+    fetch("http://localhost:5000/api/fileUpload/", {
+      method: "POST",
+      body: formData,
+      headers: getUploadHeaders(),
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        console.log("Success:", result);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+
+  return (
+    <>
+      <div className="flex justify-between">
+        <div>
+          <label htmlFor="uploaded_file">Upload data: </label>
+          <input
+            type="file"
+            id="uploaded_file"
+            name="UPLOADED_FILE"
+            accept=".txt,.csv"
+            onChange={handleFile}
+          />
+          <button onClick={uploadFile}>Upload File</button>
+        </div>
+      </div>
+      <RetrieveDataComponent />
+    </>
+  );
+};
+
+const getChartDataTest = () => {
+  fetch("http://localhost:5000/api/fileUpload/allData", {
+    method: "GET",
+    headers: getApiHeaders(),
+  })
+    .then((response) => response.json())
+    .then((result) => {
+      console.log("Success:", result);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+};
+
+const RetrieveDataComponent = () => {
+  //   const [dataRange, setDataRange] = useState<>;
+  // Current Data Should be a section of 5 sets of data
+  // You should be able to step through each dataset.
+  // IE - If you have 0-4, you can then go get 5-9, 10-14 etc etc...
+  return (
+    <div>
+      <div>Get Data From Mongo</div>
+      <div>
+        <button onClick={getChartDataTest}>Get Chart Data from DB</button>
+      </div>
+    </div>
+  );
+};

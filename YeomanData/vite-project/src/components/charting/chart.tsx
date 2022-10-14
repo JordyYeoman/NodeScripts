@@ -10,9 +10,11 @@ import {
 } from "chart.js";
 import { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
+import { options } from "../../config/chartOptions";
 import { useAppContext } from "../../AppWrapper";
 import { generateLabels, getTxtFileDataAsArray } from "../../utils/dataUtils";
 import { calculateMovingAverage } from "../../utils/MovingWindowAverage";
+import SmallCard from "../molecules/SmallCard";
 
 ChartJS.register(
   CategoryScale,
@@ -24,31 +26,9 @@ ChartJS.register(
   Legend
 );
 
-export const options = {
-  responsive: true,
-  elements: {
-    point: {
-      radius: 0.5,
-    },
-    line: {
-      borderWidth: 0.99,
-    },
-    tension: 0,
-  },
-  plugins: {
-    legend: {
-      position: "top" as const,
-    },
-    title: {
-      display: false,
-      text: "",
-    },
-  },
-};
-
 const ChartDaddy = () => {
-  const [startSplice, setStartSplice] = useState<string>("");
-  const [endSplice, setEndSplice] = useState<string>("");
+  const [startSplice, setStartSplice] = useState<string>("0");
+  const [endSplice, setEndSplice] = useState<string>("500");
   const [labels, setLabels] = useState<number[]>([0]);
   // Get the value and setter from the consumer hook
   const { ironHeartData, setIronHeartData } = useAppContext();
@@ -61,10 +41,16 @@ const ChartDaddy = () => {
     labels,
     datasets: [
       {
-        label: "Dataset 1",
+        label: "Raw",
         data: ironHeartData,
         borderColor: "rgb(99, 255, 132)",
         backgroundColor: "rgba(99, 255, 132, 0.5)",
+      },
+      {
+        label: "MWA",
+        data: calculateMovingAverage(ironHeartData, 15),
+        borderColor: "rgb(255, 132, 99)",
+        backgroundColor: "rgba(99, 132, 99, 0.9)",
       },
     ],
   };
@@ -77,93 +63,28 @@ const ChartDaddy = () => {
     );
   }, [endSplice]);
 
-  const handleStartChange = (event: any) => {
-    const result = event.target.value.replace(/\D/g, "");
-    setStartSplice(result);
-  };
-
-  const handleEndChange = (event: any) => {
-    let result = event.target.value.replace(/\D/g, "");
-    setEndSplice(result);
-  };
-
-  const handleStepForward = () => {
-    let newStart = (parseInt(startSplice) + parseInt(startSplice)).toString();
-    let newEnd = (parseInt(endSplice) + parseInt(endSplice)).toString();
-    setEndSplice(newEnd);
-    setStartSplice(newStart);
-  };
-
   return (
-    <div style={styles.wrapDaddy}>
-      {/* <div>
-        <h4 style={styles.heading}>Data range selection:</h4>
+    <div className="flex flex-col h-full w-full">
+      <div className="w-full h-6 text-sm font-bold uppercase flex items-center">
+        Analytics
       </div>
-      <div style={styles.inputContainer}>
-        <input
-          style={styles.inputField}
-          type="number"
-          id="qty"
-          value={startSplice}
-          onChange={handleStartChange}
+      <div className="flex flex-row py-2 w-full">
+        {Object.keys(ChartFilter).map((filter) => {
+          return (
+            <SmallCard key={filter} classes={"mr-1 w-min"}>
+              {filter}
+            </SmallCard>
+          );
+        })}
+      </div>
+      <div className="flex relative h-full w-full">
+        <ChartSection
+          title={"Raw"}
+          options={options}
+          data={data}
+          filterType={ChartFilter.Raw}
         />
-        <input
-          style={styles.inputField}
-          type="number"
-          id="qty"
-          value={endSplice}
-          onChange={handleEndChange}
-        />
-        <button
-          className="customButton"
-          style={styles.customButton}
-          onClick={handleStepForward}
-        >
-          Step
-        </button>
-      </div> */}
-      <ToggleChartSection
-        title={"Raw"}
-        options={options}
-        data={data}
-        filterType={ChartFilter.Raw}
-      />
-      <ToggleChartSection
-        title={"Moving Window Average"}
-        options={options}
-        data={data}
-        filterType={ChartFilter.MovingWindowAverage}
-      />
-      {/* <ToggleChartSection
-        title={"High Pass Filter"}
-        options={options}
-        data={data}
-        filterType={ChartFilter.MovingWindowAverage}
-      /> */}
-      {/* <ToggleChartSection
-        title={"Low Pass Filter"}
-        options={options}
-        data={data}
-        filterType={ChartFilter.LowPassFilter}
-      /> */}
-      {/* <ToggleChartSection
-        title={"Discrete Fourier Transform"}
-        options={options}
-        data={data}
-        filterType={ChartFilter.MovingWindowAverage}
-      />
-      <ToggleChartSection
-        title={"LPF + HPF"}
-        options={options}
-        data={data}
-        filterType={ChartFilter.MovingWindowAverage}
-      />
-      <ToggleChartSection
-        title={"LPF + HPF + DFT"}
-        options={options}
-        data={data}
-        filterType={ChartFilter.MovingWindowAverage}
-      /> */}
+      </div>
     </div>
   );
 };
@@ -171,16 +92,16 @@ const ChartDaddy = () => {
 export default ChartDaddy;
 
 export enum ChartFilter {
-  Raw,
-  MovingWindowAverage,
-  HighPassFilter,
-  LowPassFilter,
-  DiscreteFourierTransform,
-  LowPassAndHighPassFilters,
-  LowPassHighPassAndDiscreteFourierTransform,
+  Raw = "raw",
+  MovingWindowAverage = "mwa",
+  HighPassFilter = "high pass",
+  LowPassFilter = "low pass",
+  DiscreteFourierTransform = "dft",
+  LowPassAndHighPassFilters = "low pass & high pass",
+  LowPassHighPassAndDiscreteFourierTransform = "LP, HP & DFT",
 }
 
-const ToggleChartSection = ({
+const ChartSection = ({
   title,
   options,
   data,
@@ -191,7 +112,7 @@ const ToggleChartSection = ({
   data: any;
   filterType: ChartFilter;
 }) => {
-  const [open, setOpen] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(true);
 
   const getLineChartForType = () => {
     switch (filterType) {
@@ -222,56 +143,96 @@ const ToggleChartSection = ({
     }
   };
 
-  return (
-    <>
-      <div className="flex">
-        <button
-          className={open ? "bg-zinc-600" : ""}
-          style={styles.button}
-          onClick={async () => {
-            setOpen(!open);
-          }}
-        >
-          <h2>{title}</h2>
-        </button>
-      </div>
-      {open ? <>{getLineChartForType()}</> : <></>}
-    </>
-  );
+  return <>{open ? <>{getLineChartForType()}</> : <></>}</>;
 };
 
-const styles = {
-  wrapDaddy: {
-    display: "flex",
-    marginTop: 24,
-    width: "100%",
-    marginBottom: 48,
-    flexDirection: "column",
-  },
-  heading: {
-    marginBottom: 5,
-  },
-  inputContainer: {
-    width: "75%",
-    display: "flex",
-    alignItems: "center",
-    paddingBottom: "10px",
-  },
-  inputField: {
-    marginRight: "10px",
-  },
-  customButton: {
-    paddingTop: "0.3rem",
-    paddingBottom: "0.3rem",
-    paddingHorizontal: "0.6rem",
-    marginRight: 10,
-  },
-  button: {
-    maxWidth: 200,
-    marginLeft: 24,
-  },
-  headingContainer: {
-    display: "flex",
-    alignItems: "center",
-  },
-};
+{
+  /* <div>
+        <h4 style={styles.heading}>Data range selection:</h4>
+      </div>
+      <div style={styles.inputContainer}>
+        <input
+          style={styles.inputField}
+          type="number"
+          id="qty"
+          value={startSplice}
+          onChange={handleStartChange}
+        />
+        <input
+          style={styles.inputField}
+          type="number"
+          id="qty"
+          value={endSplice}
+          onChange={handleEndChange}
+        />
+        <button
+          className="customButton"
+          style={styles.customButton}
+          onClick={handleStepForward}
+        >
+          Step
+        </button>
+      </div> */
+}
+
+{
+  /* <ChartSection
+        title={"Moving Window Average"}
+        options={options}
+        data={data}
+        filterType={ChartFilter.MovingWindowAverage}
+      /> */
+}
+{
+  /* <ChartSection
+        title={"High Pass Filter"}
+        options={options}
+        data={data}
+        filterType={ChartFilter.MovingWindowAverage}
+      /> */
+}
+{
+  /* <ChartSection
+        title={"Low Pass Filter"}
+        options={options}
+        data={data}
+        filterType={ChartFilter.LowPassFilter}
+      /> */
+}
+{
+  /* <ChartSection
+        title={"Discrete Fourier Transform"}
+        options={options}
+        data={data}
+        filterType={ChartFilter.MovingWindowAverage}
+      />
+      <ChartSection
+        title={"LPF + HPF"}
+        options={options}
+        data={data}
+        filterType={ChartFilter.MovingWindowAverage}
+      />
+      <ChartSection
+        title={"LPF + HPF + DFT"}
+        options={options}
+        data={data}
+        filterType={ChartFilter.MovingWindowAverage}
+      /> */
+}
+
+// const handleStartChange = (event: any) => {
+//   const result = event.target.value.replace(/\D/g, "");
+//   setStartSplice(result);
+// };
+
+// const handleEndChange = (event: any) => {
+//   let result = event.target.value.replace(/\D/g, "");
+//   setEndSplice(result);
+// };
+
+// const handleStepForward = () => {
+//   let newStart = (parseInt(startSplice) + parseInt(startSplice)).toString();
+//   let newEnd = (parseInt(endSplice) + parseInt(endSplice)).toString();
+//   setEndSplice(newEnd);
+//   setStartSplice(newStart);
+// };
