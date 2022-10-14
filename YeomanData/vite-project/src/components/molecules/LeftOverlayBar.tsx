@@ -1,8 +1,23 @@
-import React from "react";
-
-const LeftSideElements = ["13th Oct", "STAND BY", "", "", "SYSTEMS ONLINE"];
+import React, { useEffect, useState } from "react";
 
 function LeftOverlayBar() {
+  const date = new Date();
+  const LeftSideElements = [
+    date.toLocaleDateString(),
+    "STAND BY",
+    date.toLocaleTimeString(),
+    "",
+    "SYSTEMS ONLINE",
+  ];
+  const [ticking, setTicking] = useState(true),
+    [count, setCount] = useState(0);
+
+  useEffect(() => {
+    const timer = setTimeout(() => ticking && setCount(count + 1), 1e3);
+    // Cleanup the set timeout method
+    return () => clearTimeout(timer);
+  }, [count, ticking]);
+
   return (
     <div className="absolute h-full w-10 flex flex-col justify-around items-center -left-[28px]">
       {LeftSideElements.map((el, index) => {

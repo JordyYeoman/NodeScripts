@@ -40,8 +40,8 @@ export const options = {
       position: "top" as const,
     },
     title: {
-      display: true,
-      text: "Chart.js Line Chart",
+      display: false,
+      text: "",
     },
   },
 };
@@ -224,15 +224,15 @@ const ToggleChartSection = ({
 
   return (
     <>
-      <div style={styles.headingContainer}>
-        <h4>{title}</h4>
+      <div className="flex">
         <button
+          className={open ? "bg-zinc-600" : ""}
           style={styles.button}
           onClick={async () => {
             setOpen(!open);
           }}
         >
-          IsOpen: {open ? "Open" : "Closed"}
+          <h2>{title}</h2>
         </button>
       </div>
       {open ? <>{getLineChartForType()}</> : <></>}

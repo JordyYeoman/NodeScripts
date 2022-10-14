@@ -59,7 +59,6 @@ function MainDashboard() {
             </div>
           </div>
           <RetrieveDataComponent />
-          <ChartDaddy />
         </>
       ) : (
         <>Login Bra</>
