@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Coordinates from "../atoms/Coordinates";
 import Card from "../molecules/Card";
 import LeftOverlayBar from "../molecules/LeftOverlayBar";
 import SmallCard from "../molecules/SmallCard";
@@ -108,6 +109,9 @@ function PrimeAnalytics() {
       <Card classes={"w-full ml-2 self-start font-dogica-bold"}>
         123.22 1241 2150935.0235
       </Card>
+      <div className="absolute -top-5 -right-2 w-24 h-24">
+        <Coordinates />
+      </div>
     </div>
   );
 }
