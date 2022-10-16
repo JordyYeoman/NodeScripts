@@ -25,6 +25,7 @@ app.use(
 app.set("port", process.env.PORT || 5000);
 // app.use(express.json({ limit: "100mb" }));
 app.use(cookieParser());
+app.use(express.json());
 app.use(express.urlencoded({ limit: "100mb", extended: true }));
 
 // @route   GET /

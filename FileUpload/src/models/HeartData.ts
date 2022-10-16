@@ -16,6 +16,10 @@ const heartDataSchema: Schema = new Schema(
       type: Date,
       default: Date.now,
     },
+    chunkCount: {
+      type: Number,
+      default: 0,
+    },
     chunkTime: {
       type: String,
       default: "",
@@ -23,6 +27,10 @@ const heartDataSchema: Schema = new Schema(
     sizeEstimate: {
       type: Number,
       default: 0,
+    },
+    compressionType: {
+      type: String,
+      default: "UTF16",
     },
   },
   { collection: "heartData" }
