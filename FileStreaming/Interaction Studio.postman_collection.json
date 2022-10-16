@@ -1,0 +1,81 @@
+{
+	"info": {
+		"_postman_id": "8ea4f439-8387-4df5-bff9-cdb97ac1e53d",
+		"name": "Interaction Studio",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "https://interactionstudio.uat.ladbrokes.com.au/api2/authevent/engage",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"action\":\"BTL Promo Request\",\n    \"itemAction\": \"View Item\",\n    \"user\": {\n        \"id\": \"da6bf9d2-1e08-4ba6-af74-decff30f0197\"\n    },\n    \"source\": {\n        \"channel\": \"Server\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://interactionstudio.uat.ladbrokes.com.au/api2/authevent/engage",
+					"protocol": "https",
+					"host": [
+						"interactionstudio",
+						"uat",
+						"ladbrokes",
+						"com",
+						"au"
+					],
+					"path": [
+						"api2",
+						"authevent",
+						"engage"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "quicklinkzzz",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"action\":\"BTL Promo Request\",\n    \"itemAction\": \"View Item\",\n    \"user\": {\n        \"id\": \"da6bf9d2-1e08-4ba6-af74-decff30f0197\"\n    },\n    \"source\": {\n        \"channel\": \"Server\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://interactionstudio.uat.ladbrokes.com.au/api2/authevent/engage",
+					"protocol": "https",
+					"host": [
+						"interactionstudio",
+						"uat",
+						"ladbrokes",
+						"com",
+						"au"
+					],
+					"path": [
+						"api2",
+						"authevent",
+						"engage"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -60,7 +60,7 @@ function Navbar() {
   }, []);
 
   return (
-    <div className="flex relative px-3 py-2 overflow-hidden">
+    <div className="flex relative px-5 py-2 overflow-hidden">
       {user?.isAuthenticated ? (
         <>
           <img
@@ -92,35 +92,40 @@ function Navbar() {
           </form>
         </>
       )}
-      <h1 className="text-2xl font-black small-shadow">
-        <span className="text-zinc-600 transition duration-250 hover:text-zinc-200 cursor-pointer">
-          I
-        </span>
-        <span className="text-zinc-600 transition duration-250 hover:text-zinc-200 cursor-pointer">
-          R
-        </span>
-        <span className="text-zinc-600 transition duration-250 hover:text-zinc-200 cursor-pointer">
-          O
-        </span>
-        <span className="text-zinc-600 transition duration-250 hover:text-zinc-200 cursor-pointer">
-          N
-        </span>{" "}
-        <span className="text-zinc-600 transition duration-250 hover:text-zinc-200 cursor-pointer">
-          H
-        </span>
-        <span className="text-zinc-600 transition duration-250 hover:text-zinc-200 cursor-pointer">
-          E
-        </span>
-        <span className="text-zinc-600 transition duration-250 hover:text-zinc-200 cursor-pointer">
-          A
-        </span>
-        <span className="text-zinc-600 transition duration-250 hover:text-zinc-200 cursor-pointer">
-          R
-        </span>
-        <span className="text-zinc-600 transition duration-250 hover:text-zinc-200 cursor-pointer">
-          T
-        </span>
-      </h1>
+      <div className="flex flex-col">
+        <h1 className="text-2xl font-black small-shadow">
+          <span className="text-zinc-600 transition duration-250 hover:text-zinc-200 cursor-pointer">
+            I
+          </span>
+          <span className="text-zinc-600 transition duration-250 hover:text-zinc-200 cursor-pointer">
+            R
+          </span>
+          <span className="text-zinc-600 transition duration-250 hover:text-zinc-200 cursor-pointer">
+            O
+          </span>
+          <span className="text-zinc-600 transition duration-250 hover:text-zinc-200 cursor-pointer">
+            N
+          </span>{" "}
+          <span className="text-zinc-600 transition duration-250 hover:text-zinc-200 cursor-pointer">
+            H
+          </span>
+          <span className="text-zinc-600 transition duration-250 hover:text-zinc-200 cursor-pointer">
+            E
+          </span>
+          <span className="text-zinc-600 transition duration-250 hover:text-zinc-200 cursor-pointer">
+            A
+          </span>
+          <span className="text-zinc-600 transition duration-250 hover:text-zinc-200 cursor-pointer">
+            R
+          </span>
+          <span className="text-zinc-600 transition duration-250 hover:text-zinc-200 cursor-pointer">
+            T
+          </span>
+        </h1>
+        <h4 className="uppercase font-black font-dogica-pixel-bold h-[6px] -mt-[12px] text-[6px] m-0 p-0 tracking-[2.65px]">
+          Biological Defense
+        </h4>
+      </div>
     </div>
   );
 }

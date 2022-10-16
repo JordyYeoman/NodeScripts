@@ -3,7 +3,7 @@ export const options = {
   maintainAspectRatio: false,
   elements: {
     point: {
-      radius: 0.95,
+      radius: 0.025,
     },
     line: {
       borderWidth: 0.9,

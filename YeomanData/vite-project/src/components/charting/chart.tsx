@@ -68,7 +68,7 @@ const ChartDaddy = () => {
       <div className="w-full h-6 text-sm font-bold uppercase flex items-center">
         Analytics
       </div>
-      <div className="flex flex-row py-2 w-full">
+      <div className="flex flex-row py-2 w-full flex-wrap">
         {Object.keys(ChartFilter).map((filter) => {
           return (
             <SmallCard key={filter} classes={"mr-1 w-min"}>

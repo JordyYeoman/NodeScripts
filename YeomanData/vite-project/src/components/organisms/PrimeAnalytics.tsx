@@ -33,14 +33,12 @@ function PrimeAnalytics() {
     }));
   };
 
-  console.log("Time Filter: ", timeFilter.year);
-
   return (
-    <div className="flex w-full relative">
+    <div className="flex w-full relative flex-col xl:flex-row mb-16">
       <LeftOverlayBar />
       <Card
         classes={
-          "w-1/4 md:min-h-[900px] self-start flex flex-col items-start justify-start"
+          "w-full xl:min-h-[900px] self-start flex flex-col items-start justify-start"
         }
       >
         <div className="w-full h-6 text-sm font-bold uppercase flex items-center">
@@ -77,11 +75,18 @@ function PrimeAnalytics() {
           <div></div>
         </div>
       </Card>
-      <Card classes={"w-full md:min-h-[900px] md:h-[900px] ml-2 self-start"}>
+      <Card
+        classes={
+          "h-[700px] max-w-full xl:h-[900px] mt-2 xl:ml-2 self-start overflow-hidden"
+        }
+      >
         <ChartDaddy />
       </Card>
       <div className="absolute -top-5 -right-2 w-24 h-24">
         <Coordinates />
+      </div>
+      <div>
+        <DataSources />
       </div>
     </div>
   );

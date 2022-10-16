@@ -8,7 +8,7 @@ var fs = require("fs");
 export const chunkFileAndUpload = (file: Express.Multer.File, date: string) => {
   var data: string = "";
   var readStream = fs.createReadStream(file.path, {
-    highWaterMark: 25 * 1024, // Gives around 5k data points per array
+    highWaterMark: 5 * 1024, // Gives around 5k data points per array
     encoding: "utf8",
   });
 
@@ -28,19 +28,21 @@ export const chunkFileAndUpload = (file: Express.Multer.File, date: string) => {
       let newChunk = new HeartData({
         data: data,
         date: date,
-        chunkTime: new Date().getTime() / 10000000,
+        chunkTime: new Date().getTime() / 100000,
         sizeEstimate: sizeEstimate,
       });
 
       await newChunk
         .save()
         .then((item: any) => {
-          console.log(item, ": item saved to database");
+          console.log(item?.chunkTime, ": item saved to database");
+          // console.log(item, ": item saved to database");
         })
         .catch((err: Error) => {
           console.log(err, ": Unable to save to database");
         });
-
+      // Add sleep to correctly space out data chunks when uploading
+      sleep(10);
       // reset data
       data = "";
     })
