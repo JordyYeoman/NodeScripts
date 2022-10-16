@@ -30,12 +30,12 @@ function Navbar() {
 
     fetch("http://localhost:5000/api/auth/", {
       ...requestOptions,
+      // @ts-ignore: Unreachable code error
       withCredentials: true,
       credentials: "include",
     })
       .then((response) => response.json())
       .then((result) => {
-        console.log("Setting value: ");
         setUser({
           ...user,
           isAuthenticated: true,

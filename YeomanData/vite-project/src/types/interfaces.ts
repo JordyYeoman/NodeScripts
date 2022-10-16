@@ -1,5 +1,6 @@
 export interface TimeFilter {
   year: string;
   month: string;
-  day: string;
+  day?: string;
+  date: string;
 }

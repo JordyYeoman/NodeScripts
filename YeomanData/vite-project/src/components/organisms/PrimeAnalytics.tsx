@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { TimeFilter } from "src/types/interfaces";
+import { generateDataFilterString } from "../../utils/dataUtils";
 import { getApiHeaders, getUploadHeaders } from "../../utils/auth";
 import Coordinates from "../atoms/Coordinates";
+import DateFilter from "../atoms/DateFilter";
 import DayFilter from "../atoms/DayFilter";
 import FilterButton from "../atoms/FilterButton";
 import MonthFilter from "../atoms/MonthFilter";
@@ -14,7 +16,7 @@ function PrimeAnalytics() {
   const [timeFilter, setTimeFilter] = useState<TimeFilter>({
     year: "",
     month: "",
-    day: "",
+    date: "",
   });
 
   const handleClick = (e: any) => {
@@ -32,6 +34,38 @@ function PrimeAnalytics() {
       [filterCat]: "",
     }));
   };
+
+  if (timeFilter?.year && timeFilter?.month && timeFilter?.date) {
+    // Dispatch data request action
+    let dateRange = generateDataFilterString(
+      timeFilter?.year,
+      timeFilter?.month,
+      timeFilter?.date
+    );
+    let chunkRange = {
+      chunkRangeLower: 0,
+      chunkRangeUpper: 2,
+    };
+    const filterData = new FormData();
+
+    filterData.append("dateRangeUpper", dateRange.dateRangeUpper);
+    filterData.append("dateRangeLower", dateRange.dateRangeLower);
+    filterData.append("chunkRangeLower", chunkRange.chunkRangeLower.toString());
+    filterData.append("chunkRangeUpper", chunkRange.chunkRangeUpper.toString());
+
+    fetch("http://localhost:5000/api/fileUpload/data", {
+      method: "POST",
+      body: filterData,
+      headers: getApiHeaders(),
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        console.log("Success:", result);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }
 
   return (
     <div className="flex w-full relative flex-col xl:flex-row mb-16">
@@ -54,8 +88,8 @@ function PrimeAnalytics() {
             action={handleResetVal}
           />
           <FilterButton
-            text={timeFilter.day}
-            category={"day"}
+            text={timeFilter.date}
+            category={"date"}
             action={handleResetVal}
           />
         </div>
@@ -66,8 +100,8 @@ function PrimeAnalytics() {
           {timeFilter.month ? null : (
             <MonthFilter timeFilter={timeFilter} action={handleClick} />
           )}
-          {timeFilter.day ? null : (
-            <DayFilter timeFilter={timeFilter} action={handleClick} />
+          {timeFilter.date ? null : (
+            <DateFilter timeFilter={timeFilter} action={handleClick} />
           )}
         </div>
         <div className="w-full pt-2 h-6 text-sm font-bold uppercase flex items-center">

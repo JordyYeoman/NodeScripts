@@ -18,6 +18,31 @@ export const generateData = (dataSetSize?: number) => {
   return dummyData;
 };
 
+function capitalizeFirstLetter(str: string) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+export const generateDataFilterString = (
+  year: string,
+  month: string,
+  date: string
+) => {
+  // TODO - Add time filter here
+  let time = "00:00";
+  // UTC is Coordinated Universal Time, oooohhhhh :P
+  // 1. Get date from day/month/year - 17 October 2022 00:00 UTC
+  let dates = {
+    dateRangeUpper: `${parseInt(date) + 1} ${capitalizeFirstLetter(
+      month
+    )} ${year} ${time} UTC`,
+    dateRangeLower: `${date} ${capitalizeFirstLetter(
+      month
+    )} ${year} ${time} UTC`,
+  };
+  console.log("DATES: ", dates);
+  return dates;
+};
+
 // Return text file data as array
 export const getTxtFileDataAsArray = async (
   startDataPoint?: number,
