@@ -11,11 +11,12 @@ import DateFilter from "../atoms/DateFilter";
 import FilterButton from "../atoms/FilterButton";
 import MonthFilter from "../atoms/MonthFilter";
 import YearFilter from "../atoms/YearFilter";
-import ChartDaddy from "../charting/chart";
+import ChartDaddy, { ChartFilter } from "../charting/chart";
 import Card from "../molecules/Card";
 import LeftOverlayBar from "../molecules/LeftOverlayBar";
 import { useAppContext } from "../../AppWrapper";
 import { getLatestData } from "../../utils/networkUtils";
+import SmallCard from "../molecules/SmallCard";
 
 function PrimeAnalytics() {
   const { ironHeartData, setIronHeartData } = useAppContext();
@@ -34,12 +35,6 @@ function PrimeAnalytics() {
       ...currentValues,
       [filterCat]: filterName,
     }));
-    if (timeFilter?.year && timeFilter?.month && timeFilter?.date) {
-      console.log("we in this bitch");
-      setDateFilterActive(true);
-    } else {
-      setDateFilterActive(false);
-    }
   };
 
   const handleResetVal = (filterCat: string) => {
@@ -49,47 +44,34 @@ function PrimeAnalytics() {
     }));
   };
 
-  // if (dateFilterActive) {
-  //   let dateRange = generateDataFilterString(
-  //     timeFilter?.year,
-  //     timeFilter?.month,
-  //     timeFilter?.date
-  //   );
-  //   let chunkRange = {
-  //     chunkRangeLower: "0",
-  //     chunkRangeUpper: "2",
-  //   };
-  //   const filterData = new FormData();
-
-  //   filterData.append("dateRangeUpper", dateRange.dateRangeUpper);
-  //   filterData.append("dateRangeLower", dateRange.dateRangeLower);
-  //   filterData.append("chunkRangeLower", chunkRange.chunkRangeLower);
-  //   filterData.append("chunkRangeUpper", chunkRange.chunkRangeUpper);
-  //   console.log("WHATS GOING ON??");
-  //   fetch("http://localhost:5000/api/fileUpload/data", {
-  //     method: "POST",
-  //     body: filterData,
-  //     headers: getApiFormHeaders(),
-  //   })
-  //     .then((response) => response.json())
-  //     .then((result) => {
-  //       console.log("Success:", result);
-  //       // setIronHeartData(result);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error:", error);
-  //     });
-  // }
-
   useEffect(() => {
+    // If data is empty on the initial load
+    // make a request for the latest 5 data sets
     if (ironHeartData === 0 || ironHeartData === undefined) {
       // TODO: cache response to prevent refetching
       getLatestData(
         "http://localhost:5000/api/fileUpload/latest",
         setIronHeartData
       );
+    } else {
+      // If we do have the latest data
+      // check the latest filters set and fetch based on those queries
+      if (timeFilter?.year && timeFilter?.month && timeFilter?.date) {
+        let chunkRange = {
+          chunkRangeLower: "0",
+          chunkRangeUpper: "100",
+        };
+        // Make request
+        const fetchData = async () => {
+          const data = await getShit(timeFilter, chunkRange);
+          setIronHeartData(data?.data);
+        };
+        fetchData()
+          // make sure to catch any error
+          .catch(console.error);
+      }
     }
-  }, []);
+  }, [timeFilter.year, timeFilter.month, timeFilter.date]);
 
   const ToggleDataSet = (index: number) => {
     const _index = activeDataPoints.indexOf(index);
@@ -110,7 +92,7 @@ function PrimeAnalytics() {
           "w-full xl:min-h-[900px] self-start flex flex-col items-start justify-start"
         }
       >
-        <div className="w-full h-6 text-sm font-bold uppercase flex items-center">
+        <div className="w-1/2 h-6 text-sm font-bold uppercase flex items-center">
           Filters
           <FilterButton
             text={timeFilter.year}
@@ -129,15 +111,20 @@ function PrimeAnalytics() {
           />
         </div>
         <div className="flex flex-wrap h-full w-full">
-          {timeFilter.year ? null : (
-            <YearFilter timeFilter={timeFilter} action={handleClick} />
-          )}
-          {timeFilter.month ? null : (
-            <MonthFilter timeFilter={timeFilter} action={handleClick} />
-          )}
-          {timeFilter.date ? null : (
-            <DateFilter timeFilter={timeFilter} action={handleClick} />
-          )}
+          <div className="w-2/3">
+            {timeFilter.year ? null : (
+              <YearFilter timeFilter={timeFilter} action={handleClick} />
+            )}
+            {timeFilter.month ? null : (
+              <MonthFilter timeFilter={timeFilter} action={handleClick} />
+            )}
+            {timeFilter.date ? null : (
+              <DateFilter timeFilter={timeFilter} action={handleClick} />
+            )}
+          </div>
+          <div className="w-1/3">
+            <RightFilterPanel />
+          </div>
         </div>
         <div className="w-full pt-2 text-sm font-bold uppercase flex items-start flex-col">
           Sources
@@ -268,6 +255,83 @@ const RetrieveDataComponent = () => {
       <div>Get Data From Mongo</div>
       <div>
         <button onClick={getChartDataTest}>Get Chart Data from DB</button>
+      </div>
+    </div>
+  );
+};
+
+const getShit = async (timeFilter: any, chunkRange: any) => {
+  let dateRange = generateDataFilterString(
+    timeFilter?.year,
+    timeFilter?.month,
+    timeFilter?.date
+  );
+  const filterData = new FormData();
+  let { chunkRangeLower, chunkRangeUpper } = chunkRange;
+  // Implement a limit for data chunks to prevent app slowing too much when charting > 10 line charts
+  if (parseInt(chunkRangeUpper) - parseInt(chunkRangeLower) > 10) {
+    chunkRangeUpper = (parseInt(chunkRangeLower) + 9).toString();
+  }
+  filterData.append("dateRangeUpper", dateRange.dateRangeUpper);
+  filterData.append("dateRangeLower", dateRange.dateRangeLower);
+  filterData.append("chunkRangeLower", chunkRangeLower);
+  filterData.append("chunkRangeUpper", chunkRangeUpper);
+  try {
+    const response = await fetch("http://localhost:5000/api/fileUpload/data", {
+      method: "POST",
+      body: filterData,
+      headers: getApiFormHeaders(),
+    });
+    const result_2 = await response.json();
+    return result_2;
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
+
+const RightFilterPanel = () => {
+  return (
+    <div className="flex flex-col">
+      <div className="w-full h-6 text-sm font-bold uppercase flex items-center">
+        Analytics
+      </div>
+      <div className="flex flex-row py-2 w-full flex-wrap">
+        {Object.keys(ChartFilter).map((filter) => {
+          return (
+            <SmallCard key={filter} classes={"mr-1 w-min mb-1"}>
+              {filter}
+            </SmallCard>
+          );
+        })}
+      </div>
+      <div>
+        <div className="w-full h-6 text-sm font-bold uppercase flex items-center">
+          Chunk Input
+        </div>
+        <div className="flex flex-row py-2 w-full">
+          <div className="flex flex-col mr-1">
+            <label htmlFor="chunkLower">Lower Limit</label>
+            <input
+              className="w-full bg-zinc-800"
+              autoComplete="on"
+              type="number"
+              name="chunkLower"
+              placeholder={"0"}
+              onChange={(e) => console.log("val: ", e.target.value)}
+            />
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="chunkUpper">Upper Limit</label>
+            <input
+              className="w-full bg-zinc-800"
+              autoComplete="on"
+              type="number"
+              name="chunkUpper"
+              placeholder={"10"}
+              onChange={(e) => console.log("val: ", e.target.value)}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

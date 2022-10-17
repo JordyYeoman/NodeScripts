@@ -94,6 +94,8 @@ function Navbar() {
             <div style={styles.loginText}>Login</div>
             <div style={styles.inputContainer}>
               <input
+                autoComplete="on"
+                type="email"
                 placeholder="Email"
                 {...register("email", {
                   required: "Email Address is required",
@@ -104,6 +106,7 @@ function Navbar() {
               <input
                 placeholder="Password"
                 type="password"
+                autoComplete="on"
                 {...register("password", { pattern: /^[a-zA-Z0-9_.-]*$/i })}
               />
               <input type="submit" />

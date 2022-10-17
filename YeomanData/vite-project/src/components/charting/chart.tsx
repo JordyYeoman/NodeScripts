@@ -70,18 +70,6 @@ const ChartDaddy = ({ selectedData }: { selectedData?: number[] }) => {
 
   return (
     <div className="flex flex-col h-full w-full">
-      <div className="w-full h-6 text-sm font-bold uppercase flex items-center">
-        Analytics
-      </div>
-      <div className="flex flex-row py-2 w-full flex-wrap">
-        {Object.keys(ChartFilter).map((filter) => {
-          return (
-            <SmallCard key={filter} classes={"mr-1 w-min mb-1"}>
-              {filter}
-            </SmallCard>
-          );
-        })}
-      </div>
       <div className="flex relative h-full w-full">
         <ChartSection
           title={"Raw"}
