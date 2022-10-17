@@ -31,11 +31,12 @@ export const getUploadHeaders = () => {
 };
 
 export const refreshTimedOut = (date: number) => {
+  if (!date) return false;
   let now = Date.now();
   let refresh = AppStateOptions.authTimeout;
   if (now - date > refresh) {
+    console.log("Time to refresh bra");
     return true;
   }
-  console.log("Time to refresh bra");
   return false;
 };

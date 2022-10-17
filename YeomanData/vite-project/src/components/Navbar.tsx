@@ -53,20 +53,22 @@ function Navbar() {
 
   useEffect(() => {
     // Check localStorage for cookie
-    if (refreshTimedOut(user?.authenticationTime)) {
-      if (localStorage.getItem("IronHeart.alpha.V0.003")) {
-        setUser({
-          ...user,
-          isAuthenticated: true,
-        });
-      }
-    } else {
+    if (!user.authenticationTime && refreshTimedOut(user?.authenticationTime)) {
+      console.log("user?.authenticationTime", user?.authenticationTime);
       setUser({
         isAuthenticated: false,
         authenticationTime: null,
       });
       // Clear localstorage token
       localStorage.removeItem("IronHeart.alpha.V0.003");
+      return;
+    } else {
+      if (localStorage.getItem("IronHeart.alpha.V0.003")) {
+        setUser({
+          ...user,
+          isAuthenticated: true,
+        });
+      }
     }
   }, []);
 

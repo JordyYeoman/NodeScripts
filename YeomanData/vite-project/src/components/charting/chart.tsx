@@ -26,7 +26,7 @@ ChartJS.register(
   Legend
 );
 
-const ChartDaddy = () => {
+const ChartDaddy = ({ selectedData }: { selectedData?: number[] }) => {
   const [startSplice, setStartSplice] = useState<string>("0");
   const [endSplice, setEndSplice] = useState<string>("500");
   const [labels, setLabels] = useState<number[]>([0]);
@@ -36,6 +36,12 @@ const ChartDaddy = () => {
     setLabels(generateLabels(parseInt(endSplice) - parseInt(startSplice)));
     setIronHeartData(data);
   };
+
+  const dataSets = selectedData?.map((dataIndex) => {
+    console.log("dataINdex: ", dataIndex);
+    // ironHeartData.filter(())
+  });
+  console.log(dataSets, selectedData);
 
   const data = {
     labels,
@@ -71,7 +77,7 @@ const ChartDaddy = () => {
       <div className="flex flex-row py-2 w-full flex-wrap">
         {Object.keys(ChartFilter).map((filter) => {
           return (
-            <SmallCard key={filter} classes={"mr-1 w-min"}>
+            <SmallCard key={filter} classes={"mr-1 w-min mb-1"}>
               {filter}
             </SmallCard>
           );

@@ -24,6 +24,7 @@ function PrimeAnalytics() {
     month: "",
     date: "",
   });
+  const [activeDataPoints, setActiveDataPoints] = useState<number[]>([]); // Represents index value of chunk count for current payload from server
 
   const handleClick = (e: any) => {
     const filterCat = e.target.getAttribute("data-attr");
@@ -41,7 +42,13 @@ function PrimeAnalytics() {
     }));
   };
 
-  if (timeFilter?.year && timeFilter?.month && timeFilter?.date) {
+  if (
+    (timeFilter?.year &&
+      timeFilter?.month &&
+      timeFilter?.date &&
+      ironHeartData === 0) ||
+    ironHeartData === undefined
+  ) {
     let dateRange = generateDataFilterString(
       timeFilter?.year,
       timeFilter?.month,
@@ -83,6 +90,17 @@ function PrimeAnalytics() {
     }
   }, []);
 
+  const ToggleDataSet = (index: number) => {
+    const _index = activeDataPoints.indexOf(index);
+    if (_index >= 0) {
+      setActiveDataPoints(
+        activeDataPoints.filter((dataPoint) => dataPoint !== index)
+      );
+      return;
+    }
+    setActiveDataPoints((prevState) => [...prevState, index]);
+  };
+
   return (
     <div className="flex w-full relative flex-col xl:flex-row mb-16">
       <LeftOverlayBar />
@@ -123,21 +141,41 @@ function PrimeAnalytics() {
         <div className="w-full pt-2 text-sm font-bold uppercase flex items-start flex-col">
           Sources
           <div className="flex flex-wrap items-center">
-            {ironHeartData &&
-              ironHeartData.map((data: any) => {
-                return (
-                  <div
-                    key={data?.chunkTime}
-                    className="mt-1 bg-zinc-800 text-[8px] transition duration-300 hover:bg-zinc-600 px-2 py-2 rounded mr-1"
-                  >
-                    <div className="flex">
-                      <div className="pr-4">Chunk: {data?.chunkCount}</div>
-                      <div>{data?.compressionType}</div>
+            {ironHeartData.length > 0 &&
+              ironHeartData
+                .sort((a: any, b: any) => a.chunkCount - b.chunkCount)
+                .map((data: any, index: number) => {
+                  return (
+                    <div
+                      key={index}
+                      className={`${
+                        activeDataPoints.includes(index)
+                          ? "border-cyan-400"
+                          : "border-transparent"
+                      } border border-solid mt-1 bg-zinc-800 text-[8px] transition duration-300 hover:bg-zinc-600 px-2 py-2 rounded mr-1 cursor-pointer`}
+                      onClick={() => {
+                        ToggleDataSet(index);
+                      }}
+                    >
+                      <div className="flex">
+                        <div className="pr-4">
+                          Entry: {data?.chunkCount + 1}
+                        </div>
+                        <div className="font-black text-sky-500">
+                          {data?.compressionType}
+                        </div>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <div className="">
+                          {data?.sizeEstimate.toFixed(2)}MB
+                        </div>
+                        <div className="bg-zinc-400 py-px px-1 rounded text-[6px] h-[10px] leading-[8px]">
+                          Active
+                        </div>
+                      </div>
                     </div>
-                    <div>{data?.sizeEstimate.toFixed(2)}MB</div>
-                  </div>
-                );
-              })}
+                  );
+                })}
           </div>
         </div>
       </Card>
@@ -146,7 +184,7 @@ function PrimeAnalytics() {
           "h-[700px] max-w-full xl:h-[900px] mt-2 xl:ml-2 self-start overflow-hidden"
         }
       >
-        <ChartDaddy />
+        <ChartDaddy selectedData={activeDataPoints} />
       </Card>
       <div className="absolute -top-5 -right-2 w-24 h-24">
         <Coordinates />
@@ -170,7 +208,6 @@ const DataSources = () => {
     if (!fileToUpload) return;
 
     formData.append("UPLOADED_FILE", fileToUpload);
-    console.log("File to upload: ", fileToUpload);
 
     fetch("http://localhost:5000/api/fileUpload/", {
       method: "POST",
