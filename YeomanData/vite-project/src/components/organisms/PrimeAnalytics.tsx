@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { TimeFilter } from "src/types/interfaces";
 import { generateDataFilterString } from "../../utils/dataUtils";
-import { getApiHeaders, getUploadHeaders } from "../../utils/auth";
+import {
+  getApiFormHeaders,
+  getApiHeaders,
+  getUploadHeaders,
+} from "../../utils/auth";
 import Coordinates from "../atoms/Coordinates";
 import DateFilter from "../atoms/DateFilter";
 import DayFilter from "../atoms/DayFilter";
@@ -43,20 +47,20 @@ function PrimeAnalytics() {
       timeFilter?.date
     );
     let chunkRange = {
-      chunkRangeLower: 0,
-      chunkRangeUpper: 2,
+      chunkRangeLower: "0",
+      chunkRangeUpper: "2",
     };
     const filterData = new FormData();
 
     filterData.append("dateRangeUpper", dateRange.dateRangeUpper);
     filterData.append("dateRangeLower", dateRange.dateRangeLower);
-    filterData.append("chunkRangeLower", chunkRange.chunkRangeLower.toString());
-    filterData.append("chunkRangeUpper", chunkRange.chunkRangeUpper.toString());
+    filterData.append("chunkRangeLower", chunkRange.chunkRangeLower);
+    filterData.append("chunkRangeUpper", chunkRange.chunkRangeUpper);
 
     fetch("http://localhost:5000/api/fileUpload/data", {
       method: "POST",
       body: filterData,
-      headers: getApiHeaders(),
+      headers: getApiFormHeaders(),
     })
       .then((response) => response.json())
       .then((result) => {

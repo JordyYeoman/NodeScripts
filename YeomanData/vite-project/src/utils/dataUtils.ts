@@ -31,7 +31,7 @@ export const generateDataFilterString = (
   let time = "00:00";
   // UTC is Coordinated Universal Time, oooohhhhh :P
   // 1. Get date from day/month/year - 17 October 2022 00:00 UTC
-  let dates = {
+  return {
     dateRangeUpper: `${parseInt(date) + 1} ${capitalizeFirstLetter(
       month
     )} ${year} ${time} UTC`,
@@ -39,8 +39,6 @@ export const generateDataFilterString = (
       month
     )} ${year} ${time} UTC`,
   };
-  console.log("DATES: ", dates);
-  return dates;
 };
 
 // Return text file data as array

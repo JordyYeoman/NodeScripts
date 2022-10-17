@@ -1,8 +1,9 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useAppContext } from "../AppWrapper";
-import { getApiHeaders } from "../utils/auth";
+import { getApiHeaders, refreshTimedOut } from "../utils/auth";
 import ironHeartIcon from "../assets/ironmanicon.png";
 import { useEffect } from "react";
+import { AppStateOptions } from "../config/appStateOptions";
 
 interface IFormInputs {
   email: string;
@@ -39,6 +40,7 @@ function Navbar() {
         setUser({
           ...user,
           isAuthenticated: true,
+          authenticationTime: Date.now(),
         });
         localStorage.setItem("IronHeart.alpha.V0.003", result?.jwtToken);
         // Clear form
@@ -51,11 +53,20 @@ function Navbar() {
 
   useEffect(() => {
     // Check localStorage for cookie
-    if (localStorage.getItem("IronHeart.alpha.V0.003")) {
+    if (refreshTimedOut(user?.authenticationTime)) {
+      if (localStorage.getItem("IronHeart.alpha.V0.003")) {
+        setUser({
+          ...user,
+          isAuthenticated: true,
+        });
+      }
+    } else {
       setUser({
-        ...user,
-        isAuthenticated: true,
+        isAuthenticated: false,
+        authenticationTime: null,
       });
+      // Clear localstorage token
+      localStorage.removeItem("IronHeart.alpha.V0.003");
     }
   }, []);
 
