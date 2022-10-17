@@ -128,10 +128,13 @@ function PrimeAnalytics() {
                 return (
                   <div
                     key={data?.chunkTime}
-                    className="mt-1 bg-zinc-800 text-[8px] transition duration-300 hover:bg-zinc-600 px-1 py-2 rounded mr-1"
+                    className="mt-1 bg-zinc-800 text-[8px] transition duration-300 hover:bg-zinc-600 px-2 py-2 rounded mr-1"
                   >
-                    <div>Chunk: {data?.chunkCount}</div>
-                    <div>Compression: {data?.compressionType}</div>
+                    <div className="flex">
+                      <div className="pr-4">Chunk: {data?.chunkCount}</div>
+                      <div>{data?.compressionType}</div>
+                    </div>
+                    <div>{data?.sizeEstimate.toFixed(2)}MB</div>
                   </div>
                 );
               })}
