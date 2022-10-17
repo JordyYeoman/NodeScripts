@@ -14,8 +14,6 @@ export const getApiHeaders = () => {
 
 export const getApiFormHeaders = () => {
   var myHeaders = new Headers();
-  // myHeaders.append("Access-Control-Allow-Credentials", "true");
-  // myHeaders.append("Access-Control-Allow-Origin", "true");
   myHeaders.append(
     "x-auth-token",
     localStorage.getItem("IronHeart.alpha.V0.003") ?? ""

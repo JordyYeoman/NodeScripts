@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TimeFilter } from "src/types/interfaces";
 import { generateDataFilterString } from "../../utils/dataUtils";
 import {
@@ -8,15 +8,17 @@ import {
 } from "../../utils/auth";
 import Coordinates from "../atoms/Coordinates";
 import DateFilter from "../atoms/DateFilter";
-import DayFilter from "../atoms/DayFilter";
 import FilterButton from "../atoms/FilterButton";
 import MonthFilter from "../atoms/MonthFilter";
 import YearFilter from "../atoms/YearFilter";
 import ChartDaddy from "../charting/chart";
 import Card from "../molecules/Card";
 import LeftOverlayBar from "../molecules/LeftOverlayBar";
+import { useAppContext } from "../../AppWrapper";
+import { getLatestData } from "../../utils/networkUtils";
 
 function PrimeAnalytics() {
+  const { ironHeartData, setIronHeartData } = useAppContext();
   const [timeFilter, setTimeFilter] = useState<TimeFilter>({
     year: "",
     month: "",
@@ -40,7 +42,6 @@ function PrimeAnalytics() {
   };
 
   if (timeFilter?.year && timeFilter?.month && timeFilter?.date) {
-    // Dispatch data request action
     let dateRange = generateDataFilterString(
       timeFilter?.year,
       timeFilter?.month,
@@ -70,6 +71,17 @@ function PrimeAnalytics() {
         console.error("Error:", error);
       });
   }
+
+  useEffect(() => {
+    if (ironHeartData === 0 || ironHeartData === undefined) {
+      console.log("Bra no data");
+      // TODO: cache response to prevent refetching
+      getLatestData(
+        "http://localhost:5000/api/fileUpload/latest",
+        setIronHeartData
+      );
+    }
+  }, []);
 
   return (
     <div className="flex w-full relative flex-col xl:flex-row mb-16">
@@ -108,9 +120,22 @@ function PrimeAnalytics() {
             <DateFilter timeFilter={timeFilter} action={handleClick} />
           )}
         </div>
-        <div className="w-full pt-2 h-6 text-sm font-bold uppercase flex items-center">
+        <div className="w-full pt-2 text-sm font-bold uppercase flex items-start flex-col">
           Sources
-          <div></div>
+          <div className="flex flex-wrap items-center">
+            {ironHeartData &&
+              ironHeartData.map((data: any) => {
+                return (
+                  <div
+                    key={data?.chunkTime}
+                    className="mt-1 bg-zinc-800 text-[8px] transition duration-300 hover:bg-zinc-600 px-1 py-2 rounded mr-1"
+                  >
+                    <div>Chunk: {data?.chunkCount}</div>
+                    <div>Compression: {data?.compressionType}</div>
+                  </div>
+                );
+              })}
+          </div>
         </div>
       </Card>
       <Card

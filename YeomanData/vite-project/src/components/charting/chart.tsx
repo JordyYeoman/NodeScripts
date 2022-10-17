@@ -58,7 +58,7 @@ const ChartDaddy = () => {
   useEffect(() => {
     getTxtFileDataAsArray(parseInt(startSplice, parseInt(endSplice))).then(
       (data) => {
-        handleNewData(data.map((dataPoint) => parseFloat(dataPoint)));
+        // handleNewData(data.map((dataPoint) => parseFloat(dataPoint)));
       }
     );
   }, [endSplice]);

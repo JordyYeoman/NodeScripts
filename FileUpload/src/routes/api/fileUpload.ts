@@ -74,16 +74,20 @@ router.get("/allData", auth, async (req: Request, res: Response) => {
   }
 });
 
-router.get("/latest", auth, async (req: Request, res: Response) => {
-  try {
-    let data = await HeartData.find().sort({ $natural: 1 }).limit(5);
-    if (data) res.json(data);
-    throw new Error();
-  } catch (err) {
-    console.error(err.message);
-    res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).send("Server Error");
+router.get(
+  "/latest",
+  [auth, upload.none()],
+  async (req: Request, res: Response) => {
+    try {
+      let data = await HeartData.find().sort({ $natural: 1 }).limit(5);
+      if (data) return res.json(data);
+      throw new Error();
+    } catch (err) {
+      console.error(err.message);
+      res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).send("Server Error");
+    }
   }
-});
+);
 
 router.post(
   "/data",
