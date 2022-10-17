@@ -47,11 +47,11 @@ export const getTxtFileDataAsArray = async (
   endDataPoint?: number,
   inputDataSrc?: string
 ) => {
-  console.log("-------------------------------------");
-  console.log("-------------------------------------");
-  console.log("--------| Parsing DataSet |----------");
-  console.log("-------------------------------------");
-  console.log("-------------------------------------");
+  // console.log("-------------------------------------");
+  // console.log("-------------------------------------");
+  // console.log("--------| Parsing DataSet |----------");
+  // console.log("-------------------------------------");
+  // console.log("-------------------------------------");
   let dataBoi = await fetch(dataSet);
   let textOfDataBoi = await dataBoi.text();
   let newDataSet: Array<any> = textOfDataBoi

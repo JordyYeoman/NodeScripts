@@ -8,7 +8,7 @@ export const getLatestData = (endpoint: string, action: Function): void => {
   })
     .then((response) => response.json())
     .then((result) => {
-      console.log("Success:", result);
+      // console.log("Success:", result);
       action(result);
     })
     .catch((error) => {

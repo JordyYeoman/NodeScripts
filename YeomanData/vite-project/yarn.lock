@@ -379,6 +379,11 @@
   "resolved" "https://registry.npmjs.org/arg/-/arg-5.0.2.tgz"
   "version" "5.0.2"
 
+"async-lz-string@^1.0.3":
+  "integrity" "sha512-0LoDdGn6OZaBS1EFcSRFe0ZAfDy+kqg64cCdHf91sVQTh34UJcPBvHnA6EYCH365DMwzDn9nz1pkupWXaEZxfA=="
+  "resolved" "https://registry.npmjs.org/async-lz-string/-/async-lz-string-1.0.3.tgz"
+  "version" "1.0.3"
+
 "autoprefixer@^10.4.12":
   "integrity" "sha512-WrCGV9/b97Pa+jtwf5UGaRjgQIg7OK3D06GnoYoZNcG1Xb8Gt3EfuKjlhh9i/VtT16g6PYjZ69jdJ2g8FxSC4Q=="
   "resolved" "https://registry.npmjs.org/autoprefixer/-/autoprefixer-10.4.12.tgz"

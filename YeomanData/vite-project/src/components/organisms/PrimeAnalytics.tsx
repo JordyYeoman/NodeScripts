@@ -24,7 +24,8 @@ function PrimeAnalytics() {
     month: "",
     date: "",
   });
-  const [activeDataPoints, setActiveDataPoints] = useState<number[]>([]); // Represents index value of chunk count for current payload from server
+  const [activeDataPoints, setActiveDataPoints] = useState<number[]>([0]); // Represents index value of chunk count for current payload from server
+  const [dateFilterActive, setDateFilterActive] = useState<boolean>(false);
 
   const handleClick = (e: any) => {
     const filterCat = e.target.getAttribute("data-attr");
@@ -33,6 +34,12 @@ function PrimeAnalytics() {
       ...currentValues,
       [filterCat]: filterName,
     }));
+    if (timeFilter?.year && timeFilter?.month && timeFilter?.date) {
+      console.log("we in this bitch");
+      setDateFilterActive(true);
+    } else {
+      setDateFilterActive(false);
+    }
   };
 
   const handleResetVal = (filterCat: string) => {
@@ -42,46 +49,40 @@ function PrimeAnalytics() {
     }));
   };
 
-  if (
-    (timeFilter?.year &&
-      timeFilter?.month &&
-      timeFilter?.date &&
-      ironHeartData === 0) ||
-    ironHeartData === undefined
-  ) {
-    let dateRange = generateDataFilterString(
-      timeFilter?.year,
-      timeFilter?.month,
-      timeFilter?.date
-    );
-    let chunkRange = {
-      chunkRangeLower: "0",
-      chunkRangeUpper: "2",
-    };
-    const filterData = new FormData();
+  // if (dateFilterActive) {
+  //   let dateRange = generateDataFilterString(
+  //     timeFilter?.year,
+  //     timeFilter?.month,
+  //     timeFilter?.date
+  //   );
+  //   let chunkRange = {
+  //     chunkRangeLower: "0",
+  //     chunkRangeUpper: "2",
+  //   };
+  //   const filterData = new FormData();
 
-    filterData.append("dateRangeUpper", dateRange.dateRangeUpper);
-    filterData.append("dateRangeLower", dateRange.dateRangeLower);
-    filterData.append("chunkRangeLower", chunkRange.chunkRangeLower);
-    filterData.append("chunkRangeUpper", chunkRange.chunkRangeUpper);
-
-    fetch("http://localhost:5000/api/fileUpload/data", {
-      method: "POST",
-      body: filterData,
-      headers: getApiFormHeaders(),
-    })
-      .then((response) => response.json())
-      .then((result) => {
-        console.log("Success:", result);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  }
+  //   filterData.append("dateRangeUpper", dateRange.dateRangeUpper);
+  //   filterData.append("dateRangeLower", dateRange.dateRangeLower);
+  //   filterData.append("chunkRangeLower", chunkRange.chunkRangeLower);
+  //   filterData.append("chunkRangeUpper", chunkRange.chunkRangeUpper);
+  //   console.log("WHATS GOING ON??");
+  //   fetch("http://localhost:5000/api/fileUpload/data", {
+  //     method: "POST",
+  //     body: filterData,
+  //     headers: getApiFormHeaders(),
+  //   })
+  //     .then((response) => response.json())
+  //     .then((result) => {
+  //       console.log("Success:", result);
+  //       // setIronHeartData(result);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error:", error);
+  //     });
+  // }
 
   useEffect(() => {
     if (ironHeartData === 0 || ironHeartData === undefined) {
-      console.log("Bra no data");
       // TODO: cache response to prevent refetching
       getLatestData(
         "http://localhost:5000/api/fileUpload/latest",

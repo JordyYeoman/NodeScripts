@@ -43,6 +43,7 @@ function Navbar() {
           authenticationTime: Date.now(),
         });
         localStorage.setItem("IronHeart.alpha.V0.003", result?.jwtToken);
+        localStorage.setItem("AuthTime", Date.now().toString());
         // Clear form
         reset();
       })
@@ -52,18 +53,23 @@ function Navbar() {
   };
 
   useEffect(() => {
-    // Check localStorage for cookie
-    if (!user.authenticationTime && refreshTimedOut(user?.authenticationTime)) {
-      console.log("user?.authenticationTime", user?.authenticationTime);
-      setUser({
-        isAuthenticated: false,
-        authenticationTime: null,
-      });
-      // Clear localstorage token
-      localStorage.removeItem("IronHeart.alpha.V0.003");
-      return;
-    } else {
-      if (localStorage.getItem("IronHeart.alpha.V0.003")) {
+    // Check if localStorage item exists
+    let token = localStorage.getItem("IronHeart.alpha.V0.003");
+    let authTime = localStorage.getItem("AuthTime");
+
+    if (token && authTime) {
+      // check auth time
+      if (refreshTimedOut(parseFloat(authTime))) {
+        console.log("authTime", authTime);
+        setUser({
+          isAuthenticated: false,
+          authenticationTime: null,
+        });
+        // Clear localstorage token
+        localStorage.removeItem("IronHeart.alpha.V0.003");
+        localStorage.removeItem("AuthTime");
+        return;
+      } else {
         setUser({
           ...user,
           isAuthenticated: true,

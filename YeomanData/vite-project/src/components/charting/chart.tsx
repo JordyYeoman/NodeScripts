@@ -8,6 +8,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { decompressFromUTF16 } from "async-lz-string";
 import { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 import { options } from "../../config/chartOptions";
@@ -15,6 +16,7 @@ import { useAppContext } from "../../AppWrapper";
 import { generateLabels, getTxtFileDataAsArray } from "../../utils/dataUtils";
 import { calculateMovingAverage } from "../../utils/MovingWindowAverage";
 import SmallCard from "../molecules/SmallCard";
+import { random_rgba } from "../../utils/misc";
 
 ChartJS.register(
   CategoryScale,
@@ -27,47 +29,44 @@ ChartJS.register(
 );
 
 const ChartDaddy = ({ selectedData }: { selectedData?: number[] }) => {
+  const { ironHeartData, setIronHeartData } = useAppContext();
+  // TODO - Refactor the splice method
   const [startSplice, setStartSplice] = useState<string>("0");
   const [endSplice, setEndSplice] = useState<string>("500");
-  const [labels, setLabels] = useState<number[]>([0]);
+  const [labels, setLabels] = useState<number[]>(generateLabels(1000));
+  const [dataSets, setDataSets] = useState<any>([]);
   // Get the value and setter from the consumer hook
-  const { ironHeartData, setIronHeartData } = useAppContext();
-  const handleNewData = (data: number[], dataSet?: number) => {
-    setLabels(generateLabels(parseInt(endSplice) - parseInt(startSplice)));
-    setIronHeartData(data);
-  };
 
-  const dataSets = selectedData?.map((dataIndex) => {
-    console.log("dataINdex: ", dataIndex);
-    // ironHeartData.filter(())
-  });
-  console.log(dataSets, selectedData);
+  useEffect(() => {
+    if (ironHeartData.length > 0) {
+      const data = ironHeartData.filter((_data: any) =>
+        selectedData?.includes(_data.chunkCount)
+      );
+
+      // Setup dataset in correct chart format:
+      const getFormattedChartData = async () =>
+        await Promise.all(
+          data.map(async (oldData: any) => {
+            return {
+              label: "test" + Math.random() * 100,
+              data: (await decompressFromUTF16(oldData.data))
+                .split(",")
+                .slice(0, 5000), // TODO - Add ability to dynamically slice
+              borderColor: random_rgba(),
+              backgroundColor: "rgba(99, 255, 132, 0.5)",
+            };
+          })
+        );
+      getFormattedChartData()
+        .then((formatted) => setDataSets(formatted))
+        .catch(console.error);
+    }
+  }, [ironHeartData, selectedData]);
 
   const data = {
     labels,
-    datasets: [
-      {
-        label: "Raw",
-        data: ironHeartData,
-        borderColor: "rgb(99, 255, 132)",
-        backgroundColor: "rgba(99, 255, 132, 0.5)",
-      },
-      {
-        label: "MWA",
-        data: calculateMovingAverage(ironHeartData, 15),
-        borderColor: "rgb(255, 132, 99)",
-        backgroundColor: "rgba(99, 132, 99, 0.9)",
-      },
-    ],
+    datasets: dataSets.length > 0 ? dataSets : [],
   };
-
-  useEffect(() => {
-    getTxtFileDataAsArray(parseInt(startSplice, parseInt(endSplice))).then(
-      (data) => {
-        // handleNewData(data.map((dataPoint) => parseFloat(dataPoint)));
-      }
-    );
-  }, [endSplice]);
 
   return (
     <div className="flex flex-col h-full w-full">
@@ -129,7 +128,6 @@ const ChartSection = ({
         data.datasets[0].data = newData;
         return <Line options={options} data={data} />;
       case ChartFilter.HighPassFilter:
-        // let newData =
         data = data;
         break;
       case ChartFilter.LowPassFilter:
@@ -242,3 +240,16 @@ const ChartSection = ({
 //   setEndSplice(newEnd);
 //   setStartSplice(newStart);
 // };
+
+//  const handleNewData = (data: number[], dataSet?: number) => {
+//    setLabels(generateLabels(parseInt(endSplice) - parseInt(startSplice)));
+//    setIronHeartData(data);
+//  };
+
+// useEffect(() => {
+//   getTxtFileDataAsArray(parseInt(startSplice, parseInt(endSplice))).then(
+//     (data) => {
+//       // handleNewData(data.map((dataPoint) => parseFloat(dataPoint)));
+//     }
+//   );
+// }, [endSplice]);
