@@ -27,6 +27,7 @@ function PrimeAnalytics() {
   });
   const [activeDataPoints, setActiveDataPoints] = useState<number[]>([0]); // Represents index value of chunk count for current payload from server
   const [dateFilterActive, setDateFilterActive] = useState<boolean>(false);
+  const [dataFilter, setDataFiler] = useState<ChartFilter>(ChartFilter.Raw);
 
   const handleClick = (e: any) => {
     const filterCat = e.target.getAttribute("data-attr");
@@ -289,7 +290,7 @@ const getShit = async (timeFilter: any, chunkRange: any) => {
   }
 };
 
-const RightFilterPanel = () => {
+const RightFilterPanel = ({ action }: { action: Function }) => {
   return (
     <div className="flex flex-col">
       <div className="w-full h-6 text-sm font-bold uppercase flex items-center">
