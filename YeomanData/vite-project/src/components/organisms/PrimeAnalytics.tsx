@@ -27,7 +27,7 @@ function PrimeAnalytics() {
   });
   const [activeDataPoints, setActiveDataPoints] = useState<number[]>([0]); // Represents index value of chunk count for current payload from server
   const [dateFilterActive, setDateFilterActive] = useState<boolean>(false);
-  const [dataFilter, setDataFiler] = useState<ChartFilter>(ChartFilter.Raw);
+  const [dataFilter, setDataFilter] = useState<ChartFilter>(ChartFilter.Raw);
 
   const handleClick = (e: any) => {
     const filterCat = e.target.getAttribute("data-attr");
@@ -124,7 +124,7 @@ function PrimeAnalytics() {
             )}
           </div>
           <div className="w-1/3">
-            <RightFilterPanel />
+            <RightFilterPanel action={setDataFilter} />
           </div>
         </div>
         <div className="w-full pt-2 text-sm font-bold uppercase flex items-start flex-col">
@@ -299,9 +299,15 @@ const RightFilterPanel = ({ action }: { action: Function }) => {
       <div className="flex flex-row py-2 w-full flex-wrap">
         {Object.keys(ChartFilter).map((filter) => {
           return (
-            <SmallCard key={filter} classes={"mr-1 w-min mb-1"}>
-              {filter}
-            </SmallCard>
+            <div
+              key={filter}
+              onClick={() => {
+                console.log("Setting data filter", filter);
+                action(filter);
+              }}
+            >
+              <SmallCard classes={"mr-1 w-min mb-1"}>{filter}</SmallCard>
+            </div>
           );
         })}
       </div>
