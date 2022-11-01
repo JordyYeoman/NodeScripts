@@ -3,11 +3,10 @@ import React, { useEffect, useState } from "react";
 function LeftOverlayBar() {
   const date = new Date();
   const LeftSideElements = [
-    date.toLocaleDateString(),
-    "STAND BY",
-    date.toLocaleTimeString(),
-    "",
     "SYSTEMS ONLINE",
+    date.toLocaleTimeString(),
+    "STAND BY",
+    date.toLocaleDateString(),
   ];
   const [ticking, setTicking] = useState(true),
     [count, setCount] = useState(0);

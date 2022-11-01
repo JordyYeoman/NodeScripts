@@ -91,7 +91,6 @@ router.get(
 
 router.post(
   "/data",
-  // [
   [auth, upload.none()],
   async (req: Request, res: Response) => {
     const errors = validationResult(req);

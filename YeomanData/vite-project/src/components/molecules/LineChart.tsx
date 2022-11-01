@@ -9,14 +9,15 @@ import {
   Legend,
 } from "chart.js";
 import { decompressFromUTF16 } from "async-lz-string";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Line } from "react-chartjs-2";
 import { options } from "../../config/chartOptions";
 import { useAppContext } from "../../AppWrapper";
 import { generateLabels, getTxtFileDataAsArray } from "../../utils/dataUtils";
 import { calculateMovingAverage } from "../../utils/MovingWindowAverage";
-import SmallCard from "../molecules/SmallCard";
 import { random_rgba } from "../../utils/misc";
+import { ChartFilter } from "../../types/enums";
+import ChartSection from "../atoms/ChartSection";
 
 ChartJS.register(
   CategoryScale,
@@ -28,7 +29,13 @@ ChartJS.register(
   Legend
 );
 
-const ChartDaddy = ({ selectedData }: { selectedData?: number[] }) => {
+const ChartDaddy = ({
+  dataFilter,
+  selectedData,
+}: {
+  dataFilter: ChartFilter;
+  selectedData?: number[];
+}) => {
   const { ironHeartData, setIronHeartData } = useAppContext();
   // TODO - Refactor the splice method
   const [startSplice, setStartSplice] = useState<string>("0");
@@ -36,6 +43,8 @@ const ChartDaddy = ({ selectedData }: { selectedData?: number[] }) => {
   const [labels, setLabels] = useState<number[]>(generateLabels(1000));
   const [dataSets, setDataSets] = useState<any>([]);
   // Get the value and setter from the consumer hook
+
+  useMemo;
 
   useEffect(() => {
     if (ironHeartData.length > 0) {
@@ -48,7 +57,7 @@ const ChartDaddy = ({ selectedData }: { selectedData?: number[] }) => {
         await Promise.all(
           data.map(async (oldData: any) => {
             return {
-              label: "test" + Math.random() * 100,
+              label: "Test " + (Math.random() * 100).toFixed(2),
               data: (await decompressFromUTF16(oldData.data))
                 .split(",")
                 .slice(0, 5000), // TODO - Add ability to dynamically slice
@@ -72,10 +81,10 @@ const ChartDaddy = ({ selectedData }: { selectedData?: number[] }) => {
     <div className="flex flex-col h-full w-full">
       <div className="flex relative h-full w-full">
         <ChartSection
-          title={"Raw"}
+          title={dataFilter.toString()}
           options={options}
           data={data}
-          filterType={ChartFilter.Raw}
+          filterType={dataFilter}
         />
       </div>
     </div>
@@ -83,60 +92,6 @@ const ChartDaddy = ({ selectedData }: { selectedData?: number[] }) => {
 };
 
 export default ChartDaddy;
-
-export enum ChartFilter {
-  Raw = "raw",
-  MovingWindowAverage = "mwa",
-  HighPassFilter = "high pass",
-  LowPassFilter = "low pass",
-  DiscreteFourierTransform = "dft",
-  LowPassAndHighPassFilters = "low pass & high pass",
-  LowPassHighPassAndDiscreteFourierTransform = "LP, HP & DFT",
-}
-
-const ChartSection = ({
-  title,
-  options,
-  data,
-  filterType,
-}: {
-  title: string;
-  options: any;
-  data: any;
-  filterType: ChartFilter;
-}) => {
-  const [open, setOpen] = useState<boolean>(true);
-
-  const getLineChartForType = () => {
-    switch (filterType) {
-      case ChartFilter.Raw:
-        return <Line options={options} data={data} />;
-      case ChartFilter.MovingWindowAverage:
-        let newData = calculateMovingAverage(data?.datasets[0]?.data, 15);
-        data.datasets[0].data = newData;
-        return <Line options={options} data={data} />;
-      case ChartFilter.HighPassFilter:
-        data = data;
-        break;
-      case ChartFilter.LowPassFilter:
-        data.datasets[0].data = data;
-        return <Line options={options} data={data} />;
-      case ChartFilter.DiscreteFourierTransform:
-        data = data;
-        break;
-      case ChartFilter.LowPassAndHighPassFilters:
-        data = data;
-        break;
-      case ChartFilter.LowPassHighPassAndDiscreteFourierTransform:
-        data = data;
-        break;
-      default:
-        break;
-    }
-  };
-
-  return <>{open ? <>{getLineChartForType()}</> : <></>}</>;
-};
 
 {
   /* <div>

@@ -3,21 +3,33 @@
 // -= and += operations on the sum variable that makes numerical mistakes when we work on floating numbers
 // - it is good to modify below source code and recompute sum once per some amount of iterations (amount may be selectes empiricaly).
 
-export function calculateMovingAverage(data: number[], window: number) {
+export function calculateMovingAverage(
+  data: (number | string)[],
+  window: number
+) {
   var result: any[] = [];
   if (data.length < window) {
     return result;
   }
   var sum = 0;
   for (var i = 0; i < window; ++i) {
-    sum += data[i];
+    if (typeof data[i] === "string") {
+      sum = sum + parseInt(data[i] as string);
+    } else {
+      sum += data[i] as number;
+    }
   }
-  result.push(sum / window);
+  result.push((sum / window).toString());
   var steps = data.length - window - 1;
   for (var i = 0; i < steps; ++i) {
-    sum -= data[i];
-    sum += data[i + window];
-    result.push(Math.floor(sum / window));
+    if (typeof data[i] === "string") {
+      sum -= parseInt(data[i] as string);
+      sum += parseInt(data[i + window] as string);
+    } else {
+      sum -= data[i] as number;
+      sum += data[i + window] as number;
+    }
+    result.push(Math.floor(sum / window).toString());
   }
   return result;
 }

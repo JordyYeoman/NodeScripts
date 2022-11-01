@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAppContext } from "../AppWrapper";
-import ChartDaddy from "../components/charting/chart";
+import ChartDaddy from "./molecules/LineChart";
 import { getApiHeaders, getUploadHeaders } from "../utils/auth";
 import Card from "./molecules/Card";
 import PrimeAnalytics from "./organisms/PrimeAnalytics";

@@ -4,3 +4,7 @@ export interface TimeFilter {
   day?: string;
   date: string;
 }
+
+export interface HeartPayload {
+  data: any;
+}

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { TimeFilter } from "src/types/interfaces";
+import { HeartPayload, TimeFilter } from "src/types/interfaces";
 import { generateDataFilterString } from "../../utils/dataUtils";
 import {
   getApiFormHeaders,
@@ -11,12 +11,13 @@ import DateFilter from "../atoms/DateFilter";
 import FilterButton from "../atoms/FilterButton";
 import MonthFilter from "../atoms/MonthFilter";
 import YearFilter from "../atoms/YearFilter";
-import ChartDaddy, { ChartFilter } from "../charting/chart";
+import ChartDaddy from "../molecules/LineChart";
 import Card from "../molecules/Card";
 import LeftOverlayBar from "../molecules/LeftOverlayBar";
 import { useAppContext } from "../../AppWrapper";
 import { getLatestData } from "../../utils/networkUtils";
-import SmallCard from "../molecules/SmallCard";
+import AnalogProcessingPanel from "../molecules/AnalogProcessingPanel";
+import { ChartFilter } from "../../types/enums";
 
 function PrimeAnalytics() {
   const { ironHeartData, setIronHeartData } = useAppContext();
@@ -26,7 +27,6 @@ function PrimeAnalytics() {
     date: "",
   });
   const [activeDataPoints, setActiveDataPoints] = useState<number[]>([0]); // Represents index value of chunk count for current payload from server
-  const [dateFilterActive, setDateFilterActive] = useState<boolean>(false);
   const [dataFilter, setDataFilter] = useState<ChartFilter>(ChartFilter.Raw);
 
   const handleClick = (e: any) => {
@@ -65,7 +65,9 @@ function PrimeAnalytics() {
         // Make request
         const fetchData = async () => {
           const data = await getShit(timeFilter, chunkRange);
-          setIronHeartData(data?.data);
+          if (data) {
+            setIronHeartData(data?.data);
+          }
         };
         fetchData()
           // make sure to catch any error
@@ -86,12 +88,10 @@ function PrimeAnalytics() {
   };
 
   return (
-    <div className="flex w-full relative flex-col xl:flex-row mb-16">
+    <div className="flex w-full relative flex-col mb-16">
       <LeftOverlayBar />
       <Card
-        classes={
-          "w-full xl:min-h-[900px] self-start flex flex-col items-start justify-start"
-        }
+        classes={"w-full self-start flex flex-col items-start justify-start"}
       >
         <div className="w-1/2 h-6 text-sm font-bold uppercase flex items-center">
           Filters
@@ -112,19 +112,16 @@ function PrimeAnalytics() {
           />
         </div>
         <div className="flex flex-wrap h-full w-full">
-          <div className="w-2/3">
-            {timeFilter.year ? null : (
-              <YearFilter timeFilter={timeFilter} action={handleClick} />
-            )}
-            {timeFilter.month ? null : (
-              <MonthFilter timeFilter={timeFilter} action={handleClick} />
-            )}
-            {timeFilter.date ? null : (
-              <DateFilter timeFilter={timeFilter} action={handleClick} />
-            )}
+          <div className="w-2/3 pr-12">
+            <YearFilter timeFilter={timeFilter} action={handleClick} />
+            <MonthFilter timeFilter={timeFilter} action={handleClick} />
+            <DateFilter timeFilter={timeFilter} action={handleClick} />
           </div>
           <div className="w-1/3">
-            <RightFilterPanel action={setDataFilter} />
+            <AnalogProcessingPanel
+              action={setDataFilter}
+              currentFilter={dataFilter}
+            />
           </div>
         </div>
         <div className="w-full pt-2 text-sm font-bold uppercase flex items-start flex-col">
@@ -170,10 +167,10 @@ function PrimeAnalytics() {
       </Card>
       <Card
         classes={
-          "h-[700px] max-w-full xl:h-[900px] mt-2 xl:ml-2 self-start overflow-hidden"
+          "h-[700px] max-w-full w-full xl:h-[900px] mt-2 self-start overflow-hidden"
         }
       >
-        <ChartDaddy selectedData={activeDataPoints} />
+        <ChartDaddy selectedData={activeDataPoints} dataFilter={dataFilter} />
       </Card>
       <div className="absolute -top-5 -right-2 w-24 h-24">
         <Coordinates />
@@ -261,7 +258,10 @@ const RetrieveDataComponent = () => {
   );
 };
 
-const getShit = async (timeFilter: any, chunkRange: any) => {
+const getShit = async (
+  timeFilter: any,
+  chunkRange: any
+): Promise<undefined | HeartPayload> => {
   let dateRange = generateDataFilterString(
     timeFilter?.year,
     timeFilter?.month,
@@ -283,63 +283,13 @@ const getShit = async (timeFilter: any, chunkRange: any) => {
       body: filterData,
       headers: getApiFormHeaders(),
     });
-    const result_2 = await response.json();
-    return result_2;
+
+    if (response.status === 200) {
+      const result_2 = await response.json();
+      return result_2;
+    }
+    return { data: [] }; // Return empty array if status != 200
   } catch (error) {
     console.error("Error:", error);
   }
-};
-
-const RightFilterPanel = ({ action }: { action: Function }) => {
-  return (
-    <div className="flex flex-col">
-      <div className="w-full h-6 text-sm font-bold uppercase flex items-center">
-        Analytics
-      </div>
-      <div className="flex flex-row py-2 w-full flex-wrap">
-        {Object.keys(ChartFilter).map((filter) => {
-          return (
-            <div
-              key={filter}
-              onClick={() => {
-                console.log("Setting data filter", filter);
-                action(filter);
-              }}
-            >
-              <SmallCard classes={"mr-1 w-min mb-1"}>{filter}</SmallCard>
-            </div>
-          );
-        })}
-      </div>
-      <div>
-        <div className="w-full h-6 text-sm font-bold uppercase flex items-center">
-          Chunk Input
-        </div>
-        <div className="flex flex-row py-2 w-full">
-          <div className="flex flex-col mr-1">
-            <label htmlFor="chunkLower">Lower Limit</label>
-            <input
-              className="w-full bg-zinc-800"
-              autoComplete="on"
-              type="number"
-              name="chunkLower"
-              placeholder={"0"}
-              onChange={(e) => console.log("val: ", e.target.value)}
-            />
-          </div>
-          <div className="flex flex-col">
-            <label htmlFor="chunkUpper">Upper Limit</label>
-            <input
-              className="w-full bg-zinc-800"
-              autoComplete="on"
-              type="number"
-              name="chunkUpper"
-              placeholder={"10"}
-              onChange={(e) => console.log("val: ", e.target.value)}
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
 };
