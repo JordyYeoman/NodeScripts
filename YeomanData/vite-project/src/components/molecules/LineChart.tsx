@@ -70,7 +70,7 @@ const ChartDaddy = ({
         .then((formatted) => setDataSets(formatted))
         .catch(console.error);
     }
-  }, [ironHeartData, selectedData]);
+  }, [ironHeartData, selectedData, dataFilter]);
 
   const data = {
     labels,

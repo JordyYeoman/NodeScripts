@@ -23,17 +23,20 @@ const ChartSection = ({
   const getLineChartForType = () => {
     switch (filterType) {
       case ChartFilter.Raw:
-        console.log("raw data: ", data.datasets[0]?.data);
         return <Line options={options} data={data} />;
       case ChartFilter.MovingWindowAverage:
         let newData = data?.datasets?.map((p: any) => {
           if (p?.data) {
-            return calculateMovingAverage(p?.data, 150);
+            return calculateMovingAverage(p?.data, 1);
           }
+          return [];
         });
-        console.log("newData: ", newData[0]);
+        // Data currently holds the current state of the chart info
+        // Map the parsed data onto each of the new values in the data variable
         if (newData && newData.length > 0) {
-          data.datasets.data = newData;
+          newData.map((dataChunk: string[], index: number) => {
+            data.datasets[index].data = dataChunk;
+          });
         }
         return <Line options={options} data={data} />;
       case ChartFilter.HighPassFilter:
