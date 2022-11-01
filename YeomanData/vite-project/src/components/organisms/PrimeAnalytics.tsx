@@ -18,6 +18,8 @@ import { useAppContext } from "../../AppWrapper";
 import { getLatestData } from "../../utils/networkUtils";
 import AnalogProcessingPanel from "../molecules/AnalogProcessingPanel";
 import { ChartFilter } from "../../types/enums";
+import RetrieveDataComponent from "../atoms/RetrieveDataComponent";
+import { DataUploadCard } from "../atoms/DataUploadCard";
 
 function PrimeAnalytics() {
   const { ironHeartData, setIronHeartData } = useAppContext();
@@ -122,6 +124,9 @@ function PrimeAnalytics() {
               action={setDataFilter}
               currentFilter={dataFilter}
             />
+            <div>
+              <DataUploadCard />
+            </div>
           </div>
         </div>
         <div className="w-full pt-2 text-sm font-bold uppercase flex items-start flex-col">
@@ -175,88 +180,11 @@ function PrimeAnalytics() {
       <div className="absolute -top-5 -right-2 w-24 h-24">
         <Coordinates />
       </div>
-      <div>
-        <DataSources />
-      </div>
     </div>
   );
 }
 
 export default PrimeAnalytics;
-
-const DataSources = () => {
-  const handleFile = (event: any) => {
-    setFileToUpload(event?.target?.files[0]);
-  };
-  const [fileToUpload, setFileToUpload] = useState(null);
-  const uploadFile = () => {
-    const formData = new FormData();
-    if (!fileToUpload) return;
-
-    formData.append("UPLOADED_FILE", fileToUpload);
-
-    fetch("http://localhost:5000/api/fileUpload/", {
-      method: "POST",
-      body: formData,
-      headers: getUploadHeaders(),
-    })
-      .then((response) => response.json())
-      .then((result) => {
-        console.log("Success:", result);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  };
-
-  return (
-    <>
-      <div className="flex justify-between">
-        <div>
-          <label htmlFor="uploaded_file">Upload data: </label>
-          <input
-            type="file"
-            id="uploaded_file"
-            name="UPLOADED_FILE"
-            accept=".txt,.csv"
-            onChange={handleFile}
-          />
-          <button onClick={uploadFile}>Upload File</button>
-        </div>
-      </div>
-      <RetrieveDataComponent />
-    </>
-  );
-};
-
-const getChartDataTest = () => {
-  fetch("http://localhost:5000/api/fileUpload/allData", {
-    method: "GET",
-    headers: getApiHeaders(),
-  })
-    .then((response) => response.json())
-    .then((result) => {
-      console.log("Success:", result);
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
-};
-
-const RetrieveDataComponent = () => {
-  //   const [dataRange, setDataRange] = useState<>;
-  // Current Data Should be a section of 5 sets of data
-  // You should be able to step through each dataset.
-  // IE - If you have 0-4, you can then go get 5-9, 10-14 etc etc...
-  return (
-    <div>
-      <div>Get Data From Mongo</div>
-      <div>
-        <button onClick={getChartDataTest}>Get Chart Data from DB</button>
-      </div>
-    </div>
-  );
-};
 
 const getShit = async (
   timeFilter: any,
