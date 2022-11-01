@@ -121,7 +121,7 @@ function PrimeAnalytics() {
           </div>
           <div className="w-1/3">
             <AnalogProcessingPanel
-              action={setDataFilter}
+              setFilter={setDataFilter}
               currentFilter={dataFilter}
             />
             <div>

@@ -9,10 +9,10 @@ export const getIndexOfFilter = (filter: ChartFilter) => {
 
 function AnalogProcessingPanel({
   currentFilter,
-  action,
+  setFilter,
 }: {
   currentFilter: ChartFilter;
-  action: Function;
+  setFilter: Function;
 }) {
   return (
     <div className="flex flex-col">
@@ -25,8 +25,7 @@ function AnalogProcessingPanel({
             <div
               key={filter}
               onClick={() => {
-                console.log("setting filter analogprocessingpanel: ", filter);
-                action(filter);
+                setFilter(filter);
               }}
             >
               <SmallCard
@@ -75,8 +74,53 @@ function AnalogProcessingPanel({
           </div>
         </div>
       </div>
+      <div>
+        <div className="w-full h-6 text-sm font-bold uppercase flex items-center">
+          Step Through Data
+        </div>
+        <div className="flex flex-row py-2 w-full">
+          <div className="flex flex-col mr-1">
+            <label htmlFor="stepBy">Step by:</label>
+            <div className="flex items-center">
+              <input
+                className="w-full bg-zinc-800"
+                autoComplete="on"
+                type="number"
+                name="stepBy"
+                placeholder={"0"}
+                onChange={(e) => console.log("step by : ", e.target.value)}
+              />
+              <ArrowButton
+                text={"<"}
+                action={() => {
+                  console.log("Left Arrow");
+                }}
+              />
+              <ArrowButton
+                text={">"}
+                action={() => {
+                  console.log("Right Arrow");
+                }}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
+
+const ArrowButton = ({ text, action }: { text: string; action: Function }) => {
+  return (
+    <div
+      onClick={() => {
+        action();
+      }}
+      className="ml-2 bg-zinc-800 text-xs xl:text-md px-2 py-1 h-full xl:px-4 xl:py-2 rounded transition duration-200 hover:bg-zinc-600 cursor-pointer"
+    >
+      {text}
+    </div>
+  );
+};
 
 export default AnalogProcessingPanel;

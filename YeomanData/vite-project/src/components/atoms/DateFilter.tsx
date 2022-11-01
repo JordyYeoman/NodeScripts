@@ -31,7 +31,7 @@ const DateFilter = ({
   return (
     <div className="flex flex-col">
       <div>Date</div>
-      <div className="flex flex-row flex-wrap">
+      <div className="flex flex-row flex-wrap xl:pr-32">
         {Dates.map((date) => {
           return (
             <SmallCard

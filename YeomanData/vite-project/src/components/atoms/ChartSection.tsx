@@ -27,7 +27,7 @@ const ChartSection = ({
       case ChartFilter.MovingWindowAverage:
         let newData = data?.datasets?.map((p: any) => {
           if (p?.data) {
-            return calculateMovingAverage(p?.data, 1);
+            return calculateMovingAverage(p?.data, 3);
           }
           return [];
         });

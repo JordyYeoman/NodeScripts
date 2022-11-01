@@ -30,8 +30,13 @@ export const DataUploadCard = () => {
     <>
       <div className="flex justify-between text-sm font-bold">
         <div className="flex flex-col">
-          <label htmlFor="uploaded_file">Upload data: </label>
-          <div className="bg-zinc-800 rounded flex items-center">
+          <label
+            htmlFor="uploaded_file"
+            className="w-full h-6 text-sm font-bold uppercase flex items-center"
+          >
+            Upload data
+          </label>
+          <div className="bg-zinc-800 rounded flex items-center mt-2">
             <input
               type="file"
               id="uploaded_file"
