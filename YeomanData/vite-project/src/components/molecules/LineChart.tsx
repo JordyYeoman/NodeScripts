@@ -40,7 +40,7 @@ const ChartDaddy = ({
   // TODO - Refactor the splice method
   const [startSplice, setStartSplice] = useState<string>("0");
   const [endSplice, setEndSplice] = useState<string>("500");
-  const [labels, setLabels] = useState<number[]>(generateLabels(2000));
+  const [labels, setLabels] = useState<number[]>(generateLabels(1000));
   const [dataSets, setDataSets] = useState<any>([]);
   // Get the value and setter from the consumer hook
 
