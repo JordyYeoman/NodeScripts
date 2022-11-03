@@ -7,6 +7,8 @@ import d from "./assets/outputtest.txt";
 import schc from "../src/assets/SCHC.json";
 import vcit from "../src/assets/VCIT.json";
 import portfolio from "../src/assets/portfolio.json";
+import LineChartTwo from "./LineChart2";
+import LineChartThree from "./LineChart3";
 
 const portfolioData = { name: "Portfolio", color: "#ffffff", items: portfolio };
 const schcData = { name: "SCHC", color: "#d53e4f", items: schc };
@@ -61,12 +63,20 @@ function App() {
       });
   }, []);
 
+  let data = [
+    { date: 20220101, impressions: 100 },
+    { date: 20220102, impressions: 120 },
+    // ... truncated but you get it
+  ];
+
   // console.log("chart data in app.tsx", chartData);
   return (
     <div className="App flex flex-col items-center justify-center">
       Welcome Sir
       <div className="w-[1500px] h-[800px] bg-zinc-800 rounded p-4 mt-2">
-        <LineChart data={chartData} />
+        <LineChartThree />
+        {/* <LineChartTwo Data={data} /> */}
+        {/* <LineChart data={chartData} /> */}
         {/* <MultilineChart data={[schcData, vcitData]} dimensions={dimensions} /> */}
       </div>
     </div>
