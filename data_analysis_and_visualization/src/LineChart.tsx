@@ -1,86 +1,114 @@
-import React, { useState, useCallback, useEffect } from "react";
-import ReactDOM from "react-dom";
-import { csv, scaleLinear, scaleTime, max, timeFormat, extent } from "d3";
-import { useData } from "./hooks/useData";
-import { AxisBottom } from "./utils/axisBottom";
-import { AxisLeft } from "./utils/axisLeft";
-import { Marks } from "./utils/marks";
-import useElementSize from "./hooks/useElementSize";
-import { DataLayer } from "./App";
+import React, { useEffect } from "react";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import { Line } from "react-chartjs-2";
+import { findQRSWave, generateData, generateLabels } from "./utils/helpers";
+import annotationPlugin from "chartjs-plugin-annotation";
 
-const margin = { top: 30, right: 5, bottom: 65, left: 45 };
-const xAxisLabelOffset = 50;
-const yAxisLabelOffset = -5;
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  annotationPlugin
+);
 
-const LineChart = ({ data }: { data: any }) => {
-  const [squareRef, { width, height }] = useElementSize();
-  // const data = useData();
-  if (!data || data.data.length < 1) {
-    return <pre>Loading...</pre>;
-  }
-
-  const innerHeight = (height ?? 0) - margin.top - margin.bottom;
-  const innerWidth = (width ?? 0) - margin.left - margin.right;
-  const xValue = (d: DataLayer) => d.labels;
-  const xAxisLabel = "Time";
-  const yValue = (d: DataLayer) => d.data;
-  const yAxisLabel = "Data";
-  const xAxisTickFormat = timeFormat("%a");
-
-  const xScale = scaleTime()
-    // .domain(extent(data as Iterable<T>, xValue))
-    .range([0, innerWidth])
-    .nice();
-
-  const yScale = scaleLinear()
-    // .domain(extent(data, yValue))
-    .range([innerHeight, 0])
-    .nice();
-
-  return (
-    <div
-      className="w-full h-full bg-zinc-600 flex items-center justify-center"
-      ref={squareRef}
-    >
-      <svg width={width} height={height}>
-        <g transform={`translate(${margin.left},${margin.top})`}>
-          <AxisBottom
-            xScale={xScale}
-            innerHeight={innerHeight}
-            tickFormat={xAxisTickFormat}
-            tickOffset={7}
-          />
-          <text
-            className="axis-label"
-            textAnchor="middle"
-            transform={`translate(${-yAxisLabelOffset},${
-              innerHeight / 2
-            }) rotate(-90)`}
-          >
-            {yAxisLabel}
-          </text>
-          <AxisLeft yScale={yScale} innerWidth={innerWidth} tickOffset={7} />
-          <text
-            className="axis-label"
-            x={innerWidth / 2}
-            y={innerHeight + xAxisLabelOffset}
-            textAnchor="middle"
-          >
-            {xAxisLabel}
-          </text>
-          <Marks
-            data={data}
-            xScale={xScale}
-            yScale={yScale}
-            xValue={xValue}
-            yValue={yValue}
-            tooltipFormat={xAxisTickFormat}
-            circleRadius={3}
-          />
-        </g>
-      </svg>
-    </div>
-  );
+export const options = {
+  responsive: true,
+  maintainAspectRatio: false,
+  elements: {
+    point: {
+      radius: 0.025,
+    },
+    line: {
+      borderWidth: 0.9,
+    },
+    tension: 0,
+  },
+  plugins: {
+    legend: {
+      position: "top" as const,
+    },
+    title: {
+      display: true,
+      text: "Chart.js Line Chart",
+    },
+    autocolors: false,
+    annotation: {
+      annotations: {
+        box1: {
+          type: "box",
+          xMin: 20,
+          xMax: 73,
+          yMin: 1750,
+          yMax: 1900,
+          backgroundColor: "rgba(255, 99, 132, 0.25)",
+        },
+        box2: {
+          type: "box",
+          xMin: 20,
+          xMax: 43,
+          yMin: 1350,
+          yMax: 1400,
+          backgroundColor: "rgba(53, 162, 235, 0.25)",
+        },
+      },
+    },
+  },
 };
 
-export default LineChart;
+// export interface PluginOptions {
+
+// }
+
+// export interface LineChartOptions {
+//     responsive: boolean;
+//     maintainAspectRatio: boolean;
+//     plugins: PluginOptions;
+// }
+
+const dataPointsTotal = 1000;
+const labels = generateLabels(dataPointsTotal);
+// const labels1 = generateData(dataPointsTotal);
+// const labels2 = generateData(dataPointsTotal);
+
+export function LineChart({ chartData }: { chartData: any }) {
+  const { data: chartDataArr } = chartData;
+  console.log("chartData", chartDataArr);
+  let dataSize = chartData?.data?.length > 0 ? chartData?.data?.length : 500;
+  //   let newLabels = generateLabels(dataSize);
+
+  let x = findQRSWave(chartDataArr);
+  console.log(x);
+
+  const data = {
+    labels,
+    datasets: [
+      {
+        label: "Dataset 1",
+        data: chartData?.data.length > 0 ? chartData?.data : labels,
+        borderColor: "rgb(255, 99, 132)",
+        backgroundColor: "rgba(255, 99, 132, 0.5)",
+      },
+      {
+        label: "Dataset 2",
+        data: chartData?.data.length > 0 ? chartData?.data : labels,
+        borderColor: "rgb(53, 162, 235)",
+        backgroundColor: "rgba(53, 162, 235, 0.5)",
+      },
+    ],
+  };
+
+  return <Line options={options} data={data} />;
+}

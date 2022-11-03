@@ -1,23 +1,8 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import LineChart from "./LineChart";
-import MultilineChart from "./MultiLineChart";
 import d from "./assets/outputtest.txt";
-//
-import schc from "../src/assets/SCHC.json";
-import vcit from "../src/assets/VCIT.json";
-import portfolio from "../src/assets/portfolio.json";
-import LineChartTwo from "./LineChart2";
-import LineChartThree from "./LineChart3";
+import { LineChart } from "./LineChart";
 
-const portfolioData = { name: "Portfolio", color: "#ffffff", items: portfolio };
-const schcData = { name: "SCHC", color: "#d53e4f", items: schc };
-const vcitData = { name: "VCIT", color: "#5e4fa2", items: vcit };
-const dimensions = {
-  width: 600,
-  height: 300,
-  margin: { top: 30, right: 30, bottom: 30, left: 60 },
-};
 const dataAmount = 1000;
 const spliceFromIndex = 9371;
 
@@ -63,21 +48,12 @@ function App() {
       });
   }, []);
 
-  let data = [
-    { date: 20220101, impressions: 100 },
-    { date: 20220102, impressions: 120 },
-    // ... truncated but you get it
-  ];
-
   // console.log("chart data in app.tsx", chartData);
   return (
     <div className="App flex flex-col items-center justify-center">
       Welcome Sir
       <div className="w-[1500px] h-[800px] bg-zinc-800 rounded p-4 mt-2">
-        <LineChartThree />
-        {/* <LineChartTwo Data={data} /> */}
-        {/* <LineChart data={chartData} /> */}
-        {/* <MultilineChart data={[schcData, vcitData]} dimensions={dimensions} /> */}
+        <LineChart chartData={chartData} />
       </div>
     </div>
   );
