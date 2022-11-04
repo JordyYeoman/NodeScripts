@@ -35,49 +35,61 @@ export const findQRSWave = (
 
   // Find only the local largest Yrange in a specific range of X horizontal axis points
   // Implemented by finding the lowest and highest point in the range
-  let localXRangeMax: number = 100;
+  let localXRangeMax: number = 50;
   let localHighestPoints: ChartVal[] = [];
   let currentHeartWave: any[] = [];
-  highestDataPoints.map((p, i) => {
+  console.log("highestDataPoints.length", highestDataPoints.length);
+  highestDataPoints.map((p: ChartVal, _index: number) => {
     // Segregate Heart Beat Waves
-    if (i == 0) {
+    if (_index == 0 || currentHeartWave.length <= 0) {
       currentHeartWave.push(p);
       return;
     }
     // If still the current heart wave, push into the currentHeartWave[].
-    if (
-      p.p > currentHeartWave[currentHeartWave.length - 1] &&
-      p.p - currentHeartWave[currentHeartWave.length - 1] > localXRangeMax
-    ) {
+    let current = currentHeartWave[currentHeartWave.length - 1];
+    if (p.p > current.p && p.p - current.p > localXRangeMax) {
       currentHeartWave.push(p);
       return;
     }
     // If its a new heart wave,
     // i. Find the highest and lowest values and add them to the list of boxes to display
-    let rangeBoxes = getLargestRangeValue(currentHeartWave);
+    let rangeBoxes = getLargestRangeValues(currentHeartWave);
     localHighestPoints.push(rangeBoxes.highestVal);
-    localHighestPoints.push(rangeBoxes.highestVal);
+    // localHighestPoints.push(rangeBoxes.lowestVal);
+
     // ii. Then clear the currentHeartWave[] and repeat for remaining data points
     currentHeartWave = [];
   });
-
+  console.log("localHighestPoints", localHighestPoints);
   return localHighestPoints;
 };
 
-const getLargestRangeValue = (
+const getLargestRangeValues = (
   input: any[]
 ): { highestVal: ChartVal; lowestVal: ChartVal } => {
   let highestVal = { p: 0, i: 0 };
   let lowestVal = { p: 0, i: 0 };
 
-  input.map((g) => {
-    if (g.p > highestVal.p) {
-      highestVal = g;
-    }
-    if (g.p < lowestVal.p) {
-      lowestVal = g;
-    }
-  });
+  let localVals = input.sort((a, b) => a.p - b.p);
+  highestVal = localVals[0];
+  lowestVal = localVals[localVals.length - 1];
+
+  // input.map((g) => {
+  //   console.log(
+  //     "highest val ",
+  //     highestVal.p,
+  //     "lowestval: ",
+  //     lowestVal.p,
+  //     "wtf g",
+  //     g.p
+  //   );
+  //   if (g.p > highestVal.p) {
+  //     highestVal = g;
+  //   }
+  //   if (g.p < lowestVal.p) {
+  //     lowestVal = g;
+  //   }
+  // });
 
   return { highestVal, lowestVal };
 };

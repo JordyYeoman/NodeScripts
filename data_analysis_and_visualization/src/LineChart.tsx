@@ -81,7 +81,7 @@ export function LineChart({ chartData }: { chartData: any }) {
 
   let x = findQRSWave(chartDataArr, dataPointsTotal);
   const overlayBoxes = getBoxesForData(x);
-  console.log(overlayBoxes);
+  // console.log(overlayBoxes);
 
   const doStuff = () => {
     setChartOptions({
