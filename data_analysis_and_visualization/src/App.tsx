@@ -3,8 +3,8 @@ import "./App.css";
 import d from "./assets/outputtest.txt";
 import { LineChart } from "./LineChart";
 
-const dataAmount = 1000;
-const spliceFromIndex = 9371;
+const dataAmount = 500;
+const spliceFromIndex = 10371;
 
 export interface DataLayer {
   data: number[];
@@ -18,7 +18,7 @@ function App() {
   });
 
   useEffect(() => {
-    console.log("[DEBUG] are you not running?");
+    // console.log("[DEBUG] are you not running?");
   });
 
   // Fetch data and update state
@@ -48,11 +48,14 @@ function App() {
       });
   }, []);
 
+  if (chartData.data.length <= 0) {
+    return <div>Loading....</div>;
+  }
   // console.log("chart data in app.tsx", chartData);
   return (
     <div className="App flex flex-col items-center justify-center">
       Welcome Sir
-      <div className="w-[1500px] h-[800px] bg-zinc-800 rounded p-4 mt-2">
+      <div className="h-[700px] w-[1000px] bg-zinc-800 rounded p-4 mt-2">
         <LineChart chartData={chartData} />
       </div>
     </div>

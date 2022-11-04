@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -10,8 +10,14 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { findQRSWave, generateData, generateLabels } from "./utils/helpers";
+import {
+  findQRSWave,
+  generateData,
+  generateLabels,
+  getBoxesForData,
+} from "./utils/helpers";
 import annotationPlugin from "chartjs-plugin-annotation";
+import { ChartLine } from "./components/atoms/ChartLine";
 
 ChartJS.register(
   CategoryScale,
@@ -46,24 +52,7 @@ export const options = {
     },
     autocolors: false,
     annotation: {
-      annotations: {
-        box1: {
-          type: "box",
-          xMin: 20,
-          xMax: 73,
-          yMin: 1750,
-          yMax: 1900,
-          backgroundColor: "rgba(255, 99, 132, 0.25)",
-        },
-        box2: {
-          type: "box",
-          xMin: 20,
-          xMax: 43,
-          yMin: 1350,
-          yMax: 1400,
-          backgroundColor: "rgba(53, 162, 235, 0.25)",
-        },
-      },
+      annotations: {},
     },
   },
 };
@@ -78,29 +67,44 @@ export const options = {
 //     plugins: PluginOptions;
 // }
 
-const dataPointsTotal = 1000;
+const dataPointsTotal = 500;
 const labels = generateLabels(dataPointsTotal);
 // const labels1 = generateData(dataPointsTotal);
 // const labels2 = generateData(dataPointsTotal);
 
 export function LineChart({ chartData }: { chartData: any }) {
+  const [chartOptions, setChartOptions] = useState<any>(options);
   const { data: chartDataArr } = chartData;
-  console.log("chartData", chartDataArr);
-  let dataSize = chartData?.data?.length > 0 ? chartData?.data?.length : 500;
+  // console.log("chartData", chartDataArr);
+  // let dataSize = chartData?.data?.length > 0 ? chartData?.data?.length : 500;
   //   let newLabels = generateLabels(dataSize);
 
-  let x = findQRSWave(chartDataArr);
-  console.log(x);
+  let x = findQRSWave(chartDataArr, dataPointsTotal);
+  const overlayBoxes = getBoxesForData(x);
+  console.log(overlayBoxes);
 
+  const doStuff = () => {
+    setChartOptions({
+      ...chartOptions,
+      plugins: {
+        ...chartOptions.plugins,
+        annotation: {
+          annotations: {
+            ...overlayBoxes,
+          },
+        },
+      },
+    });
+  };
+
+  useEffect(() => {
+    doStuff();
+  }, [chartData]);
+
+  // console.log("rendered....");
   const data = {
     labels,
     datasets: [
-      {
-        label: "Dataset 1",
-        data: chartData?.data.length > 0 ? chartData?.data : labels,
-        borderColor: "rgb(255, 99, 132)",
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
-      },
       {
         label: "Dataset 2",
         data: chartData?.data.length > 0 ? chartData?.data : labels,
@@ -110,5 +114,5 @@ export function LineChart({ chartData }: { chartData: any }) {
     ],
   };
 
-  return <Line options={options} data={data} />;
+  return <ChartLine chartOptions={chartOptions} data={data} />;
 }
