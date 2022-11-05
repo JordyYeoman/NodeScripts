@@ -11,7 +11,6 @@ export const findQRSWave = (
   let highestDataPoints: any[] = [];
   let minYRange: number = 600;
   let smallWindowSize: number = 5;
-
   // Find local QRS wave using largest range between data points method
   for (let i = 0; i < analysisWindowSize; i++) {
     let localArr: Array<number> = [];
@@ -32,6 +31,41 @@ export const findQRSWave = (
       }
     }
   }
+  let localWavePoints = getLocalWavePoints(highestDataPoints);
+  let xStepsBackwardFromHighpoint = 20;
+  let qWavePoints: any[] = [];
+  localWavePoints.map((wp: any, index: number) => {
+    // console.log("wp", wp);
+    // Highest point is every even number 0, 2, 4, 6 etc in the localWavePoints array.
+    if (index === 0 || index % 2 === 0) {
+      // Find the Q portion of the 'QRS' wave
+      // Likely, the lowest point x steps backwards from the highest point
+      let localQLowPoint = { p: 0, i: 0 };
+      for (let x = 0; x <= xStepsBackwardFromHighpoint; x++) {
+        let local = input[wp.i - x];
+        // console.log("x", x, "local", local, "localQLowPoint", localQLowPoint);
+        if (x === 0) {
+          localQLowPoint = {
+            p: local,
+            i: wp.i - x,
+          };
+          continue;
+        }
+        if (local < localQLowPoint.p) {
+          localQLowPoint = {
+            p: local,
+            i: wp.i - x,
+          };
+        }
+      }
+      qWavePoints.push(localQLowPoint);
+    }
+  });
+  console.log("qWavePoints", qWavePoints);
+  return [...localWavePoints, ...qWavePoints];
+};
+
+const getLocalWavePoints = (highestDataPoints: any[]) => {
   // Find only the local largest Yrange in a specific range of X horizontal axis points
   // Implemented by finding the lowest and highest point in the range
   let localYRangeMax: number = 100;
@@ -96,38 +130,6 @@ const getLargestRangeValues = (
 
   return { highestVal, lowestVal };
 };
-
-// Return values greater than cutoff + highest of previous 30 values
-// const getHighestValueOfPrevious = () => {
-// We can see that a majority of the time, the 'R' portion of the wave is >2200mV
-// 1. Find all points greater than 2200
-// let cutOffVoltage = 2200;
-//   if (dataPoint > cutOffVoltage) {
-//     // Before adding to the dataset, check if this is a noisy signal
-//     // Comparing previous X values & next X values should help seperate noise from the actual 'R' point in the 'QRS' wave
-//     // 2. Check values X steps backwards from dataPoint
-//     let xSteps = 60;
-//     let xValid = false;
-//     // Loop backwards
-//     for (let i = 0; i <= xSteps; i++) {
-//       if (input[index - i] < dataPoint - 10) {
-//         xValid = true;
-//       } else {
-//         xValid = false;
-//       }
-//     }
-
-//     // console.log("xValid", xValid);
-//     if (xValid) {
-//       highestDataPoints.push({
-//         p: dataPoint,
-//         i: index,
-//       });
-//     }
-//   }
-// }
-
-// Interface for box
 export interface OverlayBox {
   type: string;
   xMin: number;

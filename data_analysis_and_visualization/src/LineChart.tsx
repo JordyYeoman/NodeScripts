@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -9,15 +9,10 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { Line } from "react-chartjs-2";
-import {
-  findQRSWave,
-  generateData,
-  generateLabels,
-  getBoxesForData,
-} from "./utils/helpers";
+import { findQRSWave, generateLabels, getBoxesForData } from "./utils/helpers";
 import annotationPlugin from "chartjs-plugin-annotation";
 import { ChartLine } from "./components/atoms/ChartLine";
+import { calculateMovingAverage } from "./utils/MovingWindowAverage";
 
 ChartJS.register(
   CategoryScale,
@@ -38,7 +33,7 @@ export const options = {
       radius: 0.025,
     },
     line: {
-      borderWidth: 0.9,
+      borderWidth: 1.2,
     },
     tension: 0,
   },
@@ -48,7 +43,7 @@ export const options = {
     },
     title: {
       display: true,
-      text: "Chart.js Line Chart",
+      text: "Testing Annotations Data Set",
     },
     autocolors: false,
     annotation: {
@@ -57,31 +52,21 @@ export const options = {
   },
 };
 
-// export interface PluginOptions {
-
-// }
-
-// export interface LineChartOptions {
-//     responsive: boolean;
-//     maintainAspectRatio: boolean;
-//     plugins: PluginOptions;
-// }
-
 const dataPointsTotal = 500;
 const labels = generateLabels(dataPointsTotal);
-// const labels1 = generateData(dataPointsTotal);
-// const labels2 = generateData(dataPointsTotal);
 
 export function LineChart({ chartData }: { chartData: any }) {
   const [chartOptions, setChartOptions] = useState<any>(options);
-  const { data: chartDataArr } = chartData;
-  // console.log("chartData", chartDataArr);
-  // let dataSize = chartData?.data?.length > 0 ? chartData?.data?.length : 500;
-  //   let newLabels = generateLabels(dataSize);
+  let { data: chartDataArr } = chartData;
+  const [mwaActive, setMWAActive] = useState<boolean>(false);
 
-  let x = findQRSWave(chartDataArr, dataPointsTotal);
-  const overlayBoxes = getBoxesForData(x);
-  // console.log(overlayBoxes);
+  if (mwaActive) {
+    console.log("chartDataArr", chartDataArr);
+    chartDataArr = calculateMovingAverage(chartDataArr, 3);
+  }
+
+  let heartWaves = findQRSWave(chartDataArr, chartDataArr.length);
+  const overlayBoxes = getBoxesForData(heartWaves);
 
   const doStuff = () => {
     setChartOptions({
@@ -99,20 +84,28 @@ export function LineChart({ chartData }: { chartData: any }) {
 
   useEffect(() => {
     doStuff();
-  }, [chartData]);
+  }, [chartData, mwaActive]);
 
-  // console.log("rendered....");
   const data = {
     labels,
     datasets: [
       {
-        label: "Dataset 2",
-        data: chartData?.data.length > 0 ? chartData?.data : labels,
+        label: "Dataset",
+        data: mwaActive
+          ? chartDataArr
+          : chartData?.data.length > 0
+          ? chartData?.data
+          : labels,
         borderColor: "rgb(53, 162, 235)",
         backgroundColor: "rgba(53, 162, 235, 0.5)",
       },
     ],
   };
 
-  return <ChartLine chartOptions={chartOptions} data={data} />;
+  return (
+    <>
+      <ChartLine chartOptions={chartOptions} data={data} />
+      <button onClick={() => setMWAActive(!mwaActive)}>Toggle MWA</button>
+    </>
+  );
 }

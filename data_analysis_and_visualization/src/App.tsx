@@ -17,13 +17,8 @@ function App() {
     labels: [],
   });
 
-  useEffect(() => {
-    // console.log("[DEBUG] are you not running?");
-  });
-
   // Fetch data and update state
   useEffect(() => {
-    console.log("[DEBUG] running?");
     fetch(d)
       .then((r) => r.text())
       .then((text) => {
