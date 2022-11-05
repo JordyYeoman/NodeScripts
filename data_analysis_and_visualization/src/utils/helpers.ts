@@ -32,36 +32,40 @@ export const findQRSWave = (
       }
     }
   }
-
   // Find only the local largest Yrange in a specific range of X horizontal axis points
   // Implemented by finding the lowest and highest point in the range
+  let localYRangeMax: number = 100;
   let localXRangeMax: number = 50;
-  let localHighestPoints: ChartVal[] = [];
+  let localWavePoints: ChartVal[] = [];
   let currentHeartWave: any[] = [];
-  console.log("highestDataPoints.length", highestDataPoints.length);
   highestDataPoints.map((p: ChartVal, _index: number) => {
     // Segregate Heart Beat Waves
     if (_index == 0 || currentHeartWave.length <= 0) {
       currentHeartWave.push(p);
       return;
     }
-    // If still the current heart wave, push into the currentHeartWave[].
-    let current = currentHeartWave[currentHeartWave.length - 1];
-    if (p.p > current.p && p.p - current.p > localXRangeMax) {
-      currentHeartWave.push(p);
-      return;
+    // Check if final heart Wave for data set
+    if (_index < highestDataPoints.length - 1) {
+      // If still the current heart wave, push into the currentHeartWave[].
+      let current = currentHeartWave[currentHeartWave.length - 1];
+      let indexTotal = p.i - current.i;
+      if (p.p > current.p || indexTotal < localXRangeMax) {
+        currentHeartWave.push(p);
+        return;
+      }
     }
     // If its a new heart wave,
     // i. Find the highest and lowest values and add them to the list of boxes to display
     let rangeBoxes = getLargestRangeValues(currentHeartWave);
-    localHighestPoints.push(rangeBoxes.highestVal);
-    // localHighestPoints.push(rangeBoxes.lowestVal);
+    localWavePoints.push(rangeBoxes.highestVal);
+    localWavePoints.push(rangeBoxes.lowestVal);
 
     // ii. Then clear the currentHeartWave[] and repeat for remaining data points
     currentHeartWave = [];
+    // Make sure not to miss the current index value during this current iteration
+    currentHeartWave.push(p);
   });
-  console.log("localHighestPoints", localHighestPoints);
-  return localHighestPoints;
+  return localWavePoints;
 };
 
 const getLargestRangeValues = (
@@ -69,8 +73,7 @@ const getLargestRangeValues = (
 ): { highestVal: ChartVal; lowestVal: ChartVal } => {
   let highestVal = { p: 0, i: 0 };
   let lowestVal = { p: 0, i: 0 };
-
-  let localVals = input.sort((a, b) => a.p - b.p);
+  let localVals = input.sort((a, b) => b.p - a.p);
   highestVal = localVals[0];
   lowestVal = localVals[localVals.length - 1];
 
