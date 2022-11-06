@@ -9,7 +9,11 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { findQRSWave, generateLabels, getBoxesForData } from "./utils/helpers";
+import {
+  findQRSWave,
+  generateLabels,
+  getBoxesAndLabelsForData,
+} from "./utils/helpers";
 import annotationPlugin from "chartjs-plugin-annotation";
 import { ChartLine } from "./components/atoms/ChartLine";
 import { calculateMovingAverage } from "./utils/MovingWindowAverage";
@@ -65,8 +69,12 @@ export function LineChart({ chartData }: { chartData: any }) {
     chartDataArr = calculateMovingAverage(chartDataArr, 10);
   }
 
-  let heartWaves = findQRSWave(chartDataArr, chartDataArr.length);
-  const overlayBoxes = getBoxesForData(heartWaves);
+  let heartWaveSegments: any[] = findQRSWave(chartDataArr, chartDataArr.length);
+  const overlayBoxes: any[] = [];
+  heartWaveSegments.map((heartWaveDataSet: any) => {
+    let x = getBoxesAndLabelsForData(heartWaveDataSet);
+    overlayBoxes.push(...x);
+  });
 
   const doStuff = () => {
     setChartOptions({

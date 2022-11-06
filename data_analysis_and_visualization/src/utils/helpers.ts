@@ -3,10 +3,7 @@ export interface ChartVal {
   i: number;
 }
 
-export const findQRSWave = (
-  input: any[],
-  analysisWindowSize: number
-): any[] => {
+export const findQRSWave = (input: any[], analysisWindowSize: number) => {
   // With the data, identify all outstanding upper points, this will be our R of the QRS wave.
   let highestDataPoints: any[] = [];
   let minYRange: number = 600;
@@ -32,18 +29,38 @@ export const findQRSWave = (
     }
   }
 
-  let localWavePoints = getLocalWavePoints(highestDataPoints); // RS segments of 'QRS'
-  let qWavePoints = getQWavePoints(input, localWavePoints); // Q segment of 'QRS'
+  let localRSWavePoints = getRSWavePoints(highestDataPoints); // RS segments of 'QRS'
+  let qWavePoints = getQWavePoints(input, localRSWavePoints); // Q segment of 'QRS'
   let pWavePoints = getPWavePoints(input, qWavePoints); // P segment of 'PQRSTT' wave
-  let tWavePoints = getTWavePoints(input, localWavePoints); // T segment of 'PQRSTT wave
+  let pWaveStartSegment = getPWaveStartSegment(input, pWavePoints); // P segment of 'PQRSTT' wave
+  let tWavePoints = getTWavePoints(input, localRSWavePoints); // T segment of 'PQRSTT wave
   let tWaveEndSegment = getTWaveEndSegment(input, tWavePoints); // End of T Segment point
 
   return [
-    ...localWavePoints,
-    ...qWavePoints,
-    ...pWavePoints,
-    ...tWavePoints,
-    ...tWaveEndSegment,
+    {
+      segment: "RS",
+      data: localRSWavePoints,
+    },
+    {
+      segment: "Q",
+      data: qWavePoints,
+    },
+    {
+      segment: "P",
+      data: pWavePoints,
+    },
+    {
+      segment: "PS",
+      data: pWaveStartSegment,
+    },
+    {
+      segment: "T",
+      data: tWavePoints,
+    },
+    {
+      segment: "TE",
+      data: tWaveEndSegment,
+    },
   ];
 };
 
@@ -51,6 +68,33 @@ export interface IDataPoint {
   p: number;
   i: number;
 }
+
+const getPWaveStartSegment = (
+  originalDataSet: any[],
+  pWaveStartPoints: IDataPoint[]
+): IDataPoint[] => {
+  let pPoints: IDataPoint[] = [];
+  let xStepsBackwardFromPPoint = 20; // Visually the best range forwards to find the P point.
+  let currentLowestPPoint: IDataPoint = { i: 0, p: 0 };
+  // Find local P wave points within 'N' range
+  pWaveStartPoints.map((pPoint: IDataPoint) => {
+    for (let z = 0; z < xStepsBackwardFromPPoint; z++) {
+      let local = originalDataSet[pPoint.i - z];
+
+      if (pPoint.i + z > originalDataSet.length - 1) break; // End for loop if trying to reach passed the data set size
+
+      if (z === 0 || (local < pPoint.p && local <= currentLowestPPoint.p)) {
+        currentLowestPPoint = {
+          i: pPoint.i - z,
+          p: local,
+        };
+      }
+    }
+    pPoints.push(currentLowestPPoint);
+    currentLowestPPoint = { i: 0, p: 0 };
+  });
+  return pPoints;
+};
 
 const getTWaveEndSegment = (
   originalDataSet: any[],
@@ -65,10 +109,6 @@ const getTWaveEndSegment = (
       let local = originalDataSet[tPoint.i + z];
 
       if (tPoint.i + z > originalDataSet.length - 1) break; // End for loop if trying to reach passed the data set size
-
-      if (tPoint.i >= 476) {
-        console.log("local", local, "index", tPoint.i + z, "loop: ", z);
-      }
       if (z === 0 || (local < tPoint.p && local <= currentLowestTPoint.p)) {
         currentLowestTPoint = {
           i: tPoint.i + z,
@@ -164,7 +204,7 @@ const getQWavePoints = (originalDataSet: any[], localWavePoints: any[]) => {
   return qWavePoints;
 };
 
-const getLocalWavePoints = (highestDataPoints: any[]) => {
+const getRSWavePoints = (highestDataPoints: any[]) => {
   // Find only the local largest Yrange in a specific range of X horizontal axis points
   // Implemented by finding the lowest and highest point in the range
   let localYRangeMax: number = 100;
@@ -222,24 +262,75 @@ export interface OverlayBox {
   borderColor: string;
 }
 
-export const getBoxesForData = (data: any[]): OverlayBox[] => {
+export interface OverlayLabel {
+  type: string;
+  xValue: number;
+  yValue: number;
+  content: string;
+  color: string;
+  font: {
+    size: number;
+    weight: string;
+  };
+}
+
+export interface HeartWaveSegment {
+  segment: string;
+  data: any[];
+}
+
+export const getBoxesAndLabelsForData = (
+  heartWaveSegment: HeartWaveSegment
+): any[] => {
+  const { segment, data } = heartWaveSegment;
   let bufferLeftHorizontal = 3;
   let bufferRightHorizontal = 3;
   let boxes: OverlayBox[] = [];
+  let labels: OverlayLabel[] = [];
+  let colorVal: string = getColorForSegment(segment);
 
-  data.forEach((value, index) => {
+  data.forEach((value: any, index: number) => {
     boxes.push({
       type: "box",
       xMin: value.i - bufferLeftHorizontal,
       xMax: value.i + bufferRightHorizontal,
       yMin: value.p - 10,
       yMax: value.p + 10,
-      backgroundColor: "rgba(255,155,236, 0.25)",
-      borderColor: "rgba(255,149,244, 0.7)",
+      backgroundColor: colorVal,
+      borderColor: colorVal,
+    });
+    labels.push({
+      type: "label",
+      xValue: value.i,
+      yValue: value.p + 24,
+      content: segment,
+      color: colorVal,
+      font: {
+        size: 8,
+        weight: "bold",
+      },
     });
   });
+  return [...boxes, ...labels] ?? [];
+};
 
-  return boxes ?? [];
+export const getColorForSegment = (segment: string) => {
+  switch (segment) {
+    case "PS":
+      return "rgba(255,155,236, 0.5)";
+    case "P":
+      return "rgba(86, 243, 115, 0.5)";
+    case "Q":
+      return "rgba(103, 94, 232, 0.5)";
+    case "RS":
+      return "rgba(0, 175, 255, 0.5)";
+    case "T":
+      return "rgba(255, 66, 66, 0.5)";
+    case "TE":
+      return "rgba(235, 214, 40, 0.5)";
+    default:
+      return "rgba(255,155,236, 0.5)";
+  }
 };
 
 export const generateLabels = (dataSetSize: number) => {
