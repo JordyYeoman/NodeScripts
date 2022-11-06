@@ -13,6 +13,7 @@ import { findQRSWave, generateLabels, getBoxesForData } from "./utils/helpers";
 import annotationPlugin from "chartjs-plugin-annotation";
 import { ChartLine } from "./components/atoms/ChartLine";
 import { calculateMovingAverage } from "./utils/MovingWindowAverage";
+import { getSmoothedData } from "./utils/SmoothAverage";
 
 ChartJS.register(
   CategoryScale,
@@ -61,8 +62,7 @@ export function LineChart({ chartData }: { chartData: any }) {
   const [mwaActive, setMWAActive] = useState<boolean>(false);
 
   if (mwaActive) {
-    console.log("chartDataArr", chartDataArr);
-    chartDataArr = calculateMovingAverage(chartDataArr, 3);
+    chartDataArr = calculateMovingAverage(chartDataArr, 10);
   }
 
   let heartWaves = findQRSWave(chartDataArr, chartDataArr.length);

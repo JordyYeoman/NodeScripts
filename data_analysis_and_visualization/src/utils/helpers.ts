@@ -31,19 +31,119 @@ export const findQRSWave = (
       }
     }
   }
-  let localWavePoints = getLocalWavePoints(highestDataPoints);
-  let xStepsBackwardFromHighpoint = 20;
+
+  let localWavePoints = getLocalWavePoints(highestDataPoints); // RS segments of 'QRS'
+  let qWavePoints = getQWavePoints(input, localWavePoints); // Q segment of 'QRS'
+  let pWavePoints = getPWavePoints(input, qWavePoints); // P segment of 'PQRSTT' wave
+  let tWavePoints = getTWavePoints(input, localWavePoints); // T segment of 'PQRSTT wave
+  let tWaveEndSegment = getTWaveEndSegment(input, tWavePoints); // End of T Segment point
+
+  return [
+    ...localWavePoints,
+    ...qWavePoints,
+    ...pWavePoints,
+    ...tWavePoints,
+    ...tWaveEndSegment,
+  ];
+};
+
+export interface IDataPoint {
+  p: number;
+  i: number;
+}
+
+const getTWaveEndSegment = (
+  originalDataSet: any[],
+  tWaveEndPoints: IDataPoint[]
+): IDataPoint[] => {
+  let tPoints: IDataPoint[] = [];
+  let xStepsForwardFromTpoint = 20; // Visually the best range forwards to find the P point.
+  let currentLowestTPoint: IDataPoint = { i: 0, p: 0 };
+  // Find local P wave points within 'N' range
+  tWaveEndPoints.map((tPoint: IDataPoint) => {
+    for (let z = 0; z < xStepsForwardFromTpoint; z++) {
+      let local = originalDataSet[tPoint.i + z];
+
+      if (tPoint.i + z > originalDataSet.length - 1) break; // End for loop if trying to reach passed the data set size
+
+      if (tPoint.i >= 476) {
+        console.log("local", local, "index", tPoint.i + z, "loop: ", z);
+      }
+      if (z === 0 || (local < tPoint.p && local <= currentLowestTPoint.p)) {
+        currentLowestTPoint = {
+          i: tPoint.i + z,
+          p: local,
+        };
+      }
+    }
+    tPoints.push(currentLowestTPoint);
+    currentLowestTPoint = { i: 0, p: 0 };
+  });
+  return tPoints;
+};
+
+const getTWavePoints = (
+  originalDataSet: any[],
+  localWavePoints: IDataPoint[]
+): IDataPoint[] => {
+  let tPoints: IDataPoint[] = [];
+  let xStepsForwardFromRpoint = 30; // Visually the best range backwards to find the P point.
+  let currentHighestPPoint: IDataPoint = { i: 0, p: 0 };
+  // Find local T wave points within 'N' range
+  localWavePoints.map((wp: IDataPoint, index: number) => {
+    if (index % 2 === 1) {
+      for (let z = 0; z < xStepsForwardFromRpoint; z++) {
+        let local = originalDataSet[wp.i + z];
+
+        if (local > wp.p && currentHighestPPoint.p <= local) {
+          currentHighestPPoint = {
+            i: wp.i + z,
+            p: local,
+          };
+        }
+      }
+      tPoints.push(currentHighestPPoint);
+      currentHighestPPoint = { i: 0, p: 0 };
+    }
+  });
+  return tPoints;
+};
+
+const getPWavePoints = (
+  originalDataSet: any[],
+  qWavePoints: IDataPoint[]
+): IDataPoint[] => {
+  let pPoints: IDataPoint[] = [];
+  let xStepsBackwardFromQpoint = 30; // Visually the best range backwards to find the P point.
+  let currentHighestPPoint: IDataPoint = { i: 0, p: 0 };
+  // Find local P wave points within 'N' range
+  qWavePoints.map((qPoint: IDataPoint) => {
+    for (let z = 0; z < xStepsBackwardFromQpoint; z++) {
+      let local = originalDataSet[qPoint.i - z];
+      if (local > qPoint.p && currentHighestPPoint.p <= local) {
+        currentHighestPPoint = {
+          i: qPoint.i - z,
+          p: local,
+        };
+      }
+    }
+    pPoints.push(currentHighestPPoint);
+    currentHighestPPoint = { i: 0, p: 0 };
+  });
+  return pPoints;
+};
+
+const getQWavePoints = (originalDataSet: any[], localWavePoints: any[]) => {
+  let xStepsBackwardFromHighpoint = 8; // Visually the best range backwards to find the Q point.
   let qWavePoints: any[] = [];
   localWavePoints.map((wp: any, index: number) => {
-    // console.log("wp", wp);
     // Highest point is every even number 0, 2, 4, 6 etc in the localWavePoints array.
     if (index === 0 || index % 2 === 0) {
       // Find the Q portion of the 'QRS' wave
       // Likely, the lowest point x steps backwards from the highest point
       let localQLowPoint = { p: 0, i: 0 };
       for (let x = 0; x <= xStepsBackwardFromHighpoint; x++) {
-        let local = input[wp.i - x];
-        // console.log("x", x, "local", local, "localQLowPoint", localQLowPoint);
+        let local = originalDataSet[wp.i - x];
         if (x === 0) {
           localQLowPoint = {
             p: local,
@@ -61,8 +161,7 @@ export const findQRSWave = (
       qWavePoints.push(localQLowPoint);
     }
   });
-  console.log("qWavePoints", qWavePoints);
-  return [...localWavePoints, ...qWavePoints];
+  return qWavePoints;
 };
 
 const getLocalWavePoints = (highestDataPoints: any[]) => {
@@ -111,23 +210,6 @@ const getLargestRangeValues = (
   highestVal = localVals[0];
   lowestVal = localVals[localVals.length - 1];
 
-  // input.map((g) => {
-  //   console.log(
-  //     "highest val ",
-  //     highestVal.p,
-  //     "lowestval: ",
-  //     lowestVal.p,
-  //     "wtf g",
-  //     g.p
-  //   );
-  //   if (g.p > highestVal.p) {
-  //     highestVal = g;
-  //   }
-  //   if (g.p < lowestVal.p) {
-  //     lowestVal = g;
-  //   }
-  // });
-
   return { highestVal, lowestVal };
 };
 export interface OverlayBox {
@@ -141,8 +223,8 @@ export interface OverlayBox {
 }
 
 export const getBoxesForData = (data: any[]): OverlayBox[] => {
-  let bufferLeftHorizontal = 10;
-  let bufferRightHorizontal = 10;
+  let bufferLeftHorizontal = 3;
+  let bufferRightHorizontal = 3;
   let boxes: OverlayBox[] = [];
 
   data.forEach((value, index) => {
