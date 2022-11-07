@@ -4,7 +4,7 @@ import d from "./assets/outputtest.txt";
 import BasicLineChart from "./BasicLineChart";
 import { LineChart } from "./LineChart";
 
-const dataAmount = 5000;
+const dataAmount = 10000;
 const spliceFromIndex = 10371;
 
 export interface DataLayer {

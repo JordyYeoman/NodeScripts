@@ -14,7 +14,6 @@ const BasicSynchronizedLineChart = ({
 }: {
   incomingData: any;
 }) => {
-  console.log("data", incomingData.data.data);
   let data = [];
   let labels = incomingData?.data?.data;
   if (labels) {
