@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -8,16 +8,16 @@ import {
   Title,
   Tooltip,
   Legend,
-} from "chart.js";
+} from 'chart.js';
 import {
   findQRSWave,
   generateLabels,
   getBoxesAndLabelsForData,
-} from "./utils/helpers";
-import annotationPlugin from "chartjs-plugin-annotation";
-import { ChartLine } from "./components/atoms/ChartLine";
-import { calculateMovingAverage } from "./utils/MovingWindowAverage";
-import { getSmoothedData } from "./utils/SmoothAverage";
+} from './utils/helpers';
+import annotationPlugin from 'chartjs-plugin-annotation';
+import { ChartLine } from './components/atoms/ChartLine';
+import { calculateMovingAverage } from './utils/MovingWindowAverage';
+import { getSmoothedData } from './utils/SmoothAverage';
 
 ChartJS.register(
   CategoryScale,
@@ -44,11 +44,11 @@ export const options = {
   },
   plugins: {
     legend: {
-      position: "top" as const,
+      position: 'top' as const,
     },
     title: {
       display: true,
-      text: "Testing Annotations Data Set",
+      text: 'Testing Annotations Data Set',
     },
     autocolors: false,
     annotation: {
@@ -57,7 +57,7 @@ export const options = {
   },
 };
 
-const dataPointsTotal = 500;
+const dataPointsTotal = 2000; // 500;
 const labels = generateLabels(dataPointsTotal);
 
 export function LineChart({ chartData }: { chartData: any }) {
@@ -78,7 +78,7 @@ export function LineChart({ chartData }: { chartData: any }) {
 
   const getFullSegment = (originalData: any, heartWaveDataSet: any) => {
     let z = heartWaveDataSet.filter(
-      (v: any) => v.segment === "PS" || v.segment === "TE"
+      (v: any) => v.segment === 'PS' || v.segment === 'TE'
     );
     let startPoint = z[0].data;
     let endPoint = z[1].data;
@@ -94,14 +94,14 @@ export function LineChart({ chartData }: { chartData: any }) {
   const getWaveSegmentLines = (fullHeartSegments: any[]) => {
     return fullHeartSegments.map((x: number[]) => {
       return {
-        label: "Dataset 2",
+        label: 'Dataset 2',
         data: x,
-        borderColor: "rgb(253, 162, 235)",
-        backgroundColor: "rgba(253, 162, 235, 0.5)",
+        borderColor: 'rgb(253, 162, 235)',
+        backgroundColor: 'rgba(253, 162, 235, 0.5)',
       };
     });
   };
-  const waveSegments = getWaveSegmentLines(fullHeartSegments);
+  const waveSegments = []; //getWaveSegmentLines(fullHeartSegments); // Temporarily disable the other line segments
 
   const doStuff = () => {
     setChartOptions({
@@ -125,14 +125,14 @@ export function LineChart({ chartData }: { chartData: any }) {
     labels,
     datasets: [
       {
-        label: "Dataset",
+        label: 'Dataset',
         data: mwaActive
           ? chartDataArr
           : chartData?.data.length > 0
           ? chartData?.data
           : labels,
-        borderColor: "rgb(53, 162, 235)",
-        backgroundColor: "rgba(53, 162, 235, 0.5)",
+        borderColor: 'rgb(53, 162, 235)',
+        backgroundColor: 'rgba(53, 162, 235, 0.5)',
       },
       ...waveSegments,
     ],

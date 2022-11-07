@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
-import "./App.css";
-import d from "./assets/outputtest.txt";
-import { LineChart } from "./LineChart";
+import { useEffect, useState } from 'react';
+import './App.css';
+import d from './assets/outputtest2.txt';
+import { LineChart } from './LineChart';
 
-const dataAmount = 500;
-const spliceFromIndex = 10371;
+const dataAmount = 5000;
+const spliceFromIndex = 0; // 10371;
 
 export interface DataLayer {
   data: number[];
@@ -25,11 +25,10 @@ function App() {
         try {
           let newData = text
             .trim()
-            .split(",")
+            .split(',')
             .splice(spliceFromIndex, dataAmount)
             .map((d) => parseInt(d));
           let xLabels = [...Array(dataAmount).keys()].map((k) => k);
-
           let d = {
             data: newData,
             labels: xLabels,
@@ -37,7 +36,7 @@ function App() {
           setChartData(d);
         } catch (e) {
           console.log(
-            "Error ----------------------------------------------------------------"
+            'Error ----------------------------------------------------------------'
           );
         }
       });
@@ -48,9 +47,9 @@ function App() {
   }
   // console.log("chart data in app.tsx", chartData);
   return (
-    <div className="App flex flex-col items-center justify-center">
+    <div className='App flex flex-col items-center justify-center'>
       Welcome Sir
-      <div className="h-[700px] w-[1000px] bg-zinc-800 rounded p-4 mt-2">
+      <div className='h-[700px] w-[1000px] bg-zinc-800 rounded p-4 mt-2'>
         <LineChart chartData={chartData} />
       </div>
     </div>

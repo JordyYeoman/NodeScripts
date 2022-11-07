@@ -3,11 +3,40 @@ export interface ChartVal {
   i: number;
 }
 
+const getRangeCalibration = (
+  input: any[],
+  windowSize: number
+): { rangeHigh: number; rangeLow: number } => {
+  let rangeHigh = 0;
+  let rangeLow = 0;
+  input.map((val: number, index: number) => {
+    if (index === 0) {
+      rangeHigh = val;
+      rangeLow = val;
+    }
+    if (val >= rangeHigh) {
+      rangeHigh = val;
+    }
+    if (val <= rangeLow) {
+      rangeLow = val;
+    }
+  });
+  return { rangeHigh, rangeLow };
+};
+
 export const findQRSWave = (input: any[], analysisWindowSize: number) => {
+  // TODO - find dataset range peaks
+  let calibrationRange = getRangeCalibration(
+    input,
+    Math.floor(analysisWindowSize / 4)
+  );
+  // TODO - figure out how to add frequency Hz of data sampling
+  let frequency = 100; // 100 samples a second?
   // With the data, identify all outstanding upper points, this will be our R of the QRS wave.
   let highestDataPoints: any[] = [];
-  let minYRange: number = 600;
-  let smallWindowSize: number = 5;
+  let minYRange: number = calibrationRange.rangeHigh * 0.7;
+  // let smallWindowSize: number = 5;
+  let smallWindowSize: number = 10;
   // Find local QRS wave using largest range between data points method
   for (let i = 0; i < analysisWindowSize; i++) {
     let localArr: Array<number> = [];
@@ -38,27 +67,27 @@ export const findQRSWave = (input: any[], analysisWindowSize: number) => {
 
   return [
     {
-      segment: "RS",
+      segment: 'RS',
       data: localRSWavePoints,
     },
     {
-      segment: "Q",
+      segment: 'Q',
       data: qWavePoints,
     },
     {
-      segment: "P",
+      segment: 'P',
       data: pWavePoints,
     },
     {
-      segment: "PS",
+      segment: 'PS',
       data: pWaveStartSegment,
     },
     {
-      segment: "T",
+      segment: 'T',
       data: tWavePoints,
     },
     {
-      segment: "TE",
+      segment: 'TE',
       data: tWaveEndSegment,
     },
   ];
@@ -291,7 +320,7 @@ export const getBoxesAndLabelsForData = (
 
   data.forEach((value: any, index: number) => {
     boxes.push({
-      type: "box",
+      type: 'box',
       xMin: value.i - bufferLeftHorizontal,
       xMax: value.i + bufferRightHorizontal,
       yMin: value.p - 10,
@@ -300,14 +329,14 @@ export const getBoxesAndLabelsForData = (
       borderColor: colorVal,
     });
     labels.push({
-      type: "label",
+      type: 'label',
       xValue: value.i,
       yValue: value.p + 24,
       content: segment,
       color: colorVal,
       font: {
         size: 8,
-        weight: "bold",
+        weight: 'bold',
       },
     });
   });
@@ -316,20 +345,20 @@ export const getBoxesAndLabelsForData = (
 
 export const getColorForSegment = (segment: string) => {
   switch (segment) {
-    case "PS":
-      return "rgba(255,155,236, 0.5)";
-    case "P":
-      return "rgba(86, 243, 115, 0.5)";
-    case "Q":
-      return "rgba(103, 94, 232, 0.5)";
-    case "RS":
-      return "rgba(0, 175, 255, 0.5)";
-    case "T":
-      return "rgba(255, 66, 66, 0.5)";
-    case "TE":
-      return "rgba(235, 214, 40, 0.5)";
+    case 'PS':
+      return 'rgba(255,155,236, 0.5)';
+    case 'P':
+      return 'rgba(86, 243, 115, 0.5)';
+    case 'Q':
+      return 'rgba(103, 94, 232, 0.5)';
+    case 'RS':
+      return 'rgba(0, 175, 255, 0.5)';
+    case 'T':
+      return 'rgba(255, 66, 66, 0.5)';
+    case 'TE':
+      return 'rgba(235, 214, 40, 0.5)';
     default:
-      return "rgba(255,155,236, 0.5)";
+      return 'rgba(255,155,236, 0.5)';
   }
 };
 
