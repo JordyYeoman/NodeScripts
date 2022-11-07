@@ -66,17 +66,19 @@ export const DataVisuals = ({ chartData }: { chartData: DataLayer }) => {
   return (
     <>
       <div className="overflow-hidden w-full flex flex-col xl:flex-row">
-        <div className="rounded w-full h-[600px] bg-zinc-800 xl:w-2/3">
+        <div className={`rounded w-full h-[750px] bg-zinc-800 xl:w-2/3`}>
           <LineChart chartData={chartData} setWaveSegments={setWaveData} />
         </div>
-        <div className="flex flex-row w-full xl:flex-col transition duration-300 xl:w-1/3 xl:h-[600px]">
+        <div
+          className={`flex flex-row w-full xl:flex-col transition duration-300 xl:w-1/3 xl:h-[750px]`}
+        >
           {waveSegments &&
             waveSegments.map((data: any, index: number) => {
               if (index < 3) {
                 return (
                   <SmallWaveBox
                     key={index}
-                    index={0}
+                    index={index}
                     data={data}
                     labels={labels}
                   />
@@ -101,7 +103,7 @@ export const SmallWaveBox = ({
 }) => {
   return (
     <div
-      className={`rounded w-1/3 h-[250px] bg-pink-200 m-1 ml-0 xl:w-full xl:h-1/3 xl:ml-1 mb-0 ${
+      className={`rounded w-1/3 h-[250px] bg-zinc-800 m-1 ml-0 xl:w-full xl:h-1/3 xl:ml-1 mb-0 mt-1 ${
         index === 0 ? "xl:mt-0" : ""
       } ${index === 2 ? "mr-0" : ""}`}
     >

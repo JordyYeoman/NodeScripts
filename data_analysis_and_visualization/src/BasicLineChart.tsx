@@ -14,8 +14,17 @@ const BasicSynchronizedLineChart = ({
 }: {
   incomingData: any;
 }) => {
-  console.log("labels", incomingData.labels);
   console.log("data", incomingData.data.data);
+  let data = [];
+  let labels = incomingData?.data?.data;
+  if (labels) {
+    data = labels.map((d: any, index: number) => {
+      return {
+        data: d,
+        label: index,
+      };
+    });
+  }
 
   return (
     <div style={{ width: "100%", height: "100%" }}>
@@ -23,8 +32,8 @@ const BasicSynchronizedLineChart = ({
         <LineChart
           width={500}
           height={200}
-          data={incomingData.data.data ?? null}
-          //   syncId="anyId" - Uncomment for any linked line charts
+          data={data}
+          //   syncId="anyId" // Uncomment for any linked line charts
           margin={{
             top: 12,
             right: 16,
@@ -32,21 +41,32 @@ const BasicSynchronizedLineChart = ({
             bottom: -10,
           }}
         >
-          <CartesianGrid strokeDasharray="3 3" />
+          <CartesianGrid
+            strokeDasharray="0 0"
+            stroke={"rgba(24, 24, 27, 0.25)"}
+          />
           <XAxis
-            dataKey="incomingData.labels"
-            tick={{ fontSize: 7, fill: "black", fontWeight: "bold" }}
+            dataKey="label"
+            tick={{ fontSize: 7, fill: "rgb(113 113 122)", fontWeight: "bold" }}
           />
           <YAxis
-            dataKey="incomingData.data.data"
-            tick={{ fontSize: 7, fill: "black", fontWeight: "bold" }}
+            domain={["0", "auto"]}
+            dataKey="data"
+            tick={{ fontSize: 7, fill: "rgb(113 113 122)", fontWeight: "bold" }}
           />
           <Tooltip />
           <Line
-            type="monotone"
-            dataKey="incomingData.data.data"
-            stroke="#8884d8"
-            fill="#8884d8"
+            type="linear"
+            dataKey="data"
+            stroke="rgb(53, 162, 235)"
+            fill="rgb(53, 162, 235)"
+            dot={{
+              fill: "transparent",
+              stroke: "rgb(53, 162, 235)",
+              strokeWidth: 0.1,
+              width: 0,
+              r: 1,
+            }}
           />
         </LineChart>
       </ResponsiveContainer>
