@@ -99,8 +99,6 @@ export function LineChartAnnotated({
     setWaveSegments({ waveSegments });
   }, [chartData]);
 
-  console.log("chartData: ", chartData?.data);
-
   const data = {
     labels,
     datasets: [...chartData?.data],

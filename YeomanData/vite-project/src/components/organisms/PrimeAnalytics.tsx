@@ -21,6 +21,7 @@ import { ChartFilter } from "../../types/enums";
 import RetrieveDataComponent from "../atoms/RetrieveDataComponent";
 import { DataUploadCard } from "../atoms/DataUploadCard";
 import LoadingSpinner, { LoadingSpinnerSize } from "../atoms/LoadingSpinner";
+import { PrimeBarChart } from "../molecules/BarChart";
 
 function PrimeAnalytics() {
   const { ironHeartData, setIronHeartData } = useAppContext();
@@ -115,10 +116,14 @@ function PrimeAnalytics() {
           />
         </div>
         <div className="flex flex-wrap h-full w-full">
-          <div className="w-2/3 pr-12">
+          <div className="w-2/3 pr-12 flex flex-col relative">
             <YearFilter timeFilter={timeFilter} action={handleClick} />
             <MonthFilter timeFilter={timeFilter} action={handleClick} />
             <DateFilter timeFilter={timeFilter} action={handleClick} />
+            <div className="mt-2">Sleep</div>
+            <div className="w-full h-full bg-zinc-800 z-0 mt-1 mb-0 rounded">
+              <PrimeBarChart />
+            </div>
           </div>
           <div className="w-1/3">
             <AnalogProcessingPanel
