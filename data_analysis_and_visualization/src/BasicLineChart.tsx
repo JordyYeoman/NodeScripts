@@ -15,7 +15,7 @@ const BasicSynchronizedLineChart = ({
   incomingData: any;
 }) => {
   let data = [];
-  let labels = incomingData?.data?.data;
+  let labels = incomingData?.data;
   if (labels) {
     data = labels.map((d: any, index: number) => {
       return {

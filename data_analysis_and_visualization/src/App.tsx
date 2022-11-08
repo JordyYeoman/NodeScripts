@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import d from "./assets/outputtest.txt";
+import d from "./assets/IRONHEART_BETA.txt";
 import BasicLineChart from "./BasicLineChart";
 import { LineChart } from "./LineChart";
 
 const dataAmount = 10000;
-const spliceFromIndex = 10371;
+const spliceFromIndex = 220371;
 
 export interface DataLayer {
   data: number[];
@@ -61,7 +61,13 @@ export const DataVisuals = ({ chartData }: { chartData: DataLayer }) => {
     labels: undefined,
     data: undefined,
   });
-  const { labels, waveSegments } = waveData;
+  let { labels, waveSegments } = waveData;
+  const amountOfCharts = 3;
+  let missingWaveSegments = false;
+
+  if (waveSegments?.length < amountOfCharts) {
+    missingWaveSegments = true;
+  }
 
   return (
     <>
@@ -72,42 +78,39 @@ export const DataVisuals = ({ chartData }: { chartData: DataLayer }) => {
         <div
           className={`flex flex-row w-full xl:flex-col transition duration-300 xl:w-1/3 xl:h-[750px]`}
         >
-          {waveSegments &&
-            waveSegments.map((data: any, index: number) => {
-              if (index < 3) {
-                return (
-                  <SmallWaveBox
-                    key={index}
-                    index={index}
-                    data={data}
-                    labels={labels}
-                  />
-                );
-              }
-              return null;
-            })}
+          {missingWaveSegments
+            ? [...Array(Math.abs(amountOfCharts)).keys()].map(
+                (_, index: number) => {
+                  return (
+                    <SmallWaveBox
+                      key={index}
+                      index={index}
+                      data={waveSegments?.[index]?.data}
+                    />
+                  );
+                }
+              )
+            : waveSegments &&
+              waveSegments.map((data: any, index: number) => {
+                if (index < 3) {
+                  return <SmallWaveBox key={index} index={index} data={data} />;
+                }
+                return null;
+              })}
         </div>
       </div>
     </>
   );
 };
 
-export const SmallWaveBox = ({
-  data,
-  index,
-  labels,
-}: {
-  data: any;
-  index: number;
-  labels: any;
-}) => {
+export const SmallWaveBox = ({ data, index }: { data: any; index: number }) => {
   return (
     <div
       className={`rounded w-1/3 h-[250px] bg-zinc-800 m-1 ml-0 xl:w-full xl:h-1/3 xl:ml-1 mb-0 mt-1 ${
         index === 0 ? "xl:mt-0" : ""
       } ${index === 2 ? "mr-0" : ""}`}
     >
-      <BasicLineChart incomingData={{ labels, data }} />
+      <BasicLineChart incomingData={{ data }} />
     </div>
   );
 };

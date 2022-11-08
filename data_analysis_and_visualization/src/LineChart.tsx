@@ -75,7 +75,7 @@ export function LineChart({
     chartDataArr = calculateMovingAverage(chartDataArr, 10);
   }
 
-  let heartWaveSegments: any[] = findQRSWave(chartDataArr, chartDataArr.length);
+  let heartWaveSegments: any[] = findQRSWave(chartDataArr, dataPointsTotal);
   const overlayBoxes: any[] = [];
   heartWaveSegments.map((heartWaveDataSet: any) => {
     let x = getBoxesAndLabelsForData(heartWaveDataSet);
@@ -88,9 +88,13 @@ export function LineChart({
     );
     let startPoint = z[0].data;
     let endPoint = z[1].data;
-    let waveDataSegments = [];
+    let waveDataSegments: any[] = [];
     for (let i = 0; i < startPoint.length; i++) {
-      waveDataSegments.push(originalData.slice(startPoint[i].i, endPoint[i].i));
+      let d = originalData.slice(startPoint[i].i, endPoint[i].i);
+
+      if (d.length > 0) {
+        waveDataSegments.push(d);
+      }
     }
 
     return waveDataSegments;
