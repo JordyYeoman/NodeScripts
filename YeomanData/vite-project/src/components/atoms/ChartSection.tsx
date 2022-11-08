@@ -31,7 +31,7 @@ const ChartSection = ({
           }
           return [];
         });
-        // Data currently holds the current state of the chart info
+        // Data holds the current state of the chart info
         // Map the parsed data onto each of the new values in the data variable
         if (newData && newData.length > 0) {
           newData.map((dataChunk: string[], index: number) => {

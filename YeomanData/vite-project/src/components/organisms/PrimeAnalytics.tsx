@@ -20,6 +20,7 @@ import AnalogProcessingPanel from "../molecules/AnalogProcessingPanel";
 import { ChartFilter } from "../../types/enums";
 import RetrieveDataComponent from "../atoms/RetrieveDataComponent";
 import { DataUploadCard } from "../atoms/DataUploadCard";
+import LoadingSpinner, { LoadingSpinnerSize } from "../atoms/LoadingSpinner";
 
 function PrimeAnalytics() {
   const { ironHeartData, setIronHeartData } = useAppContext();
@@ -132,7 +133,7 @@ function PrimeAnalytics() {
         <div className="w-full pt-2 text-sm font-bold uppercase flex items-start flex-col">
           Sources
           <div className="flex flex-wrap items-center">
-            {ironHeartData.length > 0 &&
+            {ironHeartData?.length > 0 ? (
               ironHeartData
                 .sort((a: any, b: any) => a.chunkCount - b.chunkCount)
                 .map((data: any, index: number) => {
@@ -166,7 +167,13 @@ function PrimeAnalytics() {
                       </div>
                     </div>
                   );
-                })}
+                })
+            ) : (
+              <LoadingSpinner
+                size={LoadingSpinnerSize.SMALL}
+                classes={"mt-4 ml-1 mb-[14px]"}
+              />
+            )}
           </div>
         </div>
       </Card>

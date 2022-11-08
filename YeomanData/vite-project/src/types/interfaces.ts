@@ -8,3 +8,8 @@ export interface TimeFilter {
 export interface HeartPayload {
   data: any;
 }
+
+export interface DataLayer {
+  data: number[];
+  labels: number[];
+}
