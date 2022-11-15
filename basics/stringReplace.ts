@@ -14,3 +14,9 @@ console.log("demoStr2:", demoStr2);
 let testStr2 = "  Hello World ! ";
 const demoStr3 = testStr2.replace(/\s/g, "");
 console.log("demoStr3:", demoStr3);
+
+let testStr4 = "Hello World! | Hello Muppet!";
+console.log("Split Daddy: ", testStr4.split("|"));
+
+let testStr5 = "Hey man whats upppp";
+console.log("Spliterino: ", testStr5.split("|"));
