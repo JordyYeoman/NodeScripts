@@ -17,6 +17,11 @@ console.log("demoStr3:", demoStr3);
 
 let testStr4 = "Hello World! | Hello Muppet!";
 console.log("Split Daddy: ", testStr4.split("|"));
+console.log("Split Daddy2: ", testStr4.replace(/\s/g, "").split("|"));
 
 let testStr5 = "Hey man whats upppp";
 console.log("Spliterino: ", testStr5.split("|"));
+
+let testStr6 =
+  "Hello World! | Hello Muppet! Hello World! | Hello Muppet! Hello World! | Hello Muppet! Hello World! | Hello | Muppet! Hello World! || Hello Mup|pet!";
+console.log("Splitting weird string: ", testStr6.replace(/\s/g, "").split("|"));
