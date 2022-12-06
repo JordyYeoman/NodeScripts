@@ -1,7 +1,7 @@
 import fs from "fs";
 import readline from "readline";
 
-// --- Day 2: Rock Paper Scissors ---
+// --- Day 2: Rock Paper Scissors 1h 30min ---
 const handsMap = new Map([
   ["A", "rock"],
   ["X", "rock"],
