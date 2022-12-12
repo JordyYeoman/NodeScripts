@@ -1,7 +1,7 @@
 import fs from "fs";
 import readline from "readline";
 
-// --- Day 3: Rucksack Reorganization 20min ---
+// --- Day 3: Rucksack Reorganization 1h 54min ---
 
 // Split into two halves
 const getStringInTwoHalves = (str: string) => {
