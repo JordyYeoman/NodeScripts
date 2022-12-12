@@ -1,44 +1,26 @@
 import fs from "fs";
 import readline from "readline";
 
-// --- Day 4: Camp Cleanup ---
+// --- Day 4: Camp Cleanup 74 Minutes ---
 
 const filename = 'input.txt';
-let pairsContained = 0;
 let data: string[] = fs.readFileSync(filename, 'utf8').split('\n');
+let answer: number = 0;
+let answer2: number = 0;
 
-const getSideWithHighestNumber = (l: string[], r: string[]): string => {
-    let lNum = parseInt(l[1]); 
-    let rNum = parseInt(r[1]);
-    if(lNum === rNum) {
-        return '';
-    };
-    if(lNum >rNum) {
-        return 'LEFT';
-    }
-    return 'RIGHT';
-};
 
 data.map((pair: string)=> {
-    // Get Left and right sides
-    let leftSide = pair.split(',')[0].split('-');
-    let rightSide = pair.split(',')[1].split('-');
+  let sections = pair.split(",")
+  let leftStart = Number(sections[0].split("-")[0])
+  let leftEnd = Number(sections[0].split("-")[1])
+  let rightStart = Number(sections[1].split("-")[0])
+  let rightEnd = Number(sections[1].split("-")[1])
 
-    // Find the highest number of the lot - either left[1] or right [1]
-    let side = getSideWithHighestNumber(leftSide, rightSide);
-    
-    if(side === 'LEFT') {
-       if( leftSide[0] < rightSide[0]) {
-        console.log('leftside[0', leftSide[0], rightSide[0])
-        pairsContained += 1;
-       } // Right side fully contained in left side
-    }
-    if(side === 'RIGHT') {
-        if (rightSide[0] < leftSide[0]) {
-            pairsContained += 1;
-        } // Left side fully contained in right side
-    }
 
+  if ((leftStart >= rightStart && leftStart <= rightEnd) 
+      || (leftEnd >= rightStart && leftEnd <= rightEnd) 
+      || (rightStart <= leftEnd && rightStart >= leftStart) || (rightEnd <= leftEnd && rightEnd >= leftStart)) {
+    answer2++
+  }
 })
-
-console.log('Pairs contained: ', pairsContained);
+console.log("Count: ", answer2)
