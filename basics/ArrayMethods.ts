@@ -6,3 +6,9 @@ const filterArrBasedOnNum = (
 ): number[] => arr.filter((val) => val <= lessThanOrEqualTo);
 
 console.log("result: ", filterArrBasedOnNum(15, testArray));
+
+
+const filterOnBool = (condition: boolean, arr: number[]): number[] => arr.filter((val) => condition);
+
+console.log('Filter on true: ', filterOnBool(true, testArray));
+console.log('Filter on false: ', filterOnBool(false, testArray));
