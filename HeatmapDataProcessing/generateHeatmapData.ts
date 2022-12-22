@@ -1,9 +1,9 @@
 import fs from "fs";
 
 const filename = 'Data.csv';
-const topRow = ['group','variable','value'];
+const topRow = ['sensor','reading','iteration'];
 const sensorCount = 10;
-const totalDataReadings = 100000;
+const totalDataReadings = 250000;
 
 // Open a write stream
 const writeStream = fs.createWriteStream(`GENERATED-${filename}`);
@@ -15,21 +15,21 @@ function randomNumber(min: number, max: number): number {
   }
 
 // Structure per loop to follow: 
-// ['1', 'sensor1', 'readingOfSensor1']
-// ['1', 'sensor2', 'readingOfSensor2']
-// ['2', 'sensor1', 'readingOfSensor1']
-// ['2', 'sensor2', 'readingOfSensor2']
+// ['sensor1', 'reading', 'iteration']
+// ['sensor1', 'reading', 'iteration']
+// ['sensor1', 'reading', 'iteration']
+// ['sensor2', 'reading', 'iteration']
 
 function main(): void {
     // Add heading column to file
-    writeStream.write(`${topRow} \n`);
+    writeStream.write(`${topRow}\n`);
 
     // Loop for `totaDataReadings` to generate appropriate data size
     for(let i = 0; i < totalDataReadings; i++) {  
         // New line per sensor
         for(let j = 0; j < sensorCount; j++) {
-            let s = [i, j, randomNumber(18, 30).toFixed(2)];
-            writeStream.write(`${s.join(',')} \n`);
+            let s = [j + 1, randomNumber(18, 30).toFixed(1), i];
+            writeStream.write(`${s.join(',')}\n`);
         }
     }
 
