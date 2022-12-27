@@ -16,7 +16,7 @@ function randomNumber(min: number, max: number): number {
 
 // Structure per loop to follow: 
 // ['sensor1', 'reading', 'iteration']
-// ['sensor1', 'reading', 'iteration']
+// ['sensor2', 'reading', 'iteration']
 // ['sensor1', 'reading', 'iteration']
 // ['sensor2', 'reading', 'iteration']
 
