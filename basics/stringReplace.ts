@@ -25,3 +25,9 @@ console.log("Spliterino: ", testStr5.split("|"));
 let testStr6 =
   "Hello World! | Hello Muppet! Hello World! | Hello Muppet! Hello World! | Hello Muppet! Hello World! | Hello | Muppet! Hello World! || Hello Mup|pet!";
 console.log("Splitting weird string: ", testStr6.replace(/\s/g, "").split("|"));
+
+let testStr7 = "Woodbine Mohawk Park"
+console.log(testStr7.replace(' ', '-'));
+
+let testStr8 = "Woodbine Mohawk Park";
+console.log(testStr8.replace(/ /g, '-'));
