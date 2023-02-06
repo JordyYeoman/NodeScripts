@@ -16,10 +16,11 @@ const test2 = [
   { name: "jordy", age: 12, group: ["C"] },
   { name: "tim", age: 2, group: ["QA"] },
   { name: "bob", age: 5, group: ["DL", "MG"] },
+  { name: "bob", age: 5 }, // Object missing group - How does filter handle it? 
 ];
 
-let z = test2.filter((person) => person.group.includes("C"));
+let z = test2.filter((person) => person?.group?.includes("C"));
 console.log("z", z);
 
-let k = test2.filter((person) => person.group.includes("DL"));
+let k = test2.filter((person) => person?.group?.includes("DL"));
 console.log("k", k);
