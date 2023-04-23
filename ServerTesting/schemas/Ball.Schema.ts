@@ -1,30 +1,17 @@
-import { Schema, type } from '@colyseus/schema';
+export class Ball {
+  width: number;
+  height: number;
+  velocity: number;
+  friction: number;
 
-// class Ball extends Schema {
-//   @type('number') x: number;
-//   @type('number') y: number;
-//   @type('number') angle: number;
-//   @type('number') velocityX: number;
-//   @type('number') velocityY: number;
+  constructor(width: number, height: number) {
+    this.width = width;
+    this.height = height;
+    this.velocity = 0;
+    this.friction = 9.8;
+  }
 
-//   // constructor() {
-//   //   super();
-//   //   this.x = 0;
-//   //   this.y = 0;
-//   //   this.angle = 0;
-//   //   this.velocityX = 0;
-//   //   this.velocityY = 0;
-//   // }
-// }
-
-export class MyState extends Schema {
-  @type('string') currentTurn: string = '';
+  update() {
+    this.velocity = this.velocity - (this.velocity * this.friction) / 100;
+  }
 }
-
-// defineTypes(Ball, {
-//   x: 'number',
-//   y: 'number',
-//   angle: 'number',
-//   velocityX: 'number',
-//   velocityY: 'number',
-// });
