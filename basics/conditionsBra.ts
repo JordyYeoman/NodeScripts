@@ -32,3 +32,7 @@ if(testObj?.tools?.hammer?.dualWield) {
 if(testObj?.tools?.axe?.dualWield?.length > 0) {
     console.log('Axe is good!')
 }
+
+if({}) {
+    console.log('Empty object truthy??');
+}
