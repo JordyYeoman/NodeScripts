@@ -15,49 +15,74 @@
 // Odds for A - 2.52
 // Odds for B - 1.52
 
-
-// Try loop through all outcomes and find the absolute best outcome using decimal places
-// 1. Create standard method to get outcome
-
 const getResultForBet = (odds: number, stake: number) => {
-    return (odds * stake) - stake;
+    return odds * stake - stake;
 }
 
 // We need to use between 10 - 15 dollars of bets
 const minStake = 10;
-const maxStake = 15;
+const maxStake = 20;
 const bookieAOddsTeamA = 2.56;
 const bookieOddsTeamB = 1.52;
 
 const loopThroughOutcomes = (minStake: number, maxStake: number) => {
-    let initialStake = minStake;
-    let bestRes = 10;
+    const stepSize = 0.01;
+    let countToFindBestOutcome = 0;
+    let testStake = minStake;
     let bestStakeForBookieA = minStake;
     let bestStakeForBookieB = minStake;
+    let bookieAReturns = 0;
+    let bookieBReturns = 0;
+    // Test
+    let bestResA = 10;
+    let bestResB = 10;
 
-    // Loop 
-    while(initialStake < maxStake) {
-        let a = getResultForBet(bookieAOddsTeamA, initialStake);
-        let b = getResultForBet(bookieOddsTeamB, minStake);
+    // Loop over left side of argument (A) to find best stake
+    while(testStake < maxStake) {
+        let a = getResultForBet(bookieAOddsTeamA, testStake);
 
-        // Check if better place than the previous bet
-        let outcome1 = a - initialStake;
-        let outcome2 = b - minStake;
+        // Loop over right side and find closest to 0 & assign that value
+        for(let k = minStake; k < maxStake; k+= stepSize) {
+            const bookieAWins = a;
+            const bookieBWins = getResultForBet(bookieOddsTeamB, k);
+            
+            // Solve if A bookie wins
+            // Bookie A winnings - stake of Bookie B
+            const resA = bookieAWins - k;
 
-        // Find who is closest to 0 with only x changing
-        const res = outcome1 + outcome2;
-        if(res < bestRes) {
-            bestStakeForBookieA = initialStake;
-            bestStakeForBookieB = minStake;
+            // Solve if B bookie wins
+            // Bookie B winnings - stake of Bookie A
+            const resB = bookieBWins - testStake;
+
+            // Remove any negatives 
+            if(resA > 0 && resB > -2) {
+                // Find where both are as close to 0 as possible
+                if(resA < bestResA && resB < bestResB) {
+                    // Assign new best res's
+                    bestResA = resA;
+                    bestResB = resB;
+                    // Assign new best stakes
+                    bestStakeForBookieA = testStake;
+                    bestStakeForBookieB = k;
+                    // Incremenet counter 
+                    countToFindBestOutcome++;
+                    // Assign bookie est. returns for bet validation
+                    bookieAReturns = a + testStake;
+                    bookieBReturns = bookieBWins + k;
+                }
+            }
         }
 
-        // Add 0.1 to initialStake
-        initialStake += 0.01;
+        // Add 0.01 to testStake
+        testStake += stepSize;
     }
 
-    console.log('Best res: ', bestRes);
+    console.log('Best resA: ', bestResA);
+    console.log('Best resB: ', bestResB);
     console.log('bestStakeForBookieA', bestStakeForBookieA)
     console.log('bestStakeForBookieB', bestStakeForBookieB)
+    console.log('bookieAReturns ', bookieAReturns);
+    console.log('bookieBReturns ', bookieBReturns);
 }
 
 loopThroughOutcomes(minStake, maxStake);
