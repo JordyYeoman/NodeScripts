@@ -85,4 +85,5 @@ const loopThroughOutcomes = (minStake: number, maxStake: number) => {
     console.log('bookieBReturns ', bookieBReturns);
 }
 
+// Return best stakes for odds
 loopThroughOutcomes(minStake, maxStake);
