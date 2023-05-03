@@ -19,13 +19,8 @@ const getResultForBet = (odds: number, stake: number) => {
     return odds * stake - stake;
 }
 
-// We need to use between 10 - 15 dollars of bets
-const minStake = 10;
-const maxStake = 20;
-const bookieAOddsTeamA = 2.56;
-const bookieOddsTeamB = 1.52;
-
-const loopThroughOutcomes = (minStake: number, maxStake: number) => {
+// Max loss set to 2 by default
+const loopThroughOutcomes = (minStake: number, maxStake: number, bookieAOdds: number, bookieBOdds: number, maxLoss?: number) => {
     const stepSize = 0.01;
     let countToFindBestOutcome = 0;
     let testStake = minStake;
@@ -39,12 +34,12 @@ const loopThroughOutcomes = (minStake: number, maxStake: number) => {
 
     // Loop over left side of argument (A) to find best stake
     while(testStake < maxStake) {
-        let a = getResultForBet(bookieAOddsTeamA, testStake);
+        let a = getResultForBet(bookieAOdds, testStake);
 
         // Loop over right side and find closest to 0 & assign that value
         for(let k = minStake; k < maxStake; k+= stepSize) {
             const bookieAWins = a;
-            const bookieBWins = getResultForBet(bookieOddsTeamB, k);
+            const bookieBWins = getResultForBet(bookieBOdds, k);
             
             // Solve if A bookie wins
             // Bookie A winnings - stake of Bookie B
@@ -55,7 +50,7 @@ const loopThroughOutcomes = (minStake: number, maxStake: number) => {
             const resB = bookieBWins - testStake;
 
             // Remove any negatives 
-            if(resA > 0 && resB > -2) {
+            if(resA > 0 && resB > -(maxLoss ?? 2)) {
                 // Find where both are as close to 0 as possible
                 if(resA < bestResA && resB < bestResB) {
                     // Assign new best res's
@@ -79,11 +74,24 @@ const loopThroughOutcomes = (minStake: number, maxStake: number) => {
 
     console.log('Best resA: ', bestResA);
     console.log('Best resB: ', bestResB);
-    console.log('bestStakeForBookieA', bestStakeForBookieA)
-    console.log('bestStakeForBookieB', bestStakeForBookieB)
-    console.log('bookieAReturns ', bookieAReturns);
-    console.log('bookieBReturns ', bookieBReturns);
+    return {
+        bookieA: {
+            returns: bookieAReturns,
+            stake: bestStakeForBookieA,
+            res: bestResA
+        },
+        bookieB: {
+            returns: bookieBReturns,
+            stake: bestStakeForBookieB,
+            res: bestResB
+        }
+    }
 }
 
+const minStake = 10;
+const maxStake = 20;
+const bookieAOdds = 2.56;
+const bookieBOdds = 1.52;
+const maxLoss = 1.9;
 // Return best stakes for odds
-loopThroughOutcomes(minStake, maxStake);
+loopThroughOutcomes(minStake, maxStake, bookieAOdds, bookieBOdds, maxLoss);
