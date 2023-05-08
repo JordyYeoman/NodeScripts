@@ -95,3 +95,5 @@ const bookieBOdds = 1.52;
 const maxLoss = 1.9;
 // Return best stakes for odds with bookies
 loopThroughOutcomes(minStake, maxStake, bookieAOdds, bookieBOdds, maxLoss);
+
+// Can we improve performance of script? 
