@@ -97,3 +97,6 @@ const maxLoss = 1.9;
 loopThroughOutcomes(minStake, maxStake, bookieAOdds, bookieBOdds, maxLoss);
 
 // Can we improve performance of script? 
+
+// Can we make the function more generic to accept multiple bookies?
+// Or create a function so that the 
