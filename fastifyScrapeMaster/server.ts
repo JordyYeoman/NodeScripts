@@ -8,8 +8,12 @@ server.get("/", async (request: FastifyRequest, reply: FastifyReply) => {
   return { hello: "world" };
 });
 
-server.get("/ping", async (request, reply) => {
+server.get("/ping", async (request: FastifyRequest, reply: FastifyReply) => {
   return "pong\n";
+});
+
+server.get("/payload", async (request: FastifyRequest, reply: FastifyReply) => {
+  return Array(100).fill(0);
 });
 
 // Run the server!
