@@ -1,6 +1,11 @@
 import axios from "axios";
 import fastify from "fastify";
-import { NBAOddsApi } from "./types/OddsApi";
+import {
+  NBAOddsApi,
+  OddsApiH2HMarket,
+  OddsApiSpreadsMarket,
+} from "./types/OddsApi";
+import { Bookmaker } from "./types/OddsApi";
 require("dotenv").config();
 
 const server = fastify({ logger: false });
@@ -493,23 +498,65 @@ server.listen({ port: 8080 }, (err, address) => {
 });
 
 const handleData = (data: NBAOddsApi[]) => {
-  const betfairData: Map<string, object> = new Map();
+  const betfairDataMap: Map<string, Bookmaker> = new Map();
 
-  // Extract betfair data for comparison
+  // Extract betfair data for comparison - needed to find +EV
   data?.map((x) => {
     let newData = {
       id: x?.id,
-      betfair: {},
+      betfair: {} as Bookmaker,
     };
 
-    newData.betfair = x?.bookmakers.filter((z) => z?.key === "betfair");
-    betfairData.set(newData.id, newData.betfair);
+    newData.betfair =
+      x?.bookmakers.find((z) => z?.key === "betfair") ?? ({} as Bookmaker);
+    betfairDataMap.set(newData.id, newData.betfair);
   });
 
   // Compare to find +EV bets
 
-  data.map((event) => {
+  data.map((event: NBAOddsApi) => {
+    const betfairOdds = betfairDataMap.get(event.id);
+    //
+    let betMarket = betfairOdds?.markets?.[0];
+    let layMarket = betfairOdds?.markets?.[1];
+
+    let fairOddsTeamOne =
+      ((betMarket?.outcomes?.[0]?.price ?? 0) +
+        (layMarket?.outcomes?.[0]?.price ?? 0)) /
+      2;
+
+    let fairOddsTeamTwo =
+      ((betMarket?.outcomes?.[1]?.price ?? 0) +
+        (layMarket?.outcomes?.[1]?.price ?? 0)) /
+      2;
+
+    // defensive?
+    if (!fairOddsTeamOne || !fairOddsTeamTwo) return;
+
     // Search for +EV bet
+    // 1. Check if odds at each bookmaker are above market value
+    event.bookmakers.map((bookie) => {
+      bookie.markets.map((huh) => {
+        prettyConsole(huh.key);
+        const team1Odds = huh.outcomes[0].price;
+        const team2Odds = huh.outcomes[1].price;
+        if (team1Odds > fairOddsTeamOne) {
+        }
+      });
+    });
+
     // Find Betfair odds
   });
+};
+
+const getExpectedValue = () => {};
+
+const prettyConsole = (x: string) => {
+  console.log(
+    "================================================================"
+  );
+  console.log("market: ", x);
+  console.log(
+    "================================================================"
+  );
 };
