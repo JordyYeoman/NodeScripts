@@ -530,32 +530,44 @@ const handleData = (data: NBAOddsApi[]) => {
         (layMarket?.outcomes?.[1]?.price ?? 0)) /
       2;
 
-    // defensive?
+    // defensive code?
     if (!fairOddsTeamOne || !fairOddsTeamTwo) return;
 
     // Search for +EV bet
     // 1. Check if odds at each bookmaker are above market value
     event.bookmakers.map((bookie) => {
-      bookie.markets.map((huh) => {
-        prettyConsole(huh.key);
-        const team1Odds = huh.outcomes[0].price;
-        const team2Odds = huh.outcomes[1].price;
-        if (team1Odds > fairOddsTeamOne) {
-        }
-      });
+      if (bookie.key !== "betfair") {
+        bookie.markets.map((huh) => {
+          const team1Odds = huh.outcomes[0].price;
+          const team2Odds = huh.outcomes[1].price;
+
+          const ev = getExpectedValue(team1Odds, fairOddsTeamOne);
+          const ev2 = getExpectedValue(team2Odds, fairOddsTeamTwo);
+          console.log(ev, ev2);
+        });
+      }
     });
 
     // Find Betfair odds
   });
 };
 
-const getExpectedValue = () => {};
+const getExpectedValue = (bookieOdds: number, fairOdds: number) => {
+  // Stake amount = $10 for testing
+  const stake = 10;
+  const winOutcome = bookieOdds * stake - stake;
+  const winProbability = 1 / fairOdds;
+  const loseProbability = 1 - winProbability;
+  const loseOutcome = loseProbability * stake;
 
-const prettyConsole = (x: string) => {
+  return winOutcome - loseOutcome;
+};
+
+const prettyConsole = (title: string, x: string | number) => {
   console.log(
     "================================================================"
   );
-  console.log("market: ", x);
+  console.log(title, ": ", x);
   console.log(
     "================================================================"
   );
