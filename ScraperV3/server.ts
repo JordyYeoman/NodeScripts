@@ -535,6 +535,8 @@ const handleData = (data: NBAOddsApi[]) => {
 
     // Search for +EV bet
     // 1. Check if odds at each bookmaker are above market value
+
+    // TODO: Find out why all are positive, after cross referencing, both lads and sportsbet should return -EV
     event.bookmakers.map((bookie) => {
       if (bookie.key !== "betfair") {
         bookie.markets.map((huh) => {
