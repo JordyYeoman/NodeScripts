@@ -1,6 +1,7 @@
 import axios from "axios";
 import fastify from "fastify";
 import {
+  H2HMarketOdds,
   NBAOddsApi,
   OddsApiH2HMarket,
   OddsApiSpreadsMarket,
@@ -516,61 +517,30 @@ const handleData = (data: NBAOddsApi[]) => {
   // Compare to find +EV bets
   data.map((event: NBAOddsApi) => {
     const betfairOdds = betfairDataMap.get(event.id);
-    const { sport_title, home_team, away_team } = event;
-    //
-    let betMarket = betfairOdds?.markets?.[0];
-    let layMarket = betfairOdds?.markets?.[1];
-
-    // console.log("betMarket: ", betMarket);
-    // console.log("layMarket: ", layMarket);
-
-    let fairOddsTeamOne =
-      ((betMarket?.outcomes?.[0]?.price ?? 0) +
-        (layMarket?.outcomes?.[0]?.price ?? 0)) /
-      2;
-
-    let fairOddsTeamTwo =
-      ((betMarket?.outcomes?.[1]?.price ?? 0) +
-        (layMarket?.outcomes?.[1]?.price ?? 0)) /
-      2;
-
-    console.log("fairOdds", fairOddsTeamOne);
-    console.log("fairOdds 2", fairOddsTeamTwo);
-
-    // defensive code?
-    if (!fairOddsTeamOne || !fairOddsTeamTwo) return;
 
     // Search for +EV bet
-    // 1. Check if odds at each bookmaker are above market value
+    const positiveExpectedValueLegs: any = [];
 
-    // TODO: Find out why all are positive, after cross referencing, both lads and sportsbet should return -EV
     event.bookmakers.map((bookie) => {
       const { key, title, last_update } = bookie;
       if (bookie.key !== "betfair") {
-        bookie.markets.map((huh) => {
-          if (key === "sportsbet" && huh.key === "h2h") {
-            console.log(
-              huh.key + ": ",
-              sport_title,
-              " ",
-              home_team,
-              " vs ",
-              away_team
+        bookie.markets.map((oddsApi) => {
+          if (oddsApi.key === "h2h") {
+            positiveExpectedValueLegs.push(
+              ...getH2HPositiveExpectedValues(oddsApi, betfairOdds, event)
             );
-            console.log("huh outcomes: ", huh.outcomes);
-            const team1Odds = huh.outcomes[0].price;
-            const team2Odds = huh.outcomes[1].price;
-            console.log("huh.oiutcomes[1", huh.outcomes[1]);
-
-            // const ev = getExpectedValue(team1Odds, fairOddsTeamOne);
-            const ev2 = getExpectedValue(team2Odds, fairOddsTeamTwo);
-
-            // console.log("expected value: ", ev);
-            console.log("expected value 2: ", ev2);
           }
+          // if (oddsApi.key === "spreads") {
+          //   positiveExpectedValueLegs.push(
+          //     ...getSpreadsPositiveExpectedValues(oddsApi, betfairOdds, event)
+          //   );
+          // }
+          // TODO: Add 'spreads' seperate logic here
         });
       }
     });
+
+    console.log("positiveExpectedValueLegs", positiveExpectedValueLegs);
   });
 };
 
@@ -593,4 +563,43 @@ const prettyConsole = (title: string, x: string | number) => {
   console.log(
     "================================================================"
   );
+};
+
+const getH2HPositiveExpectedValues = (
+  oddsApi: OddsApiH2HMarket,
+  betfairOdds: Bookmaker | undefined,
+  event: NBAOddsApi
+): any[] => {
+  let oddsApiPositiveEVH2HOutcomes = oddsApi.outcomes.map(
+    (outcome: H2HMarketOdds, index: number) => {
+      let betMarket = betfairOdds?.markets?.[0];
+      let layMarket = betfairOdds?.markets?.[1];
+
+      let fairOdds =
+        ((betMarket?.outcomes?.[index]?.price ?? 0) +
+          (layMarket?.outcomes?.[index]?.price ?? 0)) /
+        2;
+
+      // defensive code?
+      if (!fairOdds) return;
+
+      const odds = outcome.price;
+      // Team 1 first in map iteration, then team 2
+      const ev = getExpectedValue(odds, fairOdds);
+
+      if (ev > -1) {
+        return {
+          eventName: event.sport_title,
+          homeTeam: event.home_team,
+          awayTeam: event.away_team,
+          expectedValue: ev,
+          betOn: outcome.name,
+          bookie: bookie.key,
+          odds,
+          fairOdds: fairOdds,
+        };
+      }
+    }
+  );
+  return oddsApiPositiveEVH2HOutcomes;
 };
