@@ -464,7 +464,7 @@ server.get("/nba/data", async (request, reply) => {
   console.log("SENDING it");
   try {
     // if (!cachedRes) {
-    console.log("Hitting endpoint");
+    // console.log("Hitting endpoint");
     // const response = await axios.get(
     //   "https://api.the-odds-api.com/v4/sports/basketball_nba/odds",
     //   {
@@ -521,7 +521,8 @@ const handleData = (data: NBAOddsApi[]) => {
     let betMarket = betfairOdds?.markets?.[0];
     let layMarket = betfairOdds?.markets?.[1];
 
-    console.log("betfair odds: ", JSON.stringify(betfairOdds));
+    // console.log("betMarket: ", betMarket);
+    // console.log("layMarket: ", layMarket);
 
     let fairOddsTeamOne =
       ((betMarket?.outcomes?.[0]?.price ?? 0) +
@@ -532,6 +533,9 @@ const handleData = (data: NBAOddsApi[]) => {
       ((betMarket?.outcomes?.[1]?.price ?? 0) +
         (layMarket?.outcomes?.[1]?.price ?? 0)) /
       2;
+
+    console.log("fairOdds", fairOddsTeamOne);
+    console.log("fairOdds 2", fairOddsTeamTwo);
 
     // defensive code?
     if (!fairOddsTeamOne || !fairOddsTeamTwo) return;
@@ -553,30 +557,28 @@ const handleData = (data: NBAOddsApi[]) => {
               " vs ",
               away_team
             );
+            console.log("huh outcomes: ", huh.outcomes);
             const team1Odds = huh.outcomes[0].price;
             const team2Odds = huh.outcomes[1].price;
+            console.log("huh.oiutcomes[1", huh.outcomes[1]);
 
-            const ev = getExpectedValue(team1Odds, fairOddsTeamOne);
+            // const ev = getExpectedValue(team1Odds, fairOddsTeamOne);
             const ev2 = getExpectedValue(team2Odds, fairOddsTeamTwo);
 
-            console.log("expected value: ", ev);
+            // console.log("expected value: ", ev);
             console.log("expected value 2: ", ev2);
           }
         });
       }
     });
-
-    // Find Betfair odds
   });
 };
 
 const getExpectedValue = (bookieOdds: number, fairOdds: number) => {
-  console.log("bookieOdds", bookieOdds);
-  console.log("fairOdds", fairOdds);
   // Stake amount = $10 for testing
   const stake = 10;
-  const winOutcome = bookieOdds * stake - stake;
   const winProbability = 1 / fairOdds;
+  const winOutcome = (bookieOdds * stake - stake) * winProbability;
   const loseProbability = 1 - winProbability;
   const loseOutcome = loseProbability * stake;
 
