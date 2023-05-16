@@ -2,7 +2,7 @@ import axios from "axios";
 import fastify from "fastify";
 import {
   H2HMarketOdds,
-  NBAOddsApi,
+  OddsApi,
   OddsApiH2HMarket,
   OddsApiSpreadsMarket,
 } from "./types/OddsApi";
@@ -499,7 +499,7 @@ server.listen({ port: 8080 }, (err, address) => {
   console.log(`Server listening at ${address}`);
 });
 
-const handleData = (data: NBAOddsApi[]) => {
+const handleData = (data: OddsApi[]) => {
   const betfairDataMap: Map<string, Bookmaker> = new Map();
 
   // Extract betfair data for comparison - needed to find +EV
@@ -514,12 +514,12 @@ const handleData = (data: NBAOddsApi[]) => {
     betfairDataMap.set(newData.id, newData.betfair);
   });
 
-  // Compare to find +EV bets
-  data.map((event: NBAOddsApi) => {
-    const betfairOdds = betfairDataMap.get(event.id);
+  // Search for +EV bet
+  const positiveExpectedValueLegs: any = [];
 
-    // Search for +EV bet
-    const positiveExpectedValueLegs: any = [];
+  // Compare to find +EV bets
+  data.map((event: OddsApi) => {
+    const betfairOdds = betfairDataMap.get(event.id);
 
     event.bookmakers.map((bookie) => {
       const { key, title, last_update } = bookie;
@@ -527,7 +527,12 @@ const handleData = (data: NBAOddsApi[]) => {
         bookie.markets.map((oddsApi) => {
           if (oddsApi.key === "h2h") {
             positiveExpectedValueLegs.push(
-              ...getH2HPositiveExpectedValues(oddsApi, betfairOdds, event)
+              ...getH2HPositiveExpectedValues(
+                oddsApi,
+                betfairOdds,
+                event,
+                bookie.key
+              )
             );
           }
           // if (oddsApi.key === "spreads") {
@@ -539,9 +544,8 @@ const handleData = (data: NBAOddsApi[]) => {
         });
       }
     });
-
-    console.log("positiveExpectedValueLegs", positiveExpectedValueLegs);
   });
+  console.log("positiveExpectedValueLegs", positiveExpectedValueLegs);
 };
 
 const getExpectedValue = (bookieOdds: number, fairOdds: number) => {
@@ -568,7 +572,8 @@ const prettyConsole = (title: string, x: string | number) => {
 const getH2HPositiveExpectedValues = (
   oddsApi: OddsApiH2HMarket,
   betfairOdds: Bookmaker | undefined,
-  event: NBAOddsApi
+  event: OddsApi,
+  bookieKey: string
 ): any[] => {
   let oddsApiPositiveEVH2HOutcomes = oddsApi.outcomes.map(
     (outcome: H2HMarketOdds, index: number) => {
@@ -587,19 +592,23 @@ const getH2HPositiveExpectedValues = (
       // Team 1 first in map iteration, then team 2
       const ev = getExpectedValue(odds, fairOdds);
 
-      if (ev > -1) {
+      if (ev > 0) {
         return {
           eventName: event.sport_title,
           homeTeam: event.home_team,
           awayTeam: event.away_team,
           expectedValue: ev,
           betOn: outcome.name,
-          bookie: bookie.key,
+          bookie: bookieKey,
           odds,
           fairOdds: fairOdds,
         };
       }
     }
   );
-  return oddsApiPositiveEVH2HOutcomes;
+  // Add filter here to remove any falsy values (such as undefined)
+  return oddsApiPositiveEVH2HOutcomes.filter(Boolean);
 };
+
+// TODO
+// Add bet spreads +/- the closest spread for other +EV bets

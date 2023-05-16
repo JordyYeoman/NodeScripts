@@ -28,7 +28,7 @@ export type Bookmaker = {
   markets: (OddsApiH2HMarket | OddsApiSpreadsMarket)[];
 };
 
-export type NBAOddsApi = {
+export type OddsApi = {
   id: string;
   sport_key: string;
   sport_title: string;
