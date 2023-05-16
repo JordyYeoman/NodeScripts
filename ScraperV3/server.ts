@@ -22,22 +22,22 @@ const d = [
       {
         key: "topsport",
         title: "TopSport",
-        last_update: "2023-05-15T10:19:19Z",
+        last_update: "2023-05-16T00:06:35Z",
         markets: [
           {
             key: "h2h",
-            last_update: "2023-05-15T10:19:19Z",
+            last_update: "2023-05-16T00:06:35Z",
             outcomes: [
-              { name: "Denver Nuggets", price: 1.46 },
-              { name: "Los Angeles Lakers", price: 2.81 },
+              { name: "Denver Nuggets", price: 1.44 },
+              { name: "Los Angeles Lakers", price: 2.88 },
             ],
           },
           {
             key: "spreads",
-            last_update: "2023-05-15T10:19:19Z",
+            last_update: "2023-05-16T00:06:35Z",
             outcomes: [
-              { name: "Denver Nuggets", price: 1.9, point: -5.5 },
-              { name: "Los Angeles Lakers", price: 1.94, point: 5.5 },
+              { name: "Denver Nuggets", price: 1.94, point: -6 },
+              { name: "Los Angeles Lakers", price: 1.9, point: 6 },
             ],
           },
         ],
@@ -45,22 +45,22 @@ const d = [
       {
         key: "unibet",
         title: "Unibet",
-        last_update: "2023-05-15T10:18:07Z",
+        last_update: "2023-05-16T00:09:56Z",
         markets: [
           {
             key: "h2h",
-            last_update: "2023-05-15T10:18:07Z",
+            last_update: "2023-05-16T00:09:56Z",
             outcomes: [
-              { name: "Denver Nuggets", price: 1.48 },
-              { name: "Los Angeles Lakers", price: 2.75 },
+              { name: "Denver Nuggets", price: 1.44 },
+              { name: "Los Angeles Lakers", price: 2.9 },
             ],
           },
           {
             key: "spreads",
-            last_update: "2023-05-15T10:18:07Z",
+            last_update: "2023-05-16T00:09:56Z",
             outcomes: [
-              { name: "Denver Nuggets", price: 1.91, point: -5.5 },
-              { name: "Los Angeles Lakers", price: 1.91, point: 5.5 },
+              { name: "Denver Nuggets", price: 1.91, point: -6 },
+              { name: "Los Angeles Lakers", price: 1.91, point: 6 },
             ],
           },
         ],
@@ -68,22 +68,22 @@ const d = [
       {
         key: "tab",
         title: "TAB",
-        last_update: "2023-05-15T10:18:48Z",
+        last_update: "2023-05-16T00:05:16Z",
         markets: [
           {
             key: "h2h",
-            last_update: "2023-05-15T10:18:48Z",
+            last_update: "2023-05-16T00:05:16Z",
             outcomes: [
-              { name: "Denver Nuggets", price: 1.46 },
-              { name: "Los Angeles Lakers", price: 2.8 },
+              { name: "Denver Nuggets", price: 1.39 },
+              { name: "Los Angeles Lakers", price: 3.1 },
             ],
           },
           {
             key: "spreads",
-            last_update: "2023-05-15T10:18:48Z",
+            last_update: "2023-05-16T00:05:16Z",
             outcomes: [
-              { name: "Denver Nuggets", price: 1.9, point: -5.5 },
-              { name: "Los Angeles Lakers", price: 1.9, point: 5.5 },
+              { name: "Denver Nuggets", price: 1.9, point: -6 },
+              { name: "Los Angeles Lakers", price: 1.9, point: 6 },
             ],
           },
         ],
@@ -91,22 +91,22 @@ const d = [
       {
         key: "sportsbet",
         title: "SportsBet",
-        last_update: "2023-05-15T10:18:22Z",
+        last_update: "2023-05-16T00:10:06Z",
         markets: [
           {
             key: "h2h",
-            last_update: "2023-05-15T10:18:22Z",
+            last_update: "2023-05-16T00:10:06Z",
             outcomes: [
-              { name: "Denver Nuggets", price: 1.44 },
-              { name: "Los Angeles Lakers", price: 2.8 },
+              { name: "Denver Nuggets", price: 1.39 },
+              { name: "Los Angeles Lakers", price: 3 },
             ],
           },
           {
             key: "spreads",
-            last_update: "2023-05-15T10:18:22Z",
+            last_update: "2023-05-16T00:10:06Z",
             outcomes: [
-              { name: "Denver Nuggets", price: 1.9, point: -5.5 },
-              { name: "Los Angeles Lakers", price: 1.9, point: 5.5 },
+              { name: "Denver Nuggets", price: 1.95, point: -6.5 },
+              { name: "Los Angeles Lakers", price: 1.86, point: 6.5 },
             ],
           },
         ],
@@ -114,22 +114,22 @@ const d = [
       {
         key: "pointsbetau",
         title: "PointsBet (AU)",
-        last_update: "2023-05-15T10:18:57Z",
+        last_update: "2023-05-16T00:06:02Z",
         markets: [
           {
             key: "h2h",
-            last_update: "2023-05-15T10:18:57Z",
+            last_update: "2023-05-16T00:06:02Z",
             outcomes: [
-              { name: "Denver Nuggets", price: 1.48 },
-              { name: "Los Angeles Lakers", price: 2.55 },
+              { name: "Denver Nuggets", price: 1.42 },
+              { name: "Los Angeles Lakers", price: 2.9 },
             ],
           },
           {
             key: "spreads",
-            last_update: "2023-05-15T10:18:57Z",
+            last_update: "2023-05-16T00:06:02Z",
             outcomes: [
-              { name: "Denver Nuggets", price: 1.9, point: -5.5 },
-              { name: "Los Angeles Lakers", price: 1.9, point: 5.5 },
+              { name: "Denver Nuggets", price: 1.9, point: -6 },
+              { name: "Los Angeles Lakers", price: 1.9, point: 6 },
             ],
           },
         ],
@@ -137,14 +137,14 @@ const d = [
       {
         key: "bluebet",
         title: "BlueBet",
-        last_update: "2023-05-15T10:19:08Z",
+        last_update: "2023-05-16T00:06:20Z",
         markets: [
           {
             key: "h2h",
-            last_update: "2023-05-15T10:19:08Z",
+            last_update: "2023-05-16T00:06:20Z",
             outcomes: [
-              { name: "Denver Nuggets", price: 1.48 },
-              { name: "Los Angeles Lakers", price: 2.67 },
+              { name: "Denver Nuggets", price: 1.4 },
+              { name: "Los Angeles Lakers", price: 2.98 },
             ],
           },
         ],
@@ -152,22 +152,22 @@ const d = [
       {
         key: "betfair",
         title: "Betfair",
-        last_update: "2023-05-15T10:18:34Z",
+        last_update: "2023-05-16T00:10:12Z",
         markets: [
           {
             key: "h2h",
-            last_update: "2023-05-15T10:18:34Z",
+            last_update: "2023-05-16T00:10:12Z",
             outcomes: [
-              { name: "Denver Nuggets", price: 1.5 },
-              { name: "Los Angeles Lakers", price: 2.96 },
+              { name: "Denver Nuggets", price: 1.45 },
+              { name: "Los Angeles Lakers", price: 3.15 },
             ],
           },
           {
             key: "h2h_lay",
-            last_update: "2023-05-15T10:18:34Z",
+            last_update: "2023-05-16T00:10:12Z",
             outcomes: [
-              { name: "Denver Nuggets", price: 1.51 },
-              { name: "Los Angeles Lakers", price: 3 },
+              { name: "Denver Nuggets", price: 1.46 },
+              { name: "Los Angeles Lakers", price: 3.2 },
             ],
           },
         ],
@@ -175,14 +175,14 @@ const d = [
       {
         key: "neds",
         title: "Neds",
-        last_update: "2023-05-15T10:18:16Z",
+        last_update: "2023-05-16T00:10:06Z",
         markets: [
           {
             key: "h2h",
-            last_update: "2023-05-15T10:18:16Z",
+            last_update: "2023-05-16T00:10:06Z",
             outcomes: [
-              { name: "Denver Nuggets", price: 1.46 },
-              { name: "Los Angeles Lakers", price: 2.75 },
+              { name: "Denver Nuggets", price: 1.4 },
+              { name: "Los Angeles Lakers", price: 3 },
             ],
           },
         ],
@@ -190,14 +190,14 @@ const d = [
       {
         key: "ladbrokes",
         title: "Ladbrokes",
-        last_update: "2023-05-15T10:18:53Z",
+        last_update: "2023-05-16T00:05:48Z",
         markets: [
           {
             key: "h2h",
-            last_update: "2023-05-15T10:18:53Z",
+            last_update: "2023-05-16T00:05:48Z",
             outcomes: [
-              { name: "Denver Nuggets", price: 1.46 },
-              { name: "Los Angeles Lakers", price: 2.75 },
+              { name: "Denver Nuggets", price: 1.4 },
+              { name: "Los Angeles Lakers", price: 3 },
             ],
           },
         ],
@@ -205,22 +205,22 @@ const d = [
       {
         key: "betr_au",
         title: "Betr",
-        last_update: "2023-05-15T10:19:30Z",
+        last_update: "2023-05-16T00:07:00Z",
         markets: [
           {
             key: "h2h",
-            last_update: "2023-05-15T10:19:30Z",
+            last_update: "2023-05-16T00:07:00Z",
             outcomes: [
-              { name: "Denver Nuggets", price: 1.45 },
-              { name: "Los Angeles Lakers", price: 2.7 },
+              { name: "Denver Nuggets", price: 1.4 },
+              { name: "Los Angeles Lakers", price: 2.9 },
             ],
           },
           {
             key: "spreads",
-            last_update: "2023-05-15T10:19:30Z",
+            last_update: "2023-05-16T00:07:00Z",
             outcomes: [
-              { name: "Denver Nuggets", price: 1.75, point: -4.5 },
-              { name: "Los Angeles Lakers", price: 2.05, point: 4.5 },
+              { name: "Denver Nuggets", price: 2.06, point: -7.5 },
+              { name: "Los Angeles Lakers", price: 1.74, point: 7.5 },
             ],
           },
         ],
@@ -238,22 +238,22 @@ const d = [
       {
         key: "tab",
         title: "TAB",
-        last_update: "2023-05-15T10:18:48Z",
+        last_update: "2023-05-16T00:05:16Z",
         markets: [
           {
             key: "h2h",
-            last_update: "2023-05-15T10:18:48Z",
+            last_update: "2023-05-16T00:05:16Z",
             outcomes: [
-              { name: "Boston Celtics", price: 1.3 },
-              { name: "Miami Heat", price: 3.7 },
+              { name: "Boston Celtics", price: 1.26 },
+              { name: "Miami Heat", price: 4 },
             ],
           },
           {
             key: "spreads",
-            last_update: "2023-05-15T10:18:48Z",
+            last_update: "2023-05-16T00:05:16Z",
             outcomes: [
-              { name: "Boston Celtics", price: 1.9, point: -7.5 },
-              { name: "Miami Heat", price: 1.9, point: 7.5 },
+              { name: "Boston Celtics", price: 1.9, point: -8.5 },
+              { name: "Miami Heat", price: 1.9, point: 8.5 },
             ],
           },
         ],
@@ -261,22 +261,22 @@ const d = [
       {
         key: "sportsbet",
         title: "SportsBet",
-        last_update: "2023-05-15T10:18:22Z",
+        last_update: "2023-05-16T00:10:06Z",
         markets: [
           {
             key: "h2h",
-            last_update: "2023-05-15T10:18:22Z",
+            last_update: "2023-05-16T00:10:06Z",
             outcomes: [
-              { name: "Boston Celtics", price: 1.3 },
-              { name: "Miami Heat", price: 3.57 },
+              { name: "Boston Celtics", price: 1.26 },
+              { name: "Miami Heat", price: 3.9 },
             ],
           },
           {
             key: "spreads",
-            last_update: "2023-05-15T10:18:22Z",
+            last_update: "2023-05-16T00:10:06Z",
             outcomes: [
-              { name: "Boston Celtics", price: 1.9, point: -7.5 },
-              { name: "Miami Heat", price: 1.9, point: 7.5 },
+              { name: "Boston Celtics", price: 1.94, point: -8.5 },
+              { name: "Miami Heat", price: 1.86, point: 8.5 },
             ],
           },
         ],
@@ -284,22 +284,22 @@ const d = [
       {
         key: "topsport",
         title: "TopSport",
-        last_update: "2023-05-15T10:19:19Z",
+        last_update: "2023-05-16T00:06:35Z",
         markets: [
           {
             key: "h2h",
-            last_update: "2023-05-15T10:19:19Z",
+            last_update: "2023-05-16T00:06:35Z",
             outcomes: [
-              { name: "Boston Celtics", price: 1.29 },
-              { name: "Miami Heat", price: 3.65 },
+              { name: "Boston Celtics", price: 1.26 },
+              { name: "Miami Heat", price: 4 },
             ],
           },
           {
             key: "spreads",
-            last_update: "2023-05-15T10:19:19Z",
+            last_update: "2023-05-16T00:06:35Z",
             outcomes: [
-              { name: "Boston Celtics", price: 1.97, point: -8 },
-              { name: "Miami Heat", price: 1.85, point: 8 },
+              { name: "Boston Celtics", price: 1.92, point: -8.5 },
+              { name: "Miami Heat", price: 1.92, point: 8.5 },
             ],
           },
         ],
@@ -307,22 +307,22 @@ const d = [
       {
         key: "pointsbetau",
         title: "PointsBet (AU)",
-        last_update: "2023-05-15T10:18:57Z",
+        last_update: "2023-05-16T00:06:02Z",
         markets: [
           {
             key: "h2h",
-            last_update: "2023-05-15T10:18:57Z",
+            last_update: "2023-05-16T00:06:02Z",
             outcomes: [
-              { name: "Boston Celtics", price: 1.29 },
-              { name: "Miami Heat", price: 3.8 },
+              { name: "Boston Celtics", price: 1.27 },
+              { name: "Miami Heat", price: 4 },
             ],
           },
           {
             key: "spreads",
-            last_update: "2023-05-15T10:18:57Z",
+            last_update: "2023-05-16T00:06:02Z",
             outcomes: [
-              { name: "Boston Celtics", price: 1.9, point: -7.5 },
-              { name: "Miami Heat", price: 1.9, point: 7.5 },
+              { name: "Boston Celtics", price: 1.9, point: -8.5 },
+              { name: "Miami Heat", price: 1.9, point: 8.5 },
             ],
           },
         ],
@@ -330,14 +330,14 @@ const d = [
       {
         key: "ladbrokes",
         title: "Ladbrokes",
-        last_update: "2023-05-15T10:18:53Z",
+        last_update: "2023-05-16T00:05:48Z",
         markets: [
           {
             key: "h2h",
-            last_update: "2023-05-15T10:18:53Z",
+            last_update: "2023-05-16T00:05:48Z",
             outcomes: [
-              { name: "Boston Celtics", price: 1.3 },
-              { name: "Miami Heat", price: 3.6 },
+              { name: "Boston Celtics", price: 1.26 },
+              { name: "Miami Heat", price: 3.9 },
             ],
           },
         ],
@@ -345,14 +345,14 @@ const d = [
       {
         key: "neds",
         title: "Neds",
-        last_update: "2023-05-15T10:18:16Z",
+        last_update: "2023-05-16T00:10:06Z",
         markets: [
           {
             key: "h2h",
-            last_update: "2023-05-15T10:18:16Z",
+            last_update: "2023-05-16T00:10:06Z",
             outcomes: [
-              { name: "Boston Celtics", price: 1.3 },
-              { name: "Miami Heat", price: 3.6 },
+              { name: "Boston Celtics", price: 1.26 },
+              { name: "Miami Heat", price: 3.9 },
             ],
           },
         ],
@@ -360,14 +360,14 @@ const d = [
       {
         key: "bluebet",
         title: "BlueBet",
-        last_update: "2023-05-15T10:19:08Z",
+        last_update: "2023-05-16T00:06:20Z",
         markets: [
           {
             key: "h2h",
-            last_update: "2023-05-15T10:19:08Z",
+            last_update: "2023-05-16T00:06:20Z",
             outcomes: [
-              { name: "Boston Celtics", price: 1.29 },
-              { name: "Miami Heat", price: 3.64 },
+              { name: "Boston Celtics", price: 1.27 },
+              { name: "Miami Heat", price: 3.81 },
             ],
           },
         ],
@@ -375,22 +375,22 @@ const d = [
       {
         key: "betr_au",
         title: "Betr",
-        last_update: "2023-05-15T10:19:30Z",
+        last_update: "2023-05-16T00:07:00Z",
         markets: [
           {
             key: "h2h",
-            last_update: "2023-05-15T10:19:30Z",
+            last_update: "2023-05-16T00:07:00Z",
             outcomes: [
-              { name: "Boston Celtics", price: 1.29 },
-              { name: "Miami Heat", price: 3.5 },
+              { name: "Boston Celtics", price: 1.26 },
+              { name: "Miami Heat", price: 3.75 },
             ],
           },
           {
             key: "spreads",
-            last_update: "2023-05-15T10:19:30Z",
+            last_update: "2023-05-16T00:07:00Z",
             outcomes: [
-              { name: "Boston Celtics", price: 1.77, point: -6.5 },
-              { name: "Miami Heat", price: 2.02, point: 6.5 },
+              { name: "Boston Celtics", price: 2.05, point: -9.5 },
+              { name: "Miami Heat", price: 1.75, point: 9.5 },
             ],
           },
         ],
@@ -398,19 +398,19 @@ const d = [
       {
         key: "unibet",
         title: "Unibet",
-        last_update: "2023-05-15T10:18:07Z",
+        last_update: "2023-05-16T00:09:56Z",
         markets: [
           {
             key: "h2h",
-            last_update: "2023-05-15T10:18:07Z",
+            last_update: "2023-05-16T00:09:56Z",
             outcomes: [
-              { name: "Boston Celtics", price: 1.33 },
-              { name: "Miami Heat", price: 3.5 },
+              { name: "Boston Celtics", price: 1.29 },
+              { name: "Miami Heat", price: 3.8 },
             ],
           },
           {
             key: "spreads",
-            last_update: "2023-05-15T10:18:07Z",
+            last_update: "2023-05-16T00:09:56Z",
             outcomes: [
               { name: "Boston Celtics", price: 1.91, point: -8 },
               { name: "Miami Heat", price: 1.91, point: 8 },
@@ -421,22 +421,22 @@ const d = [
       {
         key: "betfair",
         title: "Betfair",
-        last_update: "2023-05-15T10:18:34Z",
+        last_update: "2023-05-16T00:10:12Z",
         markets: [
           {
             key: "h2h",
-            last_update: "2023-05-15T10:18:34Z",
+            last_update: "2023-05-16T00:10:12Z",
             outcomes: [
-              { name: "Boston Celtics", price: 1.34 },
-              { name: "Miami Heat", price: 3.6 },
+              { name: "Boston Celtics", price: 1.3 },
+              { name: "Miami Heat", price: 4.1 },
             ],
           },
           {
             key: "h2h_lay",
-            last_update: "2023-05-15T10:18:34Z",
+            last_update: "2023-05-16T00:10:12Z",
             outcomes: [
-              { name: "Boston Celtics", price: 1.37 },
-              { name: "Miami Heat", price: 3.9 },
+              { name: "Boston Celtics", price: 1.32 },
+              { name: "Miami Heat", price: 4.4 },
             ],
           },
         ],
@@ -463,23 +463,24 @@ const markets = "h2h,spreads";
 server.get("/nba/data", async (request, reply) => {
   console.log("SENDING it");
   try {
-    //   if (!cachedRes) {
-    //     console.log("Hitting endpoint");
-    //     const response = await axios.get(
-    //       "https://api.the-odds-api.com/v4/sports/basketball_nba/odds",
-    //       {
-    //         params: {
-    //           apiKey,
-    //           regions,
-    //           markets,
-    //           oddsFormat,
-    //           dateFormat,
-    //         },
-    //       }
-    //     );
-    //     cachedRes = response.data;
+    // if (!cachedRes) {
+    console.log("Hitting endpoint");
+    // const response = await axios.get(
+    //   "https://api.the-odds-api.com/v4/sports/basketball_nba/odds",
+    //   {
+    //     params: {
+    //       apiKey,
+    //       regions,
+    //       markets,
+    //       oddsFormat,
+    //       dateFormat,
+    //     },
+    //   }
+    // );
+    // cachedRes = response.data;
     // handleData(response.data);
     handleData(d);
+    // return reply.status(200).send(response.data);
     return reply.status(200).send(d);
     // }
     // return reply.status(200).send(cachedRes);
@@ -513,12 +514,14 @@ const handleData = (data: NBAOddsApi[]) => {
   });
 
   // Compare to find +EV bets
-
   data.map((event: NBAOddsApi) => {
     const betfairOdds = betfairDataMap.get(event.id);
+    const { sport_title, home_team, away_team } = event;
     //
     let betMarket = betfairOdds?.markets?.[0];
     let layMarket = betfairOdds?.markets?.[1];
+
+    console.log("betfair odds: ", JSON.stringify(betfairOdds));
 
     let fairOddsTeamOne =
       ((betMarket?.outcomes?.[0]?.price ?? 0) +
@@ -538,14 +541,27 @@ const handleData = (data: NBAOddsApi[]) => {
 
     // TODO: Find out why all are positive, after cross referencing, both lads and sportsbet should return -EV
     event.bookmakers.map((bookie) => {
+      const { key, title, last_update } = bookie;
       if (bookie.key !== "betfair") {
         bookie.markets.map((huh) => {
-          const team1Odds = huh.outcomes[0].price;
-          const team2Odds = huh.outcomes[1].price;
+          if (key === "sportsbet" && huh.key === "h2h") {
+            console.log(
+              huh.key + ": ",
+              sport_title,
+              " ",
+              home_team,
+              " vs ",
+              away_team
+            );
+            const team1Odds = huh.outcomes[0].price;
+            const team2Odds = huh.outcomes[1].price;
 
-          const ev = getExpectedValue(team1Odds, fairOddsTeamOne);
-          const ev2 = getExpectedValue(team2Odds, fairOddsTeamTwo);
-          console.log(ev, ev2);
+            const ev = getExpectedValue(team1Odds, fairOddsTeamOne);
+            const ev2 = getExpectedValue(team2Odds, fairOddsTeamTwo);
+
+            console.log("expected value: ", ev);
+            console.log("expected value 2: ", ev2);
+          }
         });
       }
     });
@@ -555,6 +571,8 @@ const handleData = (data: NBAOddsApi[]) => {
 };
 
 const getExpectedValue = (bookieOdds: number, fairOdds: number) => {
+  console.log("bookieOdds", bookieOdds);
+  console.log("fairOdds", fairOdds);
   // Stake amount = $10 for testing
   const stake = 10;
   const winOutcome = bookieOdds * stake - stake;
