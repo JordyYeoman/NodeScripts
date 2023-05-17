@@ -32,3 +32,5 @@ default.json
 *.txt
 */.txt
 *.csv
+
+.env
