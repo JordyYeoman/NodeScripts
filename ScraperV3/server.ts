@@ -7,6 +7,7 @@ import {
   OddsApiSpreadsMarket,
 } from "./types/OddsApi";
 import { Bookmaker } from "./types/OddsApi";
+import { loginBetfair } from "./login";
 require("dotenv").config();
 
 const server = fastify({ logger: false });
@@ -480,9 +481,10 @@ server.get("/nba/data", async (request, reply) => {
     // );
     // cachedRes = response.data;
     // handleData(response.data);
-    handleData(d);
+    // handleData(d);
     // return reply.status(200).send(response.data);
-    return reply.status(200).send(d);
+    loginBetfair();
+    return reply.status(200).send("OK");
     // }
     // return reply.status(200).send(cachedRes);
   } catch (error: any) {
