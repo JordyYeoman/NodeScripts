@@ -31,3 +31,4 @@ default.json
 */default.json
 *.txt
 */.txt
+*.csv

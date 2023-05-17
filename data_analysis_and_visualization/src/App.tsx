@@ -5,7 +5,7 @@ import BasicLineChart from "./BasicLineChart";
 import { LineChart } from "./LineChart";
 
 const dataAmount = 10000;
-const spliceFromIndex = 220371;
+const spliceFromIndex = 20371;
 
 export interface DataLayer {
   data: number[];
@@ -34,6 +34,7 @@ function App() {
             data: newData,
             labels: xLabels,
           };
+          console.log("d", d);
           setChartData(d);
         } catch (e) {
           console.log(

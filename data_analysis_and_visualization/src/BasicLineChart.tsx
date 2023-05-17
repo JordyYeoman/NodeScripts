@@ -14,10 +14,11 @@ const BasicSynchronizedLineChart = ({
 }: {
   incomingData: any;
 }) => {
-  let data = [];
+  let data: any[] | undefined = [];
   let labels = incomingData?.data;
   if (labels) {
-    data = labels.map((d: any, index: number) => {
+    console.log("labels", labels);
+    data = labels?.data?.map((d: any, index: number) => {
       return {
         data: d,
         label: index,

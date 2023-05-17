@@ -57,7 +57,7 @@ export const options = {
   },
 };
 
-const dataPointsTotal = 500;
+const dataPointsTotal = 1000;
 const labels = generateLabels(dataPointsTotal);
 
 export function LineChart({

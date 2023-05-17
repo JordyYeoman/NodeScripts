@@ -4,7 +4,6 @@ import { ConnectionOptions, connect } from "mongoose";
 const connectDB = async () => {
   try {
     const mongoURI: string = config.get("mongoURI");
-    console.log("mongoURI: ", mongoURI);
     const options: ConnectionOptions = {
       useNewUrlParser: true,
       useCreateIndex: true,
