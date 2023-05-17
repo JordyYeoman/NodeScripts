@@ -6,12 +6,14 @@ export const loginBetfair = async () => {
   const cert = "";
   if (!key || !cert) return;
 
-  await authenticate({
+  let x = await authenticate({
     username: process.env.BETFAIR_USERNAME ?? "",
     password: process.env.BETFAIR_PASSWORD ?? "",
     appKey: process.env.BETFAIR_APP_KEY ?? "",
     certificate: cert, // Self Signed Certificate
-    certificateKey: key, // Self Signed Certificate Key
-    certificatePassword: process.env.BETFAIR_FILE_KEY, // Optional passphrase for Certificate Key
+    certificateKey: process.env.BETFAIR_CERT_KEY ?? "", // Self Signed Certificate Key
+    certificatePassword: process.env.BETFAIR_CHALLENGE, // Optional passphrase for Certificate Key
   });
+
+  console.log("x", x);
 };
