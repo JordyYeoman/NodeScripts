@@ -1,4 +1,9 @@
-import { authenticate, listEventTypes } from "betfair-api-ts";
+import {
+  authenticate,
+  listEventTypes,
+  listEvents,
+  listRunnerBook,
+} from "betfair-api-ts";
 import fs from "fs";
 
 export const loginBetfair = async () => {
@@ -21,17 +26,7 @@ export const loginBetfair = async () => {
   )
     return;
 
-  console.log(
-    "FOOKIN SEND IT: ",
-    BETFAIR_USERNAME,
-    BETFAIR_PASSWORD,
-    BETFAIR_APP_KEY,
-    BETFAIR_CERT,
-    BETFAIR_CERT_KEY,
-    BETFAIR_CHALLENGE
-  );
-
-  let x = await authenticate({
+  await authenticate({
     username: BETFAIR_USERNAME,
     password: BETFAIR_PASSWORD,
     appKey: BETFAIR_APP_KEY,
@@ -40,9 +35,32 @@ export const loginBetfair = async () => {
     certificatePassword: BETFAIR_CHALLENGE, // Optional passphrase for Certificate Key
   });
 
-  //   listEventTypes();
+  const competitionIds = new Map<string, string>([
+    ["afl", "11897406"],
+    ["nba", "10547864"],
+  ]);
 
-  console.log("x", x);
+  const competitionTypeIds = [
+    competitionIds.get("nba") ?? "",
+    competitionIds.get("afl") ?? "",
+  ];
+
+  const params = {
+    filter: {
+      competitionIds: competitionTypeIds,
+    },
+  };
+
+  // TODO
+  // Get marketid for markets
+  // Get selectionId - what is it??
+
+  // This gets all events for the markets matched by competition id (afl & nba atm)
+  let x = await listEvents(params);
+  let y = await listRunnerBook({
+    marketId: "11897406",
+    selectionId: "",
+  });
 };
 
 // export declare type MarketFilter = {
