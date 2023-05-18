@@ -63,6 +63,7 @@ export const loginBetfair = async (): Promise<any> => {
   // Get all markets available for sporting event
   let k = await listMarketCatalogue({
     filter: {
+      // replace with array of markets to use
       eventIds: ["32337073"],
     },
     maxResults: 1000,
@@ -85,7 +86,12 @@ export const loginBetfair = async (): Promise<any> => {
     let mName = marketIdsNames.get(t.marketId);
     if (!mName) return;
 
-    return { mName, ...t, marketName: marketIdsNames.get(t.marketId) };
+    // // Strip out any handicap odds that don't contain any bets.
+    if (mName === "Handicap" || mName === "Total Points") {
+      t.runners = t.runners?.filter((f) => f?.lastPriceTraded);
+    }
+
+    return { marketName: mName, ...t };
   });
 
   return updatedDeets;
