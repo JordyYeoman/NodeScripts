@@ -36,7 +36,8 @@ export const doShitWithRes = (data: any[]): any[] => {
           }
         }
       });
-
+      // TODO: Possibly need to hook up to streams api to get bet/lay market prices without having to rely on 'lastPriceTraded;
+      // For now, this should do when closer to markets
       return x.filter((x: unknown) => Boolean(x));
     }
   });
