@@ -17,12 +17,13 @@ export const doShitWithRes = (data: any[]): any[] => {
       // Loop over runners and find values surrounding the handicap market
       let x = runners.map((runner: any) => {
         // Get which team/outcome runner relates to,
+        // console.log("runner: ", runner);
         if (keylineTeam1.selectionId === runner.selectionId) {
           if (
             keylineTeam1.handicap + 1 >= runner.handicap &&
             keylineTeam1.handicap - 1 <= runner.handicap
           ) {
-            console.log("runner1 match: ", runner);
+            return runner;
           }
         }
 
@@ -31,12 +32,14 @@ export const doShitWithRes = (data: any[]): any[] => {
             keylineTeam2.handicap + 1 >= runner.handicap &&
             keylineTeam2.handicap - 1 <= runner.handicap
           ) {
-            console.log("runner2 match: ", runner);
+            return runner;
           }
         }
       });
+
+      return x.filter((x: unknown) => Boolean(x));
     }
   });
 
-  return [];
+  return data;
 };
