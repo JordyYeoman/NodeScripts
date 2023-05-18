@@ -102,7 +102,17 @@ export const loginBetfair = async (): Promise<any> => {
       );
     }
 
-    console.log("t.runners", t.runners);
+    t.runners?.map((y) => {
+      console.log(
+        "t.runners",
+        Boolean(
+          y.ex?.availableToBack?.length &&
+            y?.ex?.availableToLay?.length &&
+            y?.lastPriceTraded
+        )
+      );
+      return y.ex?.availableToBack;
+    });
 
     return { marketName: mName, ...t };
   });
