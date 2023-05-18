@@ -83,12 +83,12 @@ export const loginBetfair = async () => {
     },
     maxResults: 1000,
   });
-  console.log("k", k);
+  //   console.log("k", k);
 
-  const marketIdsDetails = new Map<string, string>();
+  const marketIdsNames = new Map<string, string>();
 
   const marketIdsForEvent = k.map((l) => {
-    marketIdsDetails.set(l.marketId, l.marketName);
+    marketIdsNames.set(l.marketId, l.marketName);
     return l.marketId;
   });
 
@@ -97,7 +97,20 @@ export const loginBetfair = async () => {
     marketIds: marketIdsForEvent,
   });
 
-  console.log("c", c[10].keyLineDescription);
+  const marketIdsDetails = new Map<string, object>();
+
+  // Match up marketNames to marketBooks
+  let updatedDeets = c.map((t) => {
+    let mName = marketIdsNames.get(t.marketId);
+    if (!mName) return;
+
+    return marketIdsDetails.set(mName, {
+      ...t,
+      marketName: marketIdsNames.get(t.marketId),
+    });
+  });
+
+  console.log("c", updatedDeets);
 
   // Using the keyline description we can find the basis of where the handicap odds will be set around.
   // We then need to:
