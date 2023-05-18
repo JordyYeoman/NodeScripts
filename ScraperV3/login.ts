@@ -9,7 +9,8 @@ import {
 } from "betfair-api-ts";
 import fs from "fs";
 
-export const loginBetfair = async () => {
+// TODO: Migrate typing
+export const loginBetfair = async (): Promise<any> => {
   const {
     BETFAIR_USERNAME,
     BETFAIR_PASSWORD,
@@ -27,7 +28,7 @@ export const loginBetfair = async () => {
     !BETFAIR_CERT_KEY ||
     !BETFAIR_CHALLENGE
   )
-    return;
+    return [];
 
   await authenticate({
     username: BETFAIR_USERNAME,
@@ -51,39 +52,21 @@ export const loginBetfair = async () => {
   const params = {
     filter: {
       competitionIds: competitionTypeIds,
-      //   eventTypeIds: ["32337073"],
     },
   };
 
-  // TODO
-  // Get marketid for markets
-  // Get selectionId - what is it??
-
-  const o = await listEventTypes(params);
-  console.log("o", o[1]);
-
+  // DO NOT REMOVE - this will be used once 1 market processing is complete
   // This gets all events for the markets matched by competition id (afl & nba atm)
-
-  //   let x = await listEvents(params);
-  //   console.log("listEvents: ", x);
-
-  // let y = await listMarketBook({
-  //   marketIds: ["1.214006168"],
-  // });
-  //   console.log("Y: ", y);
-
-  //   let z = await listMarketTypes(params);
-  //   console.log("z: ", z);
+  // let x = await listEvents(params);
+  // console.log("listEvents: ", x);
 
   // Get all markets available for sporting event
   let k = await listMarketCatalogue({
     filter: {
       eventIds: ["32337073"],
-      //   eventTypeIds: ["7522"],
     },
     maxResults: 1000,
   });
-  //   console.log("k", k);
 
   const marketIdsNames = new Map<string, string>();
 
@@ -97,20 +80,15 @@ export const loginBetfair = async () => {
     marketIds: marketIdsForEvent,
   });
 
-  const marketIdsDetails = new Map<string, object>();
-
   // Match up marketNames to marketBooks
   let updatedDeets = c.map((t) => {
     let mName = marketIdsNames.get(t.marketId);
     if (!mName) return;
 
-    return marketIdsDetails.set(mName, {
-      ...t,
-      marketName: marketIdsNames.get(t.marketId),
-    });
+    return { mName, ...t, marketName: marketIdsNames.get(t.marketId) };
   });
 
-  console.log("c", updatedDeets);
+  return updatedDeets;
 
   // Using the keyline description we can find the basis of where the handicap odds will be set around.
   // We then need to:

@@ -8,6 +8,7 @@ import {
 } from "./types/OddsApi";
 import { Bookmaker } from "./types/OddsApi";
 import { loginBetfair } from "./login";
+import { doShitWithRes } from "./utils";
 require("dotenv").config();
 
 const server = fastify({ logger: false });
@@ -450,7 +451,7 @@ const d = [
 // Testing
 const sport = "basketball_nba";
 // Temporary caching while we get system working
-let cachedRes: null | {} = null;
+let cachedRes: undefined | (Map<string, object> | undefined)[];
 
 server.get("/", async (request, reply) => {
   return "SERVER HEALTHY";
@@ -483,8 +484,14 @@ server.get("/nba/data", async (request, reply) => {
     // handleData(response.data);
     // handleData(d);
     // return reply.status(200).send(response.data);
-    loginBetfair();
-    return reply.status(200).send("OK");
+
+    if (!cachedRes) {
+      cachedRes = await loginBetfair();
+    } else {
+      doShitWithRes(cachedRes);
+    }
+
+    return reply.status(200).send(JSON.stringify(cachedRes));
     // }
     // return reply.status(200).send(cachedRes);
   } catch (error: any) {
