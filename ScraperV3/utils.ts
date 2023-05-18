@@ -4,7 +4,7 @@ export const doShitWithRes = (data: any[]): any[] => {
   console.log("Using cached data:");
   console.log("================================");
 
-  data.map((x) => {
+  const y = data.map((x) => {
     const { keyLineDescription, marketName, runners } = x;
     // Only handle handicap markets (line markets) atm.
     if (marketName === "Handicap") {
@@ -42,5 +42,7 @@ export const doShitWithRes = (data: any[]): any[] => {
     }
   });
 
-  return data;
+  y.filter((x: unknown) => Boolean(x));
+
+  return y;
 };

@@ -471,13 +471,13 @@ server.get("/nba/data", async (request, reply) => {
     // handleData(d);
     // return reply.status(200).send(response.data);
 
-    // if (!cachedRes) {
-    //   cachedRes = await loginBetfair();
-    // } else {
-    doShitWithRes(d);
-    // }
+    if (!cachedRes) {
+      cachedRes = await loginBetfair();
+    } else {
+      doShitWithRes(cachedRes);
+    }
 
-    return reply.status(200).send(JSON.stringify(d));
+    return reply.status(200).send(JSON.stringify(cachedRes));
   } catch (error: any) {
     console.log("Error status", error.response.status);
     reply.status(error.response.status).send(error.response.data);

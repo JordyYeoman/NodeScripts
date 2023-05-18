@@ -1,5 +1,6 @@
 import {
   authenticate,
+  listCurrentOrders,
   listEventTypes,
   listEvents,
   listMarketBook,
@@ -79,7 +80,12 @@ export const loginBetfair = async (): Promise<any> => {
   // Get details of specific market (odds, amount bet etc)
   let c = await listMarketBook({
     marketIds: marketIdsForEvent,
+    priceProjection: {
+      priceData: ["EX_BEST_OFFERS"],
+    },
   });
+
+  // console.log("c", c);
 
   // Match up marketNames to marketBooks
   let updatedDeets = c.map((t) => {
@@ -88,8 +94,15 @@ export const loginBetfair = async (): Promise<any> => {
 
     // // Strip out any handicap odds that don't contain any bets.
     if (mName === "Handicap" || mName === "Total Points") {
-      t.runners = t.runners?.filter((f) => f?.lastPriceTraded);
+      t.runners = t.runners?.filter(
+        (f) =>
+          f?.lastPriceTraded &&
+          f?.ex?.availableToBack?.length &&
+          f?.ex?.availableToLay?.length
+      );
     }
+
+    console.log("t.runners", t.runners);
 
     return { marketName: mName, ...t };
   });
