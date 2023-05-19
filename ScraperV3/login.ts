@@ -10,6 +10,10 @@ import {
 } from "betfair-api-ts";
 import fs from "fs";
 
+export type MarketDetails = {
+  marketName: string;
+};
+
 // TODO: Migrate typing
 export const loginBetfair = async (): Promise<any> => {
   const {
@@ -63,8 +67,9 @@ export const loginBetfair = async (): Promise<any> => {
 
   // Create a teams map to read from based on id
   const teamsMap = new Map<string, string>();
-  let j = x.map((event) => {
-    if (!event.event) return;
+  x.map((event) => {
+    console.log("event", event);
+    if (!event?.event || !event?.event?.id || !event?.event?.name) return;
     return teamsMap.set(event.event?.id, event.event?.name);
   });
 
@@ -77,16 +82,10 @@ export const loginBetfair = async (): Promise<any> => {
     maxResults: 1000,
   });
 
-  export type MarketDetails = {
-    marketName: string;
-  };
-
-  const marketIdsNames = new Map<string, MarketDetails>();
+  const marketIdsNames = new Map<string, string>();
 
   const marketIdsForEvent = k.map((l) => {
-    marketIdsNames.set(l.marketId, {
-      marketName: l.marketName,
-    });
+    marketIdsNames.set(l.marketId, l.marketName);
     return l.marketId;
   });
 
@@ -98,11 +97,11 @@ export const loginBetfair = async (): Promise<any> => {
     },
   });
 
-  // console.log("c", c);
-
   // Match up marketNames to marketBooks
   let updatedDeets = c.map((t) => {
     let mName = marketIdsNames.get(t.marketId);
+    let title = teamsMap.get(t.marketId);
+
     if (!mName) return;
 
     // Strip out any odds that don't contain any bet/lay positions.
@@ -110,8 +109,8 @@ export const loginBetfair = async (): Promise<any> => {
     t.runners = t.runners?.filter((f) =>
       Boolean(f?.ex?.availableToBack?.length || f?.ex?.availableToLay?.length)
     );
-    // console.log("t", t);
-    return { marketName: mName, ...t };
+
+    return { marketName: mName, ...t, eventTitle: title };
   });
 
   return updatedDeets;

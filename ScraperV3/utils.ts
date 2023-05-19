@@ -16,11 +16,12 @@ export const doShitWithRes = (data: any[]): any[] => {
       const team1 = [];
       const team2 = [];
 
-      runners.map((runners: any) => {
-        console.log("================================");
-        console.log("Runners", runners);
+      console.log("x", x);
 
-        console.log("================================");
+      runners.map((runners: any) => {
+        // console.log("================================");
+        // console.log("Runners", runners);
+        // console.log("================================");
       });
 
       return {
@@ -31,7 +32,7 @@ export const doShitWithRes = (data: any[]): any[] => {
 
   y = y.filter((x: unknown) => Boolean(x));
 
-  console.log("y", y[0]);
+  // console.log("y", y[0]);
 
   return y;
 };
