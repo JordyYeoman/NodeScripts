@@ -35,18 +35,19 @@ server.get("/nba/data", async (request, reply) => {
   try {
     // if (!cachedRes) {
     // console.log("Hitting endpoint");
-    // const response = await axios.get(
-    //   "https://api.the-odds-api.com/v4/sports/basketball_nba/odds",
-    //   {
-    //     params: {
-    //       apiKey,
-    //       regions,
-    //       markets,
-    //       oddsFormat,
-    //       dateFormat,
-    //     },
-    //   }
-    // );
+    const response = await axios.get(
+      "https://api.the-odds-api.com/v4/sports/aussierules_afl/odds",
+      {
+        params: {
+          apiKey,
+          regions,
+          markets,
+          oddsFormat,
+          dateFormat,
+        },
+      }
+    );
+    console.log("response: ", response.data[2].bookmakers[1].markets[0]);
     // cachedRes = response.data;
     // handleData(response.data);
     // handleData(d);
