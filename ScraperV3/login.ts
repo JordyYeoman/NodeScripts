@@ -58,8 +58,15 @@ export const loginBetfair = async (): Promise<any> => {
 
   // DO NOT REMOVE - this will be used once 1 market processing is complete
   // This gets all events for the markets matched by competition id (afl & nba atm)
-  // let x = await listEvents(params);
-  // console.log("listEvents: ", x);
+  let x = await listEvents(params);
+  // Get teams
+
+  // Create a teams map to read from based on id
+  const teamsMap = new Map<string, string>();
+  let j = x.map((event) => {
+    if (!event.event) return;
+    return teamsMap.set(event.event?.id, event.event?.name);
+  });
 
   // Get all markets available for sporting event
   let k = await listMarketCatalogue({
@@ -70,10 +77,16 @@ export const loginBetfair = async (): Promise<any> => {
     maxResults: 1000,
   });
 
-  const marketIdsNames = new Map<string, string>();
+  export type MarketDetails = {
+    marketName: string;
+  };
+
+  const marketIdsNames = new Map<string, MarketDetails>();
 
   const marketIdsForEvent = k.map((l) => {
-    marketIdsNames.set(l.marketId, l.marketName);
+    marketIdsNames.set(l.marketId, {
+      marketName: l.marketName,
+    });
     return l.marketId;
   });
 
@@ -92,28 +105,12 @@ export const loginBetfair = async (): Promise<any> => {
     let mName = marketIdsNames.get(t.marketId);
     if (!mName) return;
 
-    // // Strip out any handicap odds that don't contain any bets.
-    if (mName === "Handicap" || mName === "Total Points") {
-      t.runners = t.runners?.filter(
-        (f) =>
-          f?.lastPriceTraded &&
-          f?.ex?.availableToBack?.length &&
-          f?.ex?.availableToLay?.length
-      );
-    }
-
-    t.runners?.map((y) => {
-      console.log(
-        "t.runners",
-        Boolean(
-          y.ex?.availableToBack?.length &&
-            y?.ex?.availableToLay?.length &&
-            y?.lastPriceTraded
-        )
-      );
-      return y.ex?.availableToBack;
-    });
-
+    // Strip out any odds that don't contain any bet/lay positions.
+    // If there are currently no positions from the market, we won't be able to get a 'fair value'
+    t.runners = t.runners?.filter((f) =>
+      Boolean(f?.ex?.availableToBack?.length || f?.ex?.availableToLay?.length)
+    );
+    // console.log("t", t);
     return { marketName: mName, ...t };
   });
 
@@ -128,22 +125,3 @@ export const loginBetfair = async (): Promise<any> => {
 
   // This way we can get an average between the two if no value is set for 10.5
 };
-
-// export declare type MarketFilter = {
-//     bspOnly?: boolean;
-//     competitionIds?: string[];
-//     eventIds?: string[];
-//     eventTypeIds?: string[];
-//     exchangeIds?: string[];
-//     inPlayOnly?: boolean;
-//     marketBettingTypes?: MarketBettingType[];
-//     marketCountries?: string[];
-//     marketIds?: string[];
-//     marketStartTime?: TimeRange;
-//     marketTypeCodes?: string[];
-//     raceTypes?: string[];
-//     textQuery?: string;
-//     turnInPlayEnabled?: boolean;
-//     venues?: string[];
-//     withOrders?: OrderStatus[];
-// };

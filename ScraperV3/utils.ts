@@ -4,45 +4,34 @@ export const doShitWithRes = (data: any[]): any[] => {
   console.log("Using cached data:");
   console.log("================================");
 
-  const y = data.map((x) => {
+  let y = data.map((x) => {
     const { keyLineDescription, marketName, runners } = x;
-    // Only handle handicap markets (line markets) atm.
+    // Only handle handicap markets (line markets) atm
     if (marketName === "Handicap") {
-      // Extract keyline handicap as a baseline to find market average
-      let keylineTeam1 = keyLineDescription?.keyLine[0];
-      let keylineTeam2 = keyLineDescription?.keyLine[1];
+      // Get Bet & Lay prices for each selection
+      // Get the fair price for each handicap pricepoint
 
-      if (!keylineTeam1 || !keylineTeam2) return;
+      // Match the selection to team
+      // How?? selectionId correlates to the team
+      const team1 = [];
+      const team2 = [];
 
-      // Loop over runners and find values surrounding the handicap market
-      let x = runners.map((runner: any) => {
-        // Get which team/outcome runner relates to,
-        // console.log("runner: ", runner);
-        if (keylineTeam1.selectionId === runner.selectionId) {
-          if (
-            keylineTeam1.handicap + 1 >= runner.handicap &&
-            keylineTeam1.handicap - 1 <= runner.handicap
-          ) {
-            return runner;
-          }
-        }
+      runners.map((runners: any) => {
+        console.log("================================");
+        console.log("Runners", runners);
 
-        if (keylineTeam2.selectionId === runner.selectionId) {
-          if (
-            keylineTeam2.handicap + 1 >= runner.handicap &&
-            keylineTeam2.handicap - 1 <= runner.handicap
-          ) {
-            return runner;
-          }
-        }
+        console.log("================================");
       });
-      // TODO: Possibly need to hook up to streams api to get bet/lay market prices without having to rely on 'lastPriceTraded;
-      // For now, this should do when closer to markets
-      return x.filter((x: unknown) => Boolean(x));
+
+      return {
+        [marketName]: x,
+      };
     }
   });
 
-  y.filter((x: unknown) => Boolean(x));
+  y = y.filter((x: unknown) => Boolean(x));
+
+  console.log("y", y[0]);
 
   return y;
 };
