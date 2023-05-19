@@ -11,9 +11,9 @@ export const d = [
     numberOfWinners: 1,
     numberOfRunners: 2,
     numberOfActiveRunners: 2,
-    lastMatchTime: "2023-05-19T04:12:55.154Z",
-    totalMatched: 17946.73,
-    totalAvailable: 9319.5,
+    lastMatchTime: "2023-05-19T05:12:33.605Z",
+    totalMatched: 19184.22,
+    totalAvailable: 8783.79,
     crossMatching: true,
     runnersVoidable: false,
     version: 5251193071,
@@ -22,18 +22,18 @@ export const d = [
         selectionId: 39992,
         handicap: 0,
         status: "ACTIVE",
-        lastPriceTraded: 2.4,
+        lastPriceTraded: 2.36,
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 2.34, size: 26.79 },
-            { price: 2.32, size: 110.18 },
-            { price: 2.3, size: 30.37 },
+            { price: 2.32, size: 372.35 },
+            { price: 2.3, size: 102.55 },
+            { price: 2.06, size: 213.41 },
           ],
           availableToLay: [
-            { price: 2.36, size: 594.39 },
+            { price: 2.36, size: 28.22 },
             { price: 2.38, size: 32.64 },
-            { price: 2.4, size: 26.75 },
+            { price: 2.4, size: 34.77 },
           ],
           tradedVolume: [],
         },
@@ -42,23 +42,24 @@ export const d = [
         selectionId: 39988,
         handicap: 0,
         status: "ACTIVE",
-        lastPriceTraded: 1.75,
+        lastPriceTraded: 1.74,
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 1.73, size: 855.75 },
+            { price: 1.73, size: 83.41 },
             { price: 1.72, size: 37.33 },
-            { price: 1.71, size: 118.6 },
+            { price: 1.71, size: 179.5 },
           ],
           availableToLay: [
-            { price: 1.75, size: 69.53 },
-            { price: 1.76, size: 144.87 },
-            { price: 1.81, size: 265.37 },
+            { price: 1.75, size: 158.67 },
+            { price: 1.76, size: 423.02 },
+            { price: 1.77, size: 55.89 },
           ],
           tradedVolume: [],
         },
       },
     ],
+    eventName: "Fremantle v Geelong",
   },
   {
     marketName: "First Scoring Play",
@@ -73,7 +74,7 @@ export const d = [
     numberOfRunners: 4,
     numberOfActiveRunners: 4,
     totalMatched: 0,
-    totalAvailable: 624.57,
+    totalAvailable: 624.62,
     crossMatching: true,
     runnersVoidable: false,
     version: 5251193073,
@@ -86,7 +87,7 @@ export const d = [
         ex: {
           availableToBack: [
             { price: 3.6, size: 78.32 },
-            { price: 1.07, size: 26.01 },
+            { price: 1.07, size: 26.02 },
           ],
           availableToLay: [
             { price: 8, size: 34.71 },
@@ -103,10 +104,13 @@ export const d = [
         ex: {
           availableToBack: [
             { price: 3.75, size: 74.04 },
-            { price: 1.15, size: 24.88 },
+            { price: 1.15, size: 24.89 },
             { price: 1.07, size: 11.68 },
           ],
-          availableToLay: [{ price: 8.6, size: 32.78 }],
+          availableToLay: [
+            { price: 8.6, size: 32.79 },
+            { price: 15, size: 1 },
+          ],
           tradedVolume: [],
         },
       },
@@ -117,7 +121,7 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 3.05, size: 99.32 },
+            { price: 3.05, size: 99.33 },
             { price: 1.07, size: 37.54 },
           ],
           availableToLay: [
@@ -135,14 +139,18 @@ export const d = [
         ex: {
           availableToBack: [
             { price: 3.6, size: 78.32 },
-            { price: 1.15, size: 24.88 },
+            { price: 1.15, size: 24.89 },
             { price: 1.07, size: 11.68 },
           ],
-          availableToLay: [{ price: 8, size: 34.71 }],
+          availableToLay: [
+            { price: 8, size: 34.71 },
+            { price: 15, size: 1 },
+          ],
           tradedVolume: [],
         },
       },
     ],
+    eventName: "Fremantle v Geelong",
   },
   {
     marketName: "First Goalscorer",
@@ -174,6 +182,7 @@ export const d = [
         },
       },
     ],
+    eventName: "Fremantle v Geelong",
   },
   {
     marketName: "First Quarter Result",
@@ -188,7 +197,7 @@ export const d = [
     numberOfRunners: 2,
     numberOfActiveRunners: 2,
     totalMatched: 0,
-    totalAvailable: 907,
+    totalAvailable: 907.07,
     crossMatching: true,
     runnersVoidable: false,
     version: 5251193077,
@@ -199,8 +208,8 @@ export const d = [
         status: "ACTIVE",
         totalMatched: 0,
         ex: {
-          availableToBack: [{ price: 2, size: 203.63 }],
-          availableToLay: [{ price: 2.34, size: 213.91 }],
+          availableToBack: [{ price: 2, size: 203.64 }],
+          availableToLay: [{ price: 2.34, size: 213.93 }],
           tradedVolume: [],
         },
       },
@@ -210,12 +219,13 @@ export const d = [
         status: "ACTIVE",
         totalMatched: 0,
         ex: {
-          availableToBack: [{ price: 1.75, size: 285.83 }],
-          availableToLay: [{ price: 2, size: 203.63 }],
+          availableToBack: [{ price: 1.75, size: 285.85 }],
+          availableToLay: [{ price: 2, size: 203.64 }],
           tradedVolume: [],
         },
       },
     ],
+    eventName: "Fremantle v Geelong",
   },
   {
     marketName: "Half Time Result",
@@ -230,7 +240,7 @@ export const d = [
     numberOfRunners: 2,
     numberOfActiveRunners: 2,
     totalMatched: 0,
-    totalAvailable: 902.95,
+    totalAvailable: 903.02,
     crossMatching: true,
     runnersVoidable: false,
     version: 5251193079,
@@ -241,8 +251,8 @@ export const d = [
         status: "ACTIVE",
         totalMatched: 0,
         ex: {
-          availableToBack: [{ price: 2.08, size: 188.53 }],
-          availableToLay: [{ price: 2.42, size: 211.75 }],
+          availableToBack: [{ price: 2.08, size: 188.54 }],
+          availableToLay: [{ price: 2.42, size: 211.77 }],
           tradedVolume: [],
         },
       },
@@ -252,12 +262,13 @@ export const d = [
         status: "ACTIVE",
         totalMatched: 0,
         ex: {
-          availableToBack: [{ price: 1.71, size: 299.49 }],
-          availableToLay: [{ price: 1.93, size: 203.19 }],
+          availableToBack: [{ price: 1.71, size: 299.52 }],
+          availableToLay: [{ price: 1.93, size: 203.2 }],
           tradedVolume: [],
         },
       },
     ],
+    eventName: "Fremantle v Geelong",
   },
   {
     marketName: "Half Time/Full Time",
@@ -272,7 +283,7 @@ export const d = [
     numberOfRunners: 5,
     numberOfActiveRunners: 5,
     totalMatched: 0,
-    totalAvailable: 512.81,
+    totalAvailable: 512.84,
     crossMatching: true,
     runnersVoidable: false,
     version: 5251193081,
@@ -283,7 +294,7 @@ export const d = [
         status: "ACTIVE",
         totalMatched: 0,
         ex: {
-          availableToBack: [{ price: 2.9, size: 107.17 }],
+          availableToBack: [{ price: 2.9, size: 107.18 }],
           availableToLay: [{ price: 5.2, size: 44.29 }],
           tradedVolume: [],
         },
@@ -316,8 +327,8 @@ export const d = [
         status: "ACTIVE",
         totalMatched: 0,
         ex: {
-          availableToBack: [{ price: 2.02, size: 199.63 }],
-          availableToLay: [{ price: 2.9, size: 79.41 }],
+          availableToBack: [{ price: 2.02, size: 199.64 }],
+          availableToLay: [{ price: 2.9, size: 79.42 }],
           tradedVolume: [],
         },
       },
@@ -333,6 +344,7 @@ export const d = [
         },
       },
     ],
+    eventName: "Fremantle v Geelong",
   },
   {
     marketName: "Total Game Score",
@@ -352,6 +364,7 @@ export const d = [
     runnersVoidable: false,
     version: 5251193083,
     runners: [],
+    eventName: "Fremantle v Geelong",
   },
   {
     marketName: "Tri Bet",
@@ -371,6 +384,7 @@ export const d = [
     runnersVoidable: false,
     version: 5251193085,
     runners: [],
+    eventName: "Fremantle v Geelong",
   },
   {
     marketName: "Winning Margin 24.5",
@@ -390,6 +404,7 @@ export const d = [
     runnersVoidable: false,
     version: 5251193087,
     runners: [],
+    eventName: "Fremantle v Geelong",
   },
   {
     marketName: "Winning Margin 39.5",
@@ -404,7 +419,7 @@ export const d = [
     numberOfRunners: 5,
     numberOfActiveRunners: 5,
     totalMatched: 0,
-    totalAvailable: 84.98,
+    totalAvailable: 84.99,
     crossMatching: true,
     runnersVoidable: false,
     version: 5251193089,
@@ -415,7 +430,7 @@ export const d = [
         status: "ACTIVE",
         totalMatched: 0,
         ex: {
-          availableToBack: [{ price: 2.44, size: 44.99 }],
+          availableToBack: [{ price: 2.44, size: 45 }],
           availableToLay: [],
           tradedVolume: [],
         },
@@ -426,12 +441,13 @@ export const d = [
         status: "ACTIVE",
         totalMatched: 0,
         ex: {
-          availableToBack: [{ price: 2, size: 39.99 }],
+          availableToBack: [{ price: 2, size: 40 }],
           availableToLay: [],
           tradedVolume: [],
         },
       },
     ],
+    eventName: "Fremantle v Geelong",
   },
   {
     marketName: "Winning Margin Spread",
@@ -446,7 +462,7 @@ export const d = [
     numberOfRunners: 9,
     numberOfActiveRunners: 9,
     totalMatched: 0,
-    totalAvailable: 299.71,
+    totalAvailable: 299.76,
     crossMatching: true,
     runnersVoidable: false,
     version: 5251193091,
@@ -457,7 +473,7 @@ export const d = [
         status: "ACTIVE",
         totalMatched: 0,
         ex: {
-          availableToBack: [{ price: 1.27, size: 36.21 }],
+          availableToBack: [{ price: 1.27, size: 36.22 }],
           availableToLay: [],
           tradedVolume: [],
         },
@@ -468,7 +484,7 @@ export const d = [
         status: "ACTIVE",
         totalMatched: 0,
         ex: {
-          availableToBack: [{ price: 1.27, size: 36.21 }],
+          availableToBack: [{ price: 1.27, size: 36.22 }],
           availableToLay: [],
           tradedVolume: [],
         },
@@ -479,7 +495,7 @@ export const d = [
         status: "ACTIVE",
         totalMatched: 0,
         ex: {
-          availableToBack: [{ price: 1.27, size: 36.21 }],
+          availableToBack: [{ price: 1.27, size: 36.22 }],
           availableToLay: [],
           tradedVolume: [],
         },
@@ -490,7 +506,7 @@ export const d = [
         status: "ACTIVE",
         totalMatched: 0,
         ex: {
-          availableToBack: [{ price: 1.27, size: 36.21 }],
+          availableToBack: [{ price: 1.27, size: 36.22 }],
           availableToLay: [],
           tradedVolume: [],
         },
@@ -501,7 +517,7 @@ export const d = [
         status: "ACTIVE",
         totalMatched: 0,
         ex: {
-          availableToBack: [{ price: 1.27, size: 36.21 }],
+          availableToBack: [{ price: 1.27, size: 36.22 }],
           availableToLay: [],
           tradedVolume: [],
         },
@@ -523,7 +539,7 @@ export const d = [
         status: "ACTIVE",
         totalMatched: 0,
         ex: {
-          availableToBack: [{ price: 1.27, size: 36.21 }],
+          availableToBack: [{ price: 1.27, size: 36.22 }],
           availableToLay: [],
           tradedVolume: [],
         },
@@ -534,7 +550,7 @@ export const d = [
         status: "ACTIVE",
         totalMatched: 0,
         ex: {
-          availableToBack: [{ price: 1.27, size: 36.21 }],
+          availableToBack: [{ price: 1.27, size: 36.22 }],
           availableToLay: [],
           tradedVolume: [],
         },
@@ -545,12 +561,13 @@ export const d = [
         status: "ACTIVE",
         totalMatched: 0,
         ex: {
-          availableToBack: [{ price: 1.27, size: 36.21 }],
+          availableToBack: [{ price: 1.27, size: 36.22 }],
           availableToLay: [],
           tradedVolume: [],
         },
       },
     ],
+    eventName: "Fremantle v Geelong",
   },
   {
     marketName: "Most Disposals - Group A",
@@ -570,6 +587,7 @@ export const d = [
     runnersVoidable: false,
     version: 5251193093,
     runners: [],
+    eventName: "Fremantle v Geelong",
   },
   {
     marketName: "Handicap",
@@ -583,9 +601,9 @@ export const d = [
     numberOfWinners: 0,
     numberOfRunners: 400,
     numberOfActiveRunners: 400,
-    lastMatchTime: "2023-05-19T04:15:15.939Z",
-    totalMatched: 24279.7,
-    totalAvailable: 7550.88,
+    lastMatchTime: "2023-05-18T08:32:48.555Z",
+    totalMatched: 24279.87,
+    totalAvailable: 8946.46,
     crossMatching: true,
     runnersVoidable: false,
     version: 5251193095,
@@ -597,7 +615,7 @@ export const d = [
         lastPriceTraded: 2.2,
         totalMatched: 0,
         ex: {
-          availableToBack: [{ price: 2, size: 160.82 }],
+          availableToBack: [{ price: 2.1, size: 113.59 }],
           availableToLay: [{ price: 2.22, size: 830.35 }],
           tradedVolume: [],
         },
@@ -610,19 +628,7 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [{ price: 1.82, size: 1012.85 }],
-          availableToLay: [{ price: 2, size: 160.82 }],
-          tradedVolume: [],
-        },
-      },
-      {
-        selectionId: 39988,
-        handicap: -6.5,
-        status: "ACTIVE",
-        lastPriceTraded: 1.85,
-        totalMatched: 0,
-        ex: {
-          availableToBack: [{ price: 1.81, size: 154.28 }],
-          availableToLay: [],
+          availableToLay: [{ price: 1.91, size: 124.88 }],
           tradedVolume: [],
         },
       },
@@ -633,9 +639,9 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
+            { price: 1.88, size: 113.59 },
             { price: 1.87, size: 88.02 },
             { price: 1.83, size: 60 },
-            { price: 1.81, size: 62 },
           ],
           availableToLay: [
             { price: 2.16, size: 76.2 },
@@ -658,9 +664,40 @@ export const d = [
             { price: 1.81, size: 62 },
           ],
           availableToLay: [
+            { price: 2.14, size: 99.79 },
             { price: 2.16, size: 76.2 },
             { price: 2.22, size: 49.82 },
-            { price: 2.24, size: 50.1 },
+          ],
+          tradedVolume: [],
+        },
+      },
+      {
+        selectionId: 39992,
+        handicap: 8.5,
+        status: "ACTIVE",
+        totalMatched: 0,
+        ex: {
+          availableToBack: [
+            { price: 1.85, size: 155.95 },
+            { price: 1.84, size: 113.59 },
+          ],
+          availableToLay: [{ price: 2.3, size: 213.41 }],
+          tradedVolume: [],
+        },
+      },
+      {
+        selectionId: 39988,
+        handicap: -8.5,
+        status: "ACTIVE",
+        totalMatched: 0,
+        ex: {
+          availableToBack: [
+            { price: 1.78, size: 113.59 },
+            { price: 1.77, size: 163.09 },
+          ],
+          availableToLay: [
+            { price: 2.18, size: 132.34 },
+            { price: 2.2, size: 95 },
           ],
           tradedVolume: [],
         },
@@ -672,7 +709,7 @@ export const d = [
         lastPriceTraded: 2,
         totalMatched: 0,
         ex: {
-          availableToBack: [{ price: 1.75, size: 80.32 }],
+          availableToBack: [{ price: 1.76, size: 113.59 }],
           availableToLay: [{ price: 1.97, size: 1035.53 }],
           tradedVolume: [],
         },
@@ -685,7 +722,7 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [{ price: 2.04, size: 1000 }],
-          availableToLay: [{ price: 2.34, size: 60.07 }],
+          availableToLay: [{ price: 2.32, size: 86.17 }],
           tradedVolume: [],
         },
       },
@@ -696,7 +733,10 @@ export const d = [
         lastPriceTraded: 1.83,
         totalMatched: 0,
         ex: {
-          availableToBack: [],
+          availableToBack: [
+            { price: 1.73, size: 113.59 },
+            { price: 1.72, size: 160.03 },
+          ],
           availableToLay: [
             { price: 1.91, size: 1099.48 },
             { price: 1.92, size: 45 },
@@ -714,18 +754,10 @@ export const d = [
             { price: 2.1, size: 1000 },
             { price: 2.08, size: 41.54 },
           ],
-          availableToLay: [],
-          tradedVolume: [],
-        },
-      },
-      {
-        selectionId: 39988,
-        handicap: -11.5,
-        status: "ACTIVE",
-        totalMatched: 0,
-        ex: {
-          availableToBack: [],
-          availableToLay: [{ price: 2.6, size: 97.55 }],
+          availableToLay: [
+            { price: 2.38, size: 82.56 },
+            { price: 2.4, size: 114.68 },
+          ],
           tradedVolume: [],
         },
       },
@@ -736,6 +768,7 @@ export const d = [
         { selectionId: 39988, handicap: -7.5 },
       ],
     },
+    eventName: "Fremantle v Geelong",
   },
   {
     marketName: "Total Points",
@@ -749,9 +782,9 @@ export const d = [
     numberOfWinners: 0,
     numberOfRunners: 482,
     numberOfActiveRunners: 482,
-    lastMatchTime: "2023-05-19T04:14:59.127Z",
-    totalMatched: 200,
-    totalAvailable: 2900.03,
+    lastMatchTime: "2023-05-17T04:13:58.412Z",
+    totalMatched: 199.99,
+    totalAvailable: 2900.1,
     crossMatching: true,
     runnersVoidable: false,
     version: 5251193497,
@@ -796,7 +829,7 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [],
-          availableToLay: [{ price: 2.48, size: 118.55 }],
+          availableToLay: [{ price: 2.48, size: 118.56 }],
           tradedVolume: [],
         },
       },
@@ -812,7 +845,7 @@ export const d = [
             { price: 1.84, size: 119 },
           ],
           availableToLay: [
-            { price: 2.14, size: 248.78 },
+            { price: 2.14, size: 248.79 },
             { price: 2.16, size: 76.2 },
             { price: 2.22, size: 98.92 },
           ],
@@ -826,7 +859,7 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 1.89, size: 168.29 },
+            { price: 1.89, size: 168.3 },
             { price: 1.88, size: 114 },
             { price: 1.87, size: 88.02 },
           ],
@@ -845,6 +878,7 @@ export const d = [
         { selectionId: 8435233, handicap: 173.5 },
       ],
     },
+    eventName: "Fremantle v Geelong",
   },
   {
     marketName: "Most Disposals - Group B",
@@ -864,6 +898,7 @@ export const d = [
     runnersVoidable: false,
     version: 5251193989,
     runners: [],
+    eventName: "Fremantle v Geelong",
   },
   {
     marketName: "Same Game Multis",
@@ -878,7 +913,7 @@ export const d = [
     numberOfRunners: 9,
     numberOfActiveRunners: 9,
     totalMatched: 0,
-    totalAvailable: 2025.9,
+    totalAvailable: 2025.91,
     crossMatching: false,
     runnersVoidable: true,
     version: 5251194814,
@@ -1016,6 +1051,7 @@ export const d = [
         },
       },
     ],
+    eventName: "Fremantle v Geelong",
   },
   {
     marketName: "20 Disposals or More",
@@ -1030,7 +1066,7 @@ export const d = [
     numberOfRunners: 21,
     numberOfActiveRunners: 21,
     totalMatched: 0,
-    totalAvailable: 5864.87,
+    totalAvailable: 5865.81,
     crossMatching: false,
     runnersVoidable: false,
     version: 5251194001,
@@ -1042,8 +1078,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 1.1, size: 718.83 },
-            { price: 1.06, size: 1099.82 },
+            { price: 1.1, size: 718.95 },
+            { price: 1.06, size: 1100 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1056,8 +1092,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 1.26, size: 267.93 },
-            { price: 1.22, size: 314.24 },
+            { price: 1.26, size: 267.97 },
+            { price: 1.22, size: 314.29 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1070,8 +1106,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 1.26, size: 257.17 },
-            { price: 1.22, size: 299.95 },
+            { price: 1.26, size: 257.21 },
+            { price: 1.22, size: 300 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1084,8 +1120,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 1.42, size: 160.51 },
-            { price: 1.38, size: 178.35 },
+            { price: 1.42, size: 160.54 },
+            { price: 1.38, size: 178.38 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1098,8 +1134,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 1.52, size: 130.98 },
-            { price: 1.46, size: 143.46 },
+            { price: 1.52, size: 131 },
+            { price: 1.46, size: 143.48 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1112,8 +1148,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 1.52, size: 128.36 },
-            { price: 1.48, size: 140.41 },
+            { price: 1.52, size: 128.38 },
+            { price: 1.48, size: 140.43 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1126,8 +1162,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 1.58, size: 155.57 },
-            { price: 1.52, size: 169.2 },
+            { price: 1.58, size: 155.59 },
+            { price: 1.52, size: 169.23 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1140,8 +1176,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 1.72, size: 123.96 },
-            { price: 1.66, size: 133.31 },
+            { price: 1.72, size: 123.98 },
+            { price: 1.66, size: 133.33 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1154,8 +1190,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 2.22, size: 73.03 },
-            { price: 2.08, size: 81.47 },
+            { price: 2.22, size: 73.04 },
+            { price: 2.08, size: 81.48 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1168,8 +1204,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 2.26, size: 70.55 },
-            { price: 2.12, size: 78.56 },
+            { price: 2.26, size: 70.56 },
+            { price: 2.12, size: 78.57 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1182,8 +1218,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 2.32, size: 67.12 },
-            { price: 2.18, size: 74.57 },
+            { price: 2.32, size: 67.13 },
+            { price: 2.18, size: 74.58 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1196,8 +1232,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 2.4, size: 80.13 },
-            { price: 2.26, size: 88.79 },
+            { price: 2.4, size: 80.14 },
+            { price: 2.26, size: 88.8 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1210,8 +1246,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 2.66, size: 67.26 },
-            { price: 2.5, size: 73.99 },
+            { price: 2.66, size: 67.27 },
+            { price: 2.5, size: 74 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1224,8 +1260,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 2.76, size: 63.2 },
-            { price: 2.6, size: 69.37 },
+            { price: 2.76, size: 63.21 },
+            { price: 2.6, size: 69.38 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1238,8 +1274,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 2.82, size: 61.35 },
-            { price: 2.66, size: 67.26 },
+            { price: 2.82, size: 61.36 },
+            { price: 2.66, size: 67.27 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1252,8 +1288,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 3.6, size: 43.1 },
-            { price: 3.3, size: 49.32 },
+            { price: 3.6, size: 43.11 },
+            { price: 3.3, size: 49.33 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1266,8 +1302,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 3.9, size: 38.94 },
-            { price: 3.5, size: 44.39 },
+            { price: 3.9, size: 38.95 },
+            { price: 3.5, size: 44.4 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1280,8 +1316,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 4.4, size: 32.64 },
-            { price: 4, size: 36.99 },
+            { price: 4.4, size: 32.65 },
+            { price: 4, size: 37 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1295,7 +1331,7 @@ export const d = [
         ex: {
           availableToBack: [
             { price: 4.8, size: 29.76 },
-            { price: 4.3, size: 33.63 },
+            { price: 4.3, size: 33.64 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1309,7 +1345,7 @@ export const d = [
         ex: {
           availableToBack: [
             { price: 4.9, size: 28.91 },
-            { price: 4.4, size: 32.64 },
+            { price: 4.4, size: 32.65 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1330,6 +1366,7 @@ export const d = [
         },
       },
     ],
+    eventName: "Fremantle v Geelong",
   },
   {
     marketName: "25 Disposals or More",
@@ -1344,7 +1381,7 @@ export const d = [
     numberOfRunners: 10,
     numberOfActiveRunners: 10,
     totalMatched: 0,
-    totalAvailable: 1834.32,
+    totalAvailable: 1834.62,
     crossMatching: false,
     runnersVoidable: false,
     version: 5251194003,
@@ -1356,8 +1393,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 1.32, size: 214.19 },
-            { price: 1.28, size: 244.4 },
+            { price: 1.32, size: 214.22 },
+            { price: 1.28, size: 244.44 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1370,8 +1407,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 1.38, size: 178.4 },
-            { price: 1.34, size: 199.97 },
+            { price: 1.38, size: 178.43 },
+            { price: 1.34, size: 200 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1384,8 +1421,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 2.04, size: 85 },
-            { price: 1.92, size: 95.63 },
+            { price: 2.04, size: 85.01 },
+            { price: 1.92, size: 95.65 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1398,8 +1435,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 2.08, size: 81.65 },
-            { price: 1.96, size: 91.66 },
+            { price: 2.08, size: 81.66 },
+            { price: 1.96, size: 91.67 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1412,8 +1449,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 2.34, size: 83.32 },
-            { price: 2.2, size: 92.49 },
+            { price: 2.34, size: 83.33 },
+            { price: 2.2, size: 92.5 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1426,8 +1463,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 2.66, size: 67.26 },
-            { price: 2.5, size: 73.99 },
+            { price: 2.66, size: 67.27 },
+            { price: 2.5, size: 74 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1440,8 +1477,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 3.4, size: 47.12 },
-            { price: 3.1, size: 54.14 },
+            { price: 3.4, size: 47.13 },
+            { price: 3.1, size: 54.15 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1454,8 +1491,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 3.6, size: 43.1 },
-            { price: 3.3, size: 49.32 },
+            { price: 3.6, size: 43.11 },
+            { price: 3.3, size: 49.33 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1468,8 +1505,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 4.2, size: 34.9 },
-            { price: 3.8, size: 39.63 },
+            { price: 4.2, size: 34.91 },
+            { price: 3.8, size: 39.64 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1490,6 +1527,7 @@ export const d = [
         },
       },
     ],
+    eventName: "Fremantle v Geelong",
   },
   {
     marketName: "30 Disposals or More",
@@ -1504,7 +1542,7 @@ export const d = [
     numberOfRunners: 6,
     numberOfActiveRunners: 6,
     totalMatched: 0,
-    totalAvailable: 576.48,
+    totalAvailable: 576.57,
     crossMatching: false,
     runnersVoidable: false,
     version: 5251194005,
@@ -1516,8 +1554,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 2.12, size: 79.31 },
-            { price: 2, size: 88.88 },
+            { price: 2.12, size: 79.32 },
+            { price: 2, size: 88.89 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1530,8 +1568,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 2.22, size: 73.03 },
-            { price: 2.08, size: 81.47 },
+            { price: 2.22, size: 73.04 },
+            { price: 2.08, size: 81.48 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1544,8 +1582,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 4.4, size: 32.64 },
-            { price: 4, size: 36.99 },
+            { price: 4.4, size: 32.65 },
+            { price: 4, size: 37 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1558,8 +1596,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 4.4, size: 32.64 },
-            { price: 4, size: 36.99 },
+            { price: 4.4, size: 32.65 },
+            { price: 4, size: 37 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1573,7 +1611,7 @@ export const d = [
         ex: {
           availableToBack: [
             { price: 4.8, size: 29.76 },
-            { price: 4.3, size: 33.63 },
+            { price: 4.3, size: 33.64 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1594,6 +1632,7 @@ export const d = [
         },
       },
     ],
+    eventName: "Fremantle v Geelong",
   },
   {
     marketName: "Total Points Line",
@@ -1608,7 +1647,7 @@ export const d = [
     numberOfRunners: 1,
     numberOfActiveRunners: 1,
     totalMatched: 0,
-    totalAvailable: 136.28,
+    totalAvailable: 136.3,
     crossMatching: false,
     runnersVoidable: false,
     version: 5251194007,
@@ -1619,12 +1658,13 @@ export const d = [
         status: "ACTIVE",
         totalMatched: 0,
         ex: {
-          availableToBack: [{ price: 48, size: 136.28 }],
+          availableToBack: [{ price: 48, size: 136.3 }],
           availableToLay: [],
           tradedVolume: [],
         },
       },
     ],
+    eventName: "Fremantle v Geelong",
   },
   {
     marketName: "15 Disposals or More",
@@ -1639,7 +1679,7 @@ export const d = [
     numberOfRunners: 35,
     numberOfActiveRunners: 35,
     totalMatched: 0,
-    totalAvailable: 13798.43,
+    totalAvailable: 13800.64,
     crossMatching: false,
     runnersVoidable: false,
     version: 5251194009,
@@ -1651,8 +1691,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 1.1, size: 718.83 },
-            { price: 1.06, size: 1099.82 },
+            { price: 1.1, size: 718.95 },
+            { price: 1.06, size: 1100 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1665,8 +1705,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 1.12, size: 646.33 },
-            { price: 1.08, size: 942.71 },
+            { price: 1.12, size: 646.43 },
+            { price: 1.08, size: 942.86 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1679,8 +1719,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 1.12, size: 587.1 },
-            { price: 1.08, size: 824.87 },
+            { price: 1.12, size: 587.19 },
+            { price: 1.08, size: 825 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1693,8 +1733,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 1.14, size: 496.16 },
-            { price: 1.1, size: 659.89 },
+            { price: 1.14, size: 496.24 },
+            { price: 1.1, size: 660 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1707,8 +1747,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 1.16, size: 460.5 },
-            { price: 1.12, size: 599.9 },
+            { price: 1.16, size: 460.57 },
+            { price: 1.12, size: 600 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1721,8 +1761,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 1.26, size: 257.17 },
-            { price: 1.22, size: 299.95 },
+            { price: 1.26, size: 257.21 },
+            { price: 1.22, size: 300 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1735,8 +1775,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 1.28, size: 238.06 },
-            { price: 1.24, size: 274.96 },
+            { price: 1.28, size: 238.1 },
+            { price: 1.24, size: 275 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1749,8 +1789,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 1.32, size: 207.26 },
-            { price: 1.28, size: 235.67 },
+            { price: 1.32, size: 207.29 },
+            { price: 1.28, size: 235.71 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1763,8 +1803,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 1.34, size: 194.66 },
-            { price: 1.3, size: 219.96 },
+            { price: 1.34, size: 194.69 },
+            { price: 1.3, size: 220 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1777,8 +1817,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 1.36, size: 183.51 },
-            { price: 1.32, size: 206.22 },
+            { price: 1.36, size: 183.54 },
+            { price: 1.32, size: 206.25 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1791,8 +1831,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 1.38, size: 178.4 },
-            { price: 1.34, size: 199.97 },
+            { price: 1.38, size: 178.43 },
+            { price: 1.34, size: 200 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1805,8 +1845,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 1.58, size: 152.78 },
-            { price: 1.54, size: 166.01 },
+            { price: 1.58, size: 152.8 },
+            { price: 1.54, size: 166.04 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1819,8 +1859,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 1.62, size: 145 },
-            { price: 1.56, size: 157.11 },
+            { price: 1.62, size: 145.02 },
+            { price: 1.56, size: 157.14 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1833,8 +1873,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 1.66, size: 133.66 },
-            { price: 1.62, size: 144.24 },
+            { price: 1.66, size: 133.68 },
+            { price: 1.62, size: 144.26 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1847,8 +1887,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 1.66, size: 133.66 },
-            { price: 1.62, size: 144.24 },
+            { price: 1.66, size: 133.68 },
+            { price: 1.62, size: 144.26 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1861,8 +1901,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 1.72, size: 123.96 },
-            { price: 1.66, size: 133.31 },
+            { price: 1.72, size: 123.98 },
+            { price: 1.66, size: 133.33 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1875,8 +1915,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 1.74, size: 120.46 },
-            { price: 1.68, size: 129.39 },
+            { price: 1.74, size: 120.48 },
+            { price: 1.68, size: 129.41 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1889,8 +1929,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 1.76, size: 118.79 },
-            { price: 1.7, size: 127.52 },
+            { price: 1.76, size: 118.81 },
+            { price: 1.7, size: 127.54 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1903,8 +1943,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 1.98, size: 91.56 },
-            { price: 1.86, size: 103.51 },
+            { price: 1.98, size: 91.57 },
+            { price: 1.86, size: 103.53 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1917,8 +1957,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 2.06, size: 84.14 },
-            { price: 1.94, size: 94.6 },
+            { price: 2.06, size: 84.15 },
+            { price: 1.94, size: 94.62 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1931,8 +1971,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 2.22, size: 73.03 },
-            { price: 2.08, size: 81.47 },
+            { price: 2.22, size: 73.04 },
+            { price: 2.08, size: 81.48 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1945,8 +1985,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 2.28, size: 68.79 },
-            { price: 2.16, size: 76.51 },
+            { price: 2.28, size: 68.8 },
+            { price: 2.16, size: 76.52 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1959,8 +1999,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 2.32, size: 67.12 },
-            { price: 2.18, size: 74.57 },
+            { price: 2.32, size: 67.13 },
+            { price: 2.18, size: 74.58 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1973,8 +2013,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 2.44, size: 77.18 },
-            { price: 2.3, size: 85.37 },
+            { price: 2.44, size: 77.19 },
+            { price: 2.3, size: 85.38 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -1987,8 +2027,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 2.44, size: 77.18 },
-            { price: 2.3, size: 85.37 },
+            { price: 2.44, size: 77.19 },
+            { price: 2.3, size: 85.38 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -2001,8 +2041,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 2.66, size: 67.26 },
-            { price: 2.5, size: 73.99 },
+            { price: 2.66, size: 67.27 },
+            { price: 2.5, size: 74 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -2015,8 +2055,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 2.72, size: 65.17 },
-            { price: 2.56, size: 71.6 },
+            { price: 2.72, size: 65.18 },
+            { price: 2.56, size: 71.61 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -2029,8 +2069,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 2.82, size: 61.35 },
-            { price: 2.66, size: 67.26 },
+            { price: 2.82, size: 61.36 },
+            { price: 2.66, size: 67.27 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -2043,8 +2083,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 3.4, size: 47.12 },
-            { price: 3.1, size: 54.14 },
+            { price: 3.4, size: 47.13 },
+            { price: 3.1, size: 54.15 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -2057,8 +2097,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 3.5, size: 46.05 },
-            { price: 3.1, size: 52.85 },
+            { price: 3.5, size: 46.06 },
+            { price: 3.1, size: 52.86 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -2071,8 +2111,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 3.6, size: 44.04 },
-            { price: 3.2, size: 50.44 },
+            { price: 3.6, size: 44.05 },
+            { price: 3.2, size: 50.45 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -2085,8 +2125,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 3.6, size: 44.04 },
-            { price: 3.2, size: 50.44 },
+            { price: 3.6, size: 44.05 },
+            { price: 3.2, size: 50.45 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -2099,8 +2139,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 4.2, size: 34.9 },
-            { price: 3.8, size: 39.63 },
+            { price: 4.2, size: 34.91 },
+            { price: 3.8, size: 39.64 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -2113,8 +2153,8 @@ export const d = [
         totalMatched: 0,
         ex: {
           availableToBack: [
-            { price: 4.3, size: 33.73 },
-            { price: 3.9, size: 38.27 },
+            { price: 4.3, size: 33.74 },
+            { price: 3.9, size: 38.28 },
           ],
           availableToLay: [],
           tradedVolume: [],
@@ -2135,5 +2175,6 @@ export const d = [
         },
       },
     ],
+    eventName: "Fremantle v Geelong",
   },
 ];

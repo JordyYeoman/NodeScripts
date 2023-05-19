@@ -9,10 +9,7 @@ import {
   listRunnerBook,
 } from "betfair-api-ts";
 import fs from "fs";
-
-export type MarketDetails = {
-  marketName: string;
-};
+import { EventDetails, MarketCatalogue, MarketDetails } from "./types";
 
 // TODO: Migrate typing
 export const loginBetfair = async (): Promise<any> => {
@@ -63,15 +60,6 @@ export const loginBetfair = async (): Promise<any> => {
   // DO NOT REMOVE - this will be used once 1 market processing is complete
   // This gets all events for the markets matched by competition id (afl & nba atm)
   let x = await listEvents(params);
-  // Get teams
-
-  // Create a teams map to read from based on id
-  const teamsMap = new Map<string, string>();
-  x.map((event) => {
-    console.log("event", event);
-    if (!event?.event || !event?.event?.id || !event?.event?.name) return;
-    return teamsMap.set(event.event?.id, event.event?.name);
-  });
 
   // Get all markets available for sporting event
   let k = await listMarketCatalogue({
@@ -80,12 +68,18 @@ export const loginBetfair = async (): Promise<any> => {
       eventIds: ["32337073"],
     },
     maxResults: 1000,
+    marketProjection: ["EVENT"],
   });
 
-  const marketIdsNames = new Map<string, string>();
+  const marketDetails = new Map<string, MarketCatalogue>();
 
   const marketIdsForEvent = k.map((l) => {
-    marketIdsNames.set(l.marketId, l.marketName);
+    marketDetails.set(l.marketId, {
+      marketName: l.marketName,
+      marketId: l.marketId,
+      totalMatched: l.totalMatched,
+      event: l.event,
+    });
     return l.marketId;
   });
 
@@ -95,14 +89,15 @@ export const loginBetfair = async (): Promise<any> => {
     priceProjection: {
       priceData: ["EX_BEST_OFFERS"],
     },
+    matchProjection: "NO_ROLLUP",
   });
 
   // Match up marketNames to marketBooks
   let updatedDeets = c.map((t) => {
-    let mName = marketIdsNames.get(t.marketId);
-    let title = teamsMap.get(t.marketId);
+    let mName = marketDetails.get(t.marketId)?.marketName;
+    let eventName = marketDetails.get(t.marketId)?.event?.name;
 
-    if (!mName) return;
+    if (!mName || !eventName) return;
 
     // Strip out any odds that don't contain any bet/lay positions.
     // If there are currently no positions from the market, we won't be able to get a 'fair value'
@@ -110,7 +105,7 @@ export const loginBetfair = async (): Promise<any> => {
       Boolean(f?.ex?.availableToBack?.length || f?.ex?.availableToLay?.length)
     );
 
-    return { marketName: mName, ...t, eventTitle: title };
+    return { marketName: mName, ...t, eventName };
   });
 
   return updatedDeets;
