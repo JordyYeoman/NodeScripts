@@ -4,7 +4,7 @@ export const doShitWithRes = (data: any[]): any[] => {
   console.log("Using cached data:");
   console.log("================================");
 
-  let y = data.map((x) => {
+  let y: any = data.map((x) => {
     const { keyLineDescription, marketName, eventName, runners } = x;
     // Only handle handicap markets (line markets) atm
     if (marketName === "Handicap") {
@@ -16,8 +16,8 @@ export const doShitWithRes = (data: any[]): any[] => {
       const team1 = eventName?.split(" ")[0];
       const team2 = eventName?.split(" ")[2];
 
-      console.log("team1", team1);
-      console.log("team2", team2);
+      const team1Market: any[] = [];
+      const team2Market: any[] = [];
 
       if (!team1 || !team2) return;
 
@@ -41,23 +41,29 @@ export const doShitWithRes = (data: any[]): any[] => {
         }
       }
 
-      console.log("teamMap: ", teamMap);
-
-      // runners.map((runners: any) => {
-      //   console.log("================================");
-      //   console.log("Runners", runners);
-      //   console.log("================================");
-      // });
+      runners.map((runner: any) => {
+        // Get fair price and add to runner object
+        const fairPrice =
+          (runner.ex.availableToBack[0].price +
+            runner.ex.availableToLay[0].price) /
+          2;
+        if (runner.selectionId === teamMap.get(team1)) {
+          team1Market.push({ ...runner, fairPrice });
+        } else {
+          team2Market.push({ ...runner, fairPrice });
+        }
+      });
 
       return {
-        [marketName]: x,
+        [marketName.toLowerCase()]: {
+          team1: team1Market,
+          team2: team2Market,
+        },
       };
     }
   });
 
   y = y.filter((x: unknown) => Boolean(x));
-
-  // console.log("y", y[0]);
 
   return y;
 };

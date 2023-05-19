@@ -55,10 +55,10 @@ server.get("/nba/data", async (request, reply) => {
     // if (!cachedRes) {
     // cachedRes = await loginBetfair();
     // } else {
-    doShitWithRes(d);
+    let z = doShitWithRes(d);
     // }
 
-    return reply.status(200).send(JSON.stringify(d));
+    return reply.status(200).send(JSON.stringify(z));
   } catch (error: any) {
     console.log("Error status", error.response.status);
     reply.status(error.response.status).send(error.response.data);
@@ -131,16 +131,6 @@ const getExpectedValue = (bookieOdds: number, fairOdds: number) => {
   const loseOutcome = loseProbability * stake;
 
   return winOutcome - loseOutcome;
-};
-
-const prettyConsole = (title: string, x: string | number) => {
-  console.log(
-    "================================================================"
-  );
-  console.log(title, ": ", x);
-  console.log(
-    "================================================================"
-  );
 };
 
 const getH2HPositiveExpectedValues = (
