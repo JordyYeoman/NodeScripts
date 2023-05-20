@@ -8,10 +8,10 @@ import {
 } from "./types/OddsApi";
 import { Bookmaker } from "./types/OddsApi";
 import { loginBetfair } from "./login";
-import { doShitWithRes } from "./utils";
+import { ingestData } from "./utils";
 require("dotenv").config();
 // Test data
-import { d } from "./sampleData";
+import { d, oddsApi } from "./sampleData";
 
 const server = fastify({ logger: false });
 
@@ -35,19 +35,19 @@ server.get("/nba/data", async (request, reply) => {
   try {
     // if (!cachedRes) {
     // console.log("Hitting endpoint");
-    const response = await axios.get(
-      "https://api.the-odds-api.com/v4/sports/aussierules_afl/odds",
-      {
-        params: {
-          apiKey,
-          regions,
-          markets,
-          oddsFormat,
-          dateFormat,
-        },
-      }
-    );
-    console.log("response: ", response.data[2].bookmakers[1].markets[0]);
+    // const response = await axios.get(
+    //   "https://api.the-odds-api.com/v4/sports/aussierules_afl/odds",
+    //   {
+    //     params: {
+    //       apiKey,
+    //       regions,
+    //       markets,
+    //       oddsFormat,
+    //       dateFormat,
+    //     },
+    //   }
+    // );
+    // console.log("response: ", response.data[2].bookmakers[1].markets[0]);
     // cachedRes = response.data;
     // handleData(response.data);
     // handleData(d);
@@ -56,10 +56,10 @@ server.get("/nba/data", async (request, reply) => {
     // if (!cachedRes) {
     // cachedRes = await loginBetfair();
     // } else {
-    let z = doShitWithRes(d);
+    // let z = ingestData(d);
     // }
 
-    return reply.status(200).send(JSON.stringify(z));
+    return reply.status(200).send(JSON.stringify(oddsApi));
   } catch (error: any) {
     console.log("Error status", error.response.status);
     reply.status(error.response.status).send(error.response.data);
