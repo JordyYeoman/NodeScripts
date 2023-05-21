@@ -8,7 +8,7 @@ import {
 } from "./types/OddsApi";
 import { Bookmaker } from "./types/OddsApi";
 import { loginBetfair } from "./login";
-import { compareEvents, ingestData } from "./utils";
+import { compareEvents, getExpectedValue, ingestData } from "./utils";
 require("dotenv").config();
 // Test data
 import { d, oddsApi } from "./sampleData";
@@ -56,15 +56,15 @@ server.get("/nba/data", async (request, reply) => {
     // if (!cachedRes) {
     // cachedRes = await loginBetfair();
     // } else {
-    // let z = ingestData(d);
+    let z = ingestData(d);
     // }
 
-    let p = compareEvents(oddsApi, d);
+    let p = compareEvents(oddsApi, z);
 
     return reply.status(200).send(JSON.stringify(d));
   } catch (error: any) {
-    console.log("Error status", error.response.status);
-    reply.status(error.response.status).send(error.response.data);
+    console.log("Error status", error.response);
+    reply.send(error.response);
   }
 });
 
@@ -123,17 +123,6 @@ const handleData = (data: OddsApi[]) => {
     });
   });
   console.log("positiveExpectedValueLegs", positiveExpectedValueLegs);
-};
-
-const getExpectedValue = (bookieOdds: number, fairOdds: number) => {
-  // Stake amount = $10 for testing
-  const stake = 10;
-  const winProbability = 1 / fairOdds;
-  const winOutcome = (bookieOdds * stake - stake) * winProbability;
-  const loseProbability = 1 - winProbability;
-  const loseOutcome = loseProbability * stake;
-
-  return winOutcome - loseOutcome;
 };
 
 const getH2HPositiveExpectedValues = (

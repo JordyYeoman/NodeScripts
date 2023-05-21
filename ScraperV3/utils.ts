@@ -76,7 +76,7 @@ const handleHandicap = (
 
 export const compareEvents = (oddsApi: any, eventData: any) => {
   // Testing
-  const teamToMatch = AFLTeam.FREMANTlE;
+  const teamToMatch = AFLTeam.FREMANTlE.toLowerCase();
 
   // Seperate into seperate markets
   let foundTeamOdds: any = [];
@@ -90,6 +90,7 @@ export const compareEvents = (oddsApi: any, eventData: any) => {
           try {
             return market?.outcomes?.find((u: any) => {
               const { name } = u;
+              console.log("name: ", name);
               if (name.toLowerCase().includes(teamToMatch)) {
                 foundTeamOdds.push({
                   outcome: u,
@@ -107,4 +108,57 @@ export const compareEvents = (oddsApi: any, eventData: any) => {
   });
 
   console.log("foundTeamOdds", foundTeamOdds);
+  // Now loop over 'd' data
+
+  const x = eventData.map((e: any) => {
+    const { handicap } = e;
+
+    if (handicap) {
+      // Find matching team - 'teamToMatch'
+      const { team1, team2 } = handicap;
+      if (!team1 || !team2) return;
+
+      const isTeamOneMatch = team1.some(
+        (j: any) => j.teamName.toLowerCase() === teamToMatch
+      );
+      const isTeamTwoMatch = team2.some(
+        (j: any) => j.teamName.toLowerCase() === teamToMatch
+      );
+
+      // Oncew we find a matching team, compare all market odds to find any
+      // positive EV bets
+      if (isTeamOneMatch) {
+        console.log("team1Bra!!");
+      } else if (isTeamTwoMatch) {
+        console.log("Tis be team 2 homie!");
+        const fairPrice = parseFloat(team2[0]?.fairPrice);
+        const positiveEVBets: any = [];
+
+        // Loop over matching team odds
+        if (foundTeamOdds.length) {
+          foundTeamOdds?.map((team: any) => {
+            const positive = getExpectedValue(team?.outcome?.price, fairPrice);
+            if (positive > 0)
+              positiveEVBets.push({
+                expectedValue: positive,
+                bookie: team,
+                fairPrice,
+              });
+          });
+        }
+        return positiveEVBets;
+      }
+    }
+  });
+};
+
+export const getExpectedValue = (bookieOdds: number, fairOdds: number) => {
+  // Stake amount = $10 for testing
+  const stake = 10;
+  const winProbability = 1 / fairOdds;
+  const winOutcome = (bookieOdds * stake - stake) * winProbability;
+  const loseProbability = 1 - winProbability;
+  const loseOutcome = loseProbability * stake;
+
+  return winOutcome - loseOutcome;
 };

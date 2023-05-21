@@ -59,13 +59,14 @@ export const loginBetfair = async (): Promise<any> => {
 
   // DO NOT REMOVE - this will be used once 1 market processing is complete
   // This gets all events for the markets matched by competition id (afl & nba atm)
-  let x = await listEvents(params);
+  // let x = await listEvents(params);
+  // console.log("listOfEvents", x);
 
   // Get all markets available for sporting event
   let k = await listMarketCatalogue({
     filter: {
       // replace with array of markets to use
-      eventIds: ["32337073"],
+      eventIds: ["32355795"],
     },
     maxResults: 1000,
     marketProjection: ["EVENT"],
