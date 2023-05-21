@@ -106,9 +106,6 @@ export const compareEvents = (oddsApi: any, eventData: any) => {
     });
   });
 
-  // console.log("foundTeamOdds", foundTeamOdds);
-  // Now loop over 'd' data
-
   const x = eventData.map((e: any) => {
     const { handicap } = e;
 
@@ -148,19 +145,20 @@ const compareMarkets = (team: any[], matchedTeamOdds: any[]): any[] => {
 
       matchedTeamOdds?.map((team: any) => {
         // Find handicap with same value, otherwise exit
-        if (team?.outcome?.point === handicap) {
-          console.log("Handicap Match");
-          const ev = getExpectedValue(team?.outcome?.price, fairPrice);
+        if (team?.outcome?.point !== handicap) return;
 
-          if (ev > 0)
-            positiveEVBets.push({
-              expectedValue: ev,
-              bookie: team,
-              fairPrice,
-              handicap,
-              betfairPoint: team?.outcome?.point,
-            });
-        }
+        console.log("Handicap Match");
+        const ev = getExpectedValue(team?.outcome?.price, fairPrice);
+
+        if (ev <= 0) return;
+
+        positiveEVBets.push({
+          expectedValue: ev,
+          bookie: team,
+          fairPrice,
+          handicap,
+          betfairPoint: team?.outcome?.point,
+        });
       });
     });
   }
