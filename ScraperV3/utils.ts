@@ -90,7 +90,6 @@ export const compareEvents = (oddsApi: any, eventData: any) => {
           try {
             return market?.outcomes?.find((u: any) => {
               const { name } = u;
-              console.log("name: ", name);
               if (name.toLowerCase().includes(teamToMatch)) {
                 foundTeamOdds.push({
                   outcome: u,
@@ -107,7 +106,7 @@ export const compareEvents = (oddsApi: any, eventData: any) => {
     });
   });
 
-  console.log("foundTeamOdds", foundTeamOdds);
+  // console.log("foundTeamOdds", foundTeamOdds);
   // Now loop over 'd' data
 
   const x = eventData.map((e: any) => {
@@ -129,27 +128,44 @@ export const compareEvents = (oddsApi: any, eventData: any) => {
       // positive EV bets
       if (isTeamOneMatch) {
         console.log("team1Bra!!");
+        return compareMarkets(team1, foundTeamOdds);
       } else if (isTeamTwoMatch) {
         console.log("Tis be team 2 homie!");
-        const fairPrice = parseFloat(team2[0]?.fairPrice);
-        const positiveEVBets: any = [];
-
-        // Loop over matching team odds
-        if (foundTeamOdds.length) {
-          foundTeamOdds?.map((team: any) => {
-            const positive = getExpectedValue(team?.outcome?.price, fairPrice);
-            if (positive > 0)
-              positiveEVBets.push({
-                expectedValue: positive,
-                bookie: team,
-                fairPrice,
-              });
-          });
-        }
-        return positiveEVBets;
+        return compareMarkets(team2, foundTeamOdds);
       }
     }
   });
+};
+
+const compareMarkets = (team: any[], matchedTeamOdds: any[]): any[] => {
+  const positiveEVBets: any = [];
+
+  if (matchedTeamOdds.length) {
+    team?.map((t: any) => {
+      const { handicap, fairPrice } = t;
+
+      if (!handicap || !fairPrice) return;
+
+      matchedTeamOdds?.map((team: any) => {
+        // Find handicap with same value, otherwise exit
+        if (team?.outcome?.point === handicap) {
+          console.log("Handicap Match");
+          const ev = getExpectedValue(team?.outcome?.price, fairPrice);
+
+          if (ev > 0)
+            positiveEVBets.push({
+              expectedValue: ev,
+              bookie: team,
+              fairPrice,
+              handicap,
+              betfairPoint: team?.outcome?.point,
+            });
+        }
+      });
+    });
+  }
+  console.log("positiveEVBets", positiveEVBets);
+  return positiveEVBets;
 };
 
 export const getExpectedValue = (bookieOdds: number, fairOdds: number) => {
