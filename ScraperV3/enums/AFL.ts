@@ -1,10 +1,20 @@
-export enum AFLTeam: {
-  ADELAIDE,
-  BrisbaneLions: "Brisbane";
-  Carlton: "Carlton";
-  Collingwood: "Collingwood";
-  Essendon: "Essendon";
-  Fremantle: "Fremantle";
-  Geelong: "Geelong";
-  GoldCoast: 'GoldCoast';
-};
+export enum AFLTeam {
+  ADELAIDE = "ADELAIDE",
+  BRISBANE = "BRISBANE",
+  CARLTON = "CARLTON",
+  COLLINGWOOD = "COLLINGWOOD",
+  ESSENDON = "ESSENDON",
+  FREMANTlE = "FREMANTlE",
+  GEELONG = "GEELONG",
+  GOLDCOAST = "GOLDCOAST",
+  GWS = "GWS",
+  HAWTHORN = "HAWTHORN",
+  MELBOURNE = "MELBOURNE",
+  NORTH_MELBOURNE = "NORTH_MELBOURNE",
+  PORT_ADELAIDE = "PORT_ADELAIDE",
+  RICHMOND = "RICHMOND",
+  ST_KILDA = "ST_KILDA",
+  SYDNEY_SWANS = "SYDNEY_SWANS",
+  WCE = "WCE",
+  WESTERN_BULLDOGS = "WESTERN_BULLDOGS",
+}

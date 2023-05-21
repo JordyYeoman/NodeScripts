@@ -1,3 +1,6 @@
+import { AFLTeam } from "./enums/AFL";
+import { OddsApi } from "./types/OddsApi";
+
 export const ingestData = (data: any[]): any[] => {
   console.log("================================");
   console.log("Using cached data:");
@@ -69,4 +72,20 @@ const handleHandicap = (
       team2: team2Market,
     },
   };
+};
+
+export const compareEvents = (oddsApi: any, eventData: any) => {
+  //
+  // console.log("eventData", eventData);
+
+  // Seperate into seperate markets
+  oddsApi?.map((x: any) => {
+    const z = x?.bookmakers?.[0]?.markets?.[1];
+    if (z?.key === "spreads") {
+      let matchedTeam = z?.outcomes?.find((u: any) => {
+        return u.includes(AFLTeam.FREMANTlE.toLowerCase());
+      });
+      console.log("Match", matchedTeam);
+    }
+  });
 };

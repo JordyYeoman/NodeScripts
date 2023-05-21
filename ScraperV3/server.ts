@@ -8,7 +8,7 @@ import {
 } from "./types/OddsApi";
 import { Bookmaker } from "./types/OddsApi";
 import { loginBetfair } from "./login";
-import { ingestData } from "./utils";
+import { compareEvents, ingestData } from "./utils";
 require("dotenv").config();
 // Test data
 import { d, oddsApi } from "./sampleData";
@@ -59,7 +59,9 @@ server.get("/nba/data", async (request, reply) => {
     // let z = ingestData(d);
     // }
 
-    return reply.status(200).send(JSON.stringify(oddsApi));
+    let p = compareEvents(oddsApi, d);
+
+    return reply.status(200).send(JSON.stringify(d));
   } catch (error: any) {
     console.log("Error status", error.response.status);
     reply.status(error.response.status).send(error.response.data);
