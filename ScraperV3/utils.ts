@@ -75,17 +75,36 @@ const handleHandicap = (
 };
 
 export const compareEvents = (oddsApi: any, eventData: any) => {
-  //
-  // console.log("eventData", eventData);
+  // Testing
+  const teamToMatch = AFLTeam.FREMANTlE;
 
   // Seperate into seperate markets
+  let foundTeamOdds: any = [];
+
   oddsApi?.map((x: any) => {
-    const z = x?.bookmakers?.[0]?.markets?.[1];
-    if (z?.key === "spreads") {
-      let matchedTeam = z?.outcomes?.find((u: any) => {
-        return u.includes(AFLTeam.FREMANTlE.toLowerCase());
+    // Loop over each bookmaker
+    return x?.bookmakers?.map((bookmaker: any) => {
+      const bookieName = bookmaker.title;
+      return bookmaker?.markets.map((market: any) => {
+        if (market?.key === "spreads") {
+          try {
+            return market?.outcomes?.find((u: any) => {
+              const { name } = u;
+              if (name.toLowerCase().includes(teamToMatch)) {
+                foundTeamOdds.push({
+                  outcome: u,
+                  market: market?.key,
+                  bookie: bookieName,
+                });
+              }
+            });
+          } catch (e) {
+            console.log("error", e);
+          }
+        }
       });
-      console.log("Match", matchedTeam);
-    }
+    });
   });
+
+  console.log("foundTeamOdds", foundTeamOdds);
 };
