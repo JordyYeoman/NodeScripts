@@ -136,6 +136,7 @@ const getH2HPositiveExpectedValues = (
       let betMarket = betfairOdds?.markets?.[0];
       let layMarket = betfairOdds?.markets?.[1];
 
+      // Get fair odds between back & lay markets
       let fairOdds =
         ((betMarket?.outcomes?.[index]?.price ?? 0) +
           (layMarket?.outcomes?.[index]?.price ?? 0)) /
