@@ -10,13 +10,15 @@ import { Bookmaker } from "./types/OddsApi";
 import { loginBetfair } from "./login";
 import { compareEvents, getExpectedValue, ingestData } from "./utils";
 require("dotenv").config();
+
 // Test data
 import { d, oddsApi } from "./sampleData";
+import { params } from "./setup/config";
+import { getSportData } from "./OddsApi/api";
+import { OddsApiSportKey } from "./enums/OddsApi";
 
 const server = fastify({ logger: false });
 
-// Testing
-const sport = "basketball_nba";
 // Temporary caching while we get system working
 let cachedRes: undefined | (Map<string, object> | undefined)[];
 
@@ -24,40 +26,22 @@ server.get("/", async (request, reply) => {
   return "SERVER HEALTHY";
 });
 
-const apiKey = process.env.ODDS_API_KEY;
-const regions = "au";
-const oddsFormat = "decimal";
-const dateFormat = "iso";
-const markets = "h2h,spreads";
-
 server.get("/afl/data", async (request, reply) => {
-  console.log("SENDING it");
   try {
-    // if (!cachedRes) {
-    const response = await axios.get(
-      "https://api.the-odds-api.com/v4/sports/aussierules_afl/odds",
-      {
-        params: {
-          apiKey,
-          regions,
-          markets,
-          oddsFormat,
-          dateFormat,
-        },
-      }
-    );
-    // cachedRes = response.data;
-    handleData(response.data);
-    // handleData(d);
-    // return reply.status(200).send(response.data);
+    // Fetch all sport specific data from Odds API
+    // This will return each bookmakers odds for H2H & Spreads markets
+    const res = await getSportData(OddsApiSportKey.AFL);
 
-    // if (!cachedRes) {
-    // cachedRes = await loginBetfair();
-    // } else {
-    let z = ingestData(d);
-    // }
+    // Find any +EV bets for H2H markets
+    getValidH2HMarkets(res);
+    // getValidH2HMarkets(d);
 
-    let p = compareEvents(oddsApi, z);
+    // Get Betfair Data for sport market
+    // EG - AFL / NBA
+    const betfairData = await loginBetfair();
+
+    // let z = ingestData(d);
+    // let p = compareEvents(oddsApi, z);
 
     return reply.status(200).send(JSON.stringify(d));
   } catch (error: any) {
@@ -74,7 +58,7 @@ server.listen({ port: 8080 }, (err, address) => {
   console.log(`Server listening at ${address}`);
 });
 
-const handleData = (data: OddsApi[]) => {
+const getValidH2HMarkets = (data: OddsApi[]) => {
   const betfairDataMap: Map<string, Bookmaker> = new Map();
 
   // Extract betfair data for comparison - needed to find +EV

@@ -110,13 +110,4 @@ export const loginBetfair = async (): Promise<any> => {
   });
 
   return updatedDeets;
-
-  // Using the keyline description we can find the basis of where the handicap odds will be set around.
-  // We then need to:
-
-  // Find the keyline inside the large dataset 'runners' which is a list of all odds for the market type
-  // Take 1-2 elements above and below the keyline description handicap levels
-  // EG +10.5, -10.5, then we also want +9.5/-9.5 & +11.5, -11.5 with their odds values
-
-  // This way we can get an average between the two if no value is set for 10.5
 };
