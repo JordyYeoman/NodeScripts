@@ -8,7 +8,6 @@ import {
   listMarketTypes,
   listRunnerBook,
 } from "betfair-api-ts";
-import fs from "fs";
 import { EventDetails, MarketCatalogue, MarketDetails } from "./types";
 
 // TODO: Migrate typing
