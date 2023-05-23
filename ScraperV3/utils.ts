@@ -147,7 +147,6 @@ const compareMarkets = (team: any[], matchedTeamOdds: any[]): any[] => {
         // Find handicap with same value, otherwise exit
         if (team?.outcome?.point !== handicap) return;
 
-        console.log("Handicap Match");
         const ev = getExpectedValue(team?.outcome?.price, fairPrice);
 
         if (ev <= 0) return;
@@ -162,7 +161,7 @@ const compareMarkets = (team: any[], matchedTeamOdds: any[]): any[] => {
       });
     });
   }
-  console.log("positiveEVBets", positiveEVBets);
+
   return positiveEVBets;
 };
 

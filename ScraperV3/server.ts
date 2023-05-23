@@ -30,26 +30,24 @@ const oddsFormat = "decimal";
 const dateFormat = "iso";
 const markets = "h2h,spreads";
 
-server.get("/nba/data", async (request, reply) => {
+server.get("/afl/data", async (request, reply) => {
   console.log("SENDING it");
   try {
     // if (!cachedRes) {
-    // console.log("Hitting endpoint");
-    // const response = await axios.get(
-    //   "https://api.the-odds-api.com/v4/sports/aussierules_afl/odds",
-    //   {
-    //     params: {
-    //       apiKey,
-    //       regions,
-    //       markets,
-    //       oddsFormat,
-    //       dateFormat,
-    //     },
-    //   }
-    // );
-    // console.log("response: ", response.data[2].bookmakers[1].markets[0]);
+    const response = await axios.get(
+      "https://api.the-odds-api.com/v4/sports/aussierules_afl/odds",
+      {
+        params: {
+          apiKey,
+          regions,
+          markets,
+          oddsFormat,
+          dateFormat,
+        },
+      }
+    );
     // cachedRes = response.data;
-    // handleData(response.data);
+    handleData(response.data);
     // handleData(d);
     // return reply.status(200).send(response.data);
 
@@ -112,12 +110,6 @@ const handleData = (data: OddsApi[]) => {
               )
             );
           }
-          // if (oddsApi.key === "spreads") {
-          //   positiveExpectedValueLegs.push(
-          //     ...getSpreadsPositiveExpectedValues(oddsApi, betfairOdds, event)
-          //   );
-          // }
-          // TODO: Add 'spreads' seperate logic here
         });
       }
     });
@@ -131,7 +123,7 @@ const getH2HPositiveExpectedValues = (
   event: OddsApi,
   bookieKey: string
 ): any[] => {
-  let oddsApiPositiveEVH2HOutcomes = oddsApi.outcomes.map(
+  let oddsApiPositiveEVH2HOutcomes = oddsApi?.outcomes?.map(
     (outcome: H2HMarketOdds, index: number) => {
       let betMarket = betfairOdds?.markets?.[0];
       let layMarket = betfairOdds?.markets?.[1];
@@ -142,13 +134,12 @@ const getH2HPositiveExpectedValues = (
           (layMarket?.outcomes?.[index]?.price ?? 0)) /
         2;
 
-      // defensive code?
       if (!fairOdds) return;
 
-      const odds = outcome.price;
-      // Team 1 first in map iteration, then team 2
-      const ev = getExpectedValue(odds, fairOdds);
+      const odds = outcome?.price;
 
+      const ev = getExpectedValue(odds, fairOdds);
+      console.log("ev", ev);
       if (ev > 0) {
         return {
           eventName: event.sport_title,
@@ -163,9 +154,8 @@ const getH2HPositiveExpectedValues = (
       }
     }
   );
-  // Add filter here to remove any falsy values (such as undefined)
+
+  console.log("oddsApiPositiveEVH2HOutcomes", oddsApiPositiveEVH2HOutcomes);
+  // Add filter here to remove any falsy values
   return oddsApiPositiveEVH2HOutcomes.filter(Boolean);
 };
-
-// TODO
-// Add bet spreads +/- the closest spread for other +EV bets
