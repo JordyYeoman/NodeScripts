@@ -28,7 +28,7 @@ export const getH2HPositiveExpectedValues = (
       const odds = outcome?.price;
 
       const ev = getExpectedValue(odds, fairOdds);
-      console.log("ev", ev);
+      // console.log("ev", ev);
       if (ev > 0) {
         return {
           eventName: event.sport_title,
@@ -39,6 +39,7 @@ export const getH2HPositiveExpectedValues = (
           bookie: bookieKey,
           odds,
           fairOdds: fairOdds,
+          ev
         };
       }
     }
@@ -88,5 +89,5 @@ export const getValidH2HMarkets = (data: OddsApi[]) => {
       }
     });
   });
-  console.log("positiveExpectedValueLegs", positiveExpectedValueLegs);
+  // console.log("positiveExpectedValueLegs", positiveExpectedValueLegs);
 };
