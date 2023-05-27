@@ -10,21 +10,21 @@ const leg3FairOdds = 2.6;
 const d = [leg1Odds, leg2Odds, leg3Odds];
 const z = [leg1FairOdds, leg2FairOdds, leg3FairOdds];
 
+export const getExpectedValue = (
+  bookieOdds: number[],
+  fairOdds: number[],
+  stake: number = 10
+) => {
+  let totalFairOdds = fairOdds.reduce((a, c) => a * c, 1);
 
-export const getExpectedValue = (bookieOdds: number[], fairOdds: number[], stake: number = 10) => {
-    let f = 1;
-     let totalFairOdds = fairOdds.reduce((a, c) => a * c, f);
+  // const winProbability = 1 / totalFairOdds;
+  // const winOutcome = (totalBookieOdds * stake - stake) * winProbability;
+  // const loseProbability = 1 - winProbability;
+  // const loseOutcome = loseProbability * stake;
 
-    // const winProbability = 1 / totalFairOdds;
-    // const winOutcome = (totalBookieOdds * stake - stake) * winProbability;
-    // const loseProbability = 1 - winProbability;
-    // const loseOutcome = loseProbability * stake;
-  
-    // return winOutcome - loseOutcome;
-    return totalFairOdds;
-  };
+  // return winOutcome - loseOutcome;
+  return totalFairOdds;
+};
 
-  console.log('SEND IT');
-  let l = getExpectedValue(d, z);
+let l = getExpectedValue(d, z);
 console.log(l);
-
