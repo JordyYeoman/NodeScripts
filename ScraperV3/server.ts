@@ -34,16 +34,19 @@ server.get("/afl/data", async (request, reply) => {
     const res = await getSportData(OddsApiSportKey.AFL);
 
     // Find any +EV bets for H2H markets
-    getValidH2HMarkets(res);
+    const positiveH2H = getValidH2HMarkets(res);
 
     // Get Betfair Data for sport market
     // EG - AFL / NBA
-    const betfairData = await loginBetfair();
+    // const betfairData = await loginBetfair();
 
     // let z = ingestData(d);
     // let p = compareEvents(oddsApi, z);
 
-    return reply.status(200).send(JSON.stringify(d));
+    return reply.status(200).send({
+      message: "VALID",
+      payload: JSON.stringify(positiveH2H),
+    });
   } catch (error: any) {
     console.log("Error status", error.response);
     reply.send(error.response);
