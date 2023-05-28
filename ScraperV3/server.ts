@@ -67,12 +67,15 @@ server.get("/nba/data", async (request, reply) => {
     await loginBetfair();
     const betfairData = await getData();
 
-    // let z = ingestData(d);
-    // let p = compareEvents(oddsApi, z);
+    if (betfairData) {
+      let z = ingestData(betfairData);
+      console.log("z", z);
+      // let p = compareEvents(oddsApi, z);
+    }
 
     return reply.status(200).send({
       message: "VALID",
-      payload: JSON.stringify(betfairData),
+      payload: JSON.stringify(""),
     });
   } catch (error: any) {
     console.log("Error status", error.response);

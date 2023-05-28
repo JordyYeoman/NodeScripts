@@ -67,21 +67,22 @@ export const getData = async () => {
 
   // Match up marketNames to marketBooks
   let updatedDeets = marketBookList.map((t) => {
-    let mName = marketDetails.get(t.marketId)?.marketName;
-    let eventName = marketDetails.get(t.marketId)?.event?.name;
+    return t.map((z: any) => {
+      let mName = marketDetails.get(z.marketId)?.marketName;
+      let eventName = marketDetails.get(z.marketId)?.event?.name;
 
-    if (!mName || !eventName) return;
+      if (!mName || !eventName) return;
 
-    // Strip out any odds that don't contain any bet/lay positions.
-    // If there are currently no positions from the market, we won't be able to get a 'fair value'
-    t.runners = t.runners?.filter((f: any) =>
-      Boolean(f?.ex?.availableToBack?.length || f?.ex?.availableToLay?.length)
-    );
+      // Strip out any odds that don't contain any bet/lay positions.
+      // If there are currently no positions from the market, we won't be able to get a 'fair value'
+      z.runners = z.runners?.filter((f: any) =>
+        Boolean(f?.ex?.availableToBack?.length || f?.ex?.availableToLay?.length)
+      );
 
-    return { marketName: mName, ...t, eventName };
+      return { marketName: mName, ...t, eventName };
+    });
   });
 
-  console.log("update market", updatedDeets);
   return updatedDeets;
 };
 
@@ -89,37 +90,52 @@ const getMarketBookList = async (
   marketIdsForEvent: string[]
 ): Promise<any[]> => {
   const splitElements = getSeperatedEventIds(marketIdsForEvent);
-  const results: any[] = [];
+  const promises: Promise<any>[] = [];
 
-  let marketBookList = await listMarketBook({
-    marketIds: [""],
-    priceProjection: {
-      priceData: ["EX_BEST_OFFERS"],
-    },
-    matchProjection: "NO_ROLLUP",
+  splitElements.map((listOfMarketIds: string[]) => {
+    // Due to map not waiting for network req to resolve, we need to create an array of promises
+    // wait for all promises to resolve then return the array.
+    const promise = listMarketBook({
+      marketIds: listOfMarketIds,
+      priceProjection: {
+        priceData: ["EX_BEST_OFFERS"],
+      },
+      matchProjection: "NO_ROLLUP",
+    });
+    promises.push(promise);
   });
 
-  splitElements.map((e: any) => {
-    return e;
-  });
+  const results = await Promise.all(promises);
 
-  return marketBookList;
+  return results;
 };
 
 /*
  * Returns an array of arrays split into x lengths.
- * Ideally, we want to seperate the marketIds into groups of ~30
+ * Ideally, we want to seperate the marketIds into groups of ~25
  */
-const getSeperatedEventIds = (arr: any[], arrLength: number = 30): any[] => {
+const getSeperatedEventIds = (arr: any[], maxArrLength: number = 25): any[] => {
   try {
-    // How to split array into smaller chunks?
-    // 1. Figure out how many arrays will be created
-    const numArrays = Math.ceil(arr.length / arrLength);
-    console.log("numArrays: ", numArrays);
+    const finalArr = [];
 
-    return [];
+    // Push Max amount into each array, then the final array with the remainder
+    let iterator = 0;
+    let localArr = [];
+    for (let i = 0; i < arr.length; i++) {
+      if (iterator < maxArrLength) {
+        localArr.push(arr[i]);
+      }
+      iterator++;
+      if (iterator >= maxArrLength || i === arr.length - 1) {
+        finalArr.push(localArr);
+        localArr = [];
+        iterator = 0;
+      }
+    }
+
+    return finalArr;
   } catch (e) {
-    console.warn("Error seperating event ids: ", e);
+    console.warn("Error seperating event ids into groups, [ERROR]: ", e);
     return [];
   }
 };
