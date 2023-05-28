@@ -107,3 +107,150 @@ const newArr = arrOfArrs.reduce((acc, y) => acc.concat(y), []);
 console.log("newArr", newArr);
 const newArr2 = arrOfArrs.reduce((acc, y) => [...acc, ...y], []);
 console.log("newArr2", newArr2);
+
+// Test Use case
+const test = [
+  {
+    event: {
+      id: "28159788",
+      name: "AFL",
+      countryCode: "AU",
+      timezone: "GMT",
+      openDate: "2099-09-24T00:00:00.000Z",
+    },
+    marketCount: 17,
+  },
+  {
+    event: {
+      id: "32374473",
+      name: "Western Bulldogs v Geelong",
+      countryCode: "AU",
+      timezone: "GMT",
+      openDate: "2023-06-03T09:25:00.000Z",
+    },
+    marketCount: 2,
+  },
+  {
+    event: {
+      id: "32374472",
+      name: "Port Adelaide v Hawthorn",
+      countryCode: "AU",
+      timezone: "GMT",
+      openDate: "2023-06-03T03:45:00.000Z",
+    },
+    marketCount: 2,
+  },
+  {
+    event: {
+      id: "32374474",
+      name: "Melbourne v Carlton",
+      countryCode: "AU",
+      timezone: "GMT",
+      openDate: "2023-06-02T09:50:00.000Z",
+    },
+    marketCount: 2,
+  },
+  {
+    event: {
+      id: "32374469",
+      name: "Gold Coast v Adelaide",
+      countryCode: "AU",
+      timezone: "GMT",
+      openDate: "2023-06-03T09:30:00.000Z",
+    },
+    marketCount: 2,
+  },
+  {
+    event: {
+      id: "32374468",
+      name: "Essendon v North Melbourne",
+      countryCode: "AU",
+      timezone: "GMT",
+      openDate: "2023-06-04T06:40:00.000Z",
+    },
+    marketCount: 2,
+  },
+  {
+    event: {
+      id: "32374471",
+      name: "GWS v Richmond",
+      countryCode: "AU",
+      timezone: "GMT",
+      openDate: "2023-06-04T03:10:00.000Z",
+    },
+    marketCount: 2,
+  },
+  {
+    event: {
+      id: "32374470",
+      name: "West Coast v Collingwood",
+      countryCode: "AU",
+      timezone: "GMT",
+      openDate: "2023-06-03T06:35:00.000Z",
+    },
+    marketCount: 2,
+  },
+  {
+    event: {
+      id: "32355801",
+      name: "Adelaide v Brisbane",
+      countryCode: "AU",
+      timezone: "GMT",
+      openDate: "2023-05-28T06:41:29.000Z",
+    },
+    marketCount: 26,
+  },
+  {
+    event: {
+      id: "32379899",
+      name: "Miami Heat @ Boston Celtics",
+      countryCode: "GB",
+      timezone: "GMT",
+      openDate: "2023-05-30T00:30:00.000Z",
+    },
+    marketCount: 6,
+  },
+  {
+    event: {
+      id: "32355800",
+      name: "Collingwood v North Melbourne",
+      countryCode: "AU",
+      timezone: "GMT",
+      openDate: "2023-05-28T05:20:42.000Z",
+    },
+    marketCount: 5,
+  },
+  {
+    event: {
+      id: "32372475",
+      name: " Round 11 Multis",
+      countryCode: "AU",
+      timezone: "GMT",
+      openDate: "2023-05-26T09:50:00.000Z",
+    },
+    marketCount: 1,
+  },
+  {
+    event: {
+      id: "28049020",
+      name: "NBA",
+      countryCode: "US",
+      timezone: "Europe/London",
+      openDate: "2022-06-06T00:00:00.000Z",
+    },
+    marketCount: 2,
+  },
+  {
+    event: {
+      id: "32353719",
+      name: "Boston Celtics v Miami Heat",
+      countryCode: "US",
+      timezone: "Europe/London",
+      openDate: "2023-05-30T00:30:00.000Z",
+    },
+    marketCount: 2,
+  },
+];
+
+const outcome = test.reduce((x: any[], y) => x.concat(y.event.id), []);
+console.log("outcome: ", outcome);
