@@ -2,18 +2,15 @@ import { AFLTeam } from "./enums/AFL";
 import { OddsApi } from "./types/OddsApi";
 
 export const ingestData = (data: any[]): any[] => {
-  // console.log("================================");
-  // console.log("Using cached data:");
-  // console.log("================================");
-
-  // TODO - resolve issue with nesting events, each event is being returned as '23':{}, '24':{}, '25':{}.... etc
+  // Loop through each of the competition (sport) markets
+  // Eg - nba events || afl events
   return data
     .map((x) => {
+      // Loop over each event market for that specific competition
       return x
         .map((y: any) => {
           const { marketName, eventName, runners } = y;
           // Only handle handicap markets (line markets) atm
-          console.log("eventName: ", eventName);
           if (marketName === "Handicap") {
             return handleHandicap(eventName, runners, marketName);
           }

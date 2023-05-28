@@ -12,12 +12,12 @@ import { EventDetails, MarketCatalogue, MarketDetails } from "../types";
 import { BetfairEventList } from "../types/Betfair";
 import { EventResult } from "betfair-api-ts/lib/types/bettingAPI/betting";
 
-export const getData = async () => {
-  const competitionIds = new Map<string, string>([
-    ["afl", "11897406"],
-    ["nba", "10547864"],
-  ]);
+const competitionIds = new Map<string, string>([
+  ["afl", "11897406"],
+  ["nba", "10547864"],
+]);
 
+export const getData = async () => {
   const competitionTypeIds = [
     competitionIds.get("nba") ?? "",
     competitionIds.get("afl") ?? "",
@@ -38,7 +38,7 @@ export const getData = async () => {
 
   if (!(listOfEventIds?.length > 0)) return;
 
-  // Get all markets available for sporting event
+  // Get all markets available for sporting event using the event ID
   let k = await listMarketCatalogue({
     filter: {
       eventIds: listOfEventIds,
@@ -60,7 +60,7 @@ export const getData = async () => {
   });
 
   // To prevent api error - TOO_MUCH_DATA error from betfair,
-  // We only want to send a request that includes a max of 30 markets
+  // We only want to send a request that includes a max of 25-30 markets
   //
   // Get details of specific market (odds, amount bet etc)
   const marketBookList = await getMarketBookList(marketIdsForEvent);
@@ -79,7 +79,7 @@ export const getData = async () => {
         Boolean(f?.ex?.availableToBack?.length || f?.ex?.availableToLay?.length)
       );
 
-      return { marketName: mName, ...t, eventName };
+      return { marketName: mName, ...z, eventName };
     });
   });
 

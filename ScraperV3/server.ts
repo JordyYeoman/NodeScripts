@@ -75,7 +75,7 @@ server.get("/nba/data", async (request, reply) => {
 
     return reply.status(200).send({
       message: "VALID",
-      payload: JSON.stringify(""),
+      payload: betfairData,
     });
   } catch (error: any) {
     console.log("Error status", error.response);
