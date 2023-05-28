@@ -8,7 +8,9 @@ import {
   listMarketTypes,
   listRunnerBook,
 } from "betfair-api-ts";
-import { EventDetails, MarketCatalogue, MarketDetails } from "./types";
+import { EventDetails, MarketCatalogue, MarketDetails } from "../types";
+import { BetfairEventList } from "../types/Betfair";
+import { EventResult } from "betfair-api-ts/lib/types/bettingAPI/betting";
 
 // TODO: Migrate typing
 export const loginBetfair = async (): Promise<any> => {
@@ -39,7 +41,9 @@ export const loginBetfair = async (): Promise<any> => {
     certificateKey: BETFAIR_CERT_KEY, // Self Signed Certificate Key
     certificatePassword: BETFAIR_CHALLENGE, // Optional passphrase for Certificate Key
   });
+};
 
+export const getData = async () => {
   const competitionIds = new Map<string, string>([
     ["afl", "11897406"],
     ["nba", "10547864"],
@@ -56,16 +60,19 @@ export const loginBetfair = async (): Promise<any> => {
     },
   };
 
-  // DO NOT REMOVE - this will be used once 1 market processing is complete
   // This gets all events for the markets matched by competition id (afl & nba atm)
-  let x = await listEvents(params);
-  console.log("listOfEvents", x);
+  let eventsRes: EventResult[] = await listEvents(params);
+  const listOfEventIds = eventsRes.reduce(
+    (acc: any, event: EventResult) => acc.concat(event.event?.id),
+    []
+  );
+
+  if (!(listOfEventIds?.length > 0)) return;
 
   // Get all markets available for sporting event
   let k = await listMarketCatalogue({
     filter: {
-      // replace with array of markets to use
-      eventIds: ["32355795"],
+      eventIds: listOfEventIds,
     },
     maxResults: 1000,
     marketProjection: ["EVENT"],

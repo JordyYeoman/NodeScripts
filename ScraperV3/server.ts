@@ -7,7 +7,7 @@ import {
   OddsApiSpreadsMarket,
 } from "./types/OddsApi";
 import { Bookmaker } from "./types/OddsApi";
-import { loginBetfair } from "./login";
+import { getData, loginBetfair } from "./BetfairApi/login";
 import { compareEvents, getExpectedValue, ingestData } from "./utils";
 require("dotenv").config();
 
@@ -46,6 +46,32 @@ server.get("/afl/data", async (request, reply) => {
     return reply.status(200).send({
       message: "VALID",
       payload: JSON.stringify(positiveH2H),
+    });
+  } catch (error: any) {
+    console.log("Error status", error.response);
+    reply.send(error.response);
+  }
+});
+
+server.get("/nba/data", async (request, reply) => {
+  try {
+    // Fetch all sport specific data from Odds API
+    // This will return each bookmakers odds for H2H & Spreads markets
+    // const res = await getSportData(OddsApiSportKey.NBA);
+
+    // Find any +EV bets for H2H markets
+    // const positiveH2H = getValidH2HMarkets(res);
+
+    // Get Betfair Data for sport market
+    await loginBetfair();
+    const betfairData = await getData();
+
+    // let z = ingestData(d);
+    // let p = compareEvents(oddsApi, z);
+
+    return reply.status(200).send({
+      message: "VALID",
+      payload: JSON.stringify("x"),
     });
   } catch (error: any) {
     console.log("Error status", error.response);
