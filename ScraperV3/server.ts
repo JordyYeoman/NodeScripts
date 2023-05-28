@@ -7,7 +7,7 @@ import {
   OddsApiSpreadsMarket,
 } from "./types/OddsApi";
 import { Bookmaker } from "./types/OddsApi";
-import { getData, loginBetfair } from "./BetfairApi/login";
+import { loginBetfair } from "./BetfairApi/login";
 import { compareEvents, getExpectedValue, ingestData } from "./utils";
 require("dotenv").config();
 
@@ -17,6 +17,7 @@ import { params } from "./setup/config";
 import { getSportData } from "./OddsApi/api";
 import { OddsApiSportKey } from "./enums/OddsApi";
 import { getValidH2HMarkets } from "./OddsApi/H2H/h2hUtil";
+import { getData } from "./BetfairApi/utils";
 
 const server = fastify({ logger: false });
 
@@ -71,7 +72,7 @@ server.get("/nba/data", async (request, reply) => {
 
     return reply.status(200).send({
       message: "VALID",
-      payload: JSON.stringify("x"),
+      payload: JSON.stringify(betfairData),
     });
   } catch (error: any) {
     console.log("Error status", error.response);
