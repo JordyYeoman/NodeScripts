@@ -8,16 +8,22 @@ function randomIntFromInterval(min: number, max: number) {
 
 const generate = () => {
   let x: any = [];
-  for (let i = 0; i < 10000000; i++) {
-    // x.push(randomIntFromInterval(0, 10000));
-    x.push(i);
+  for (let i = 0; i < 1000000; i++) {
+    if (i % 3 === 0) {
+      const len = i % 2 === 0 ? 10 : 20;
+      for (let k = 0; k < len; k++) {
+        x.push(i);
+      }
+    } else {
+      x.push(i);
+    }
   }
   // Write to file
   createFile(x);
 };
 
 const createFile = (data: number[]) => {
-  fs.writeFile('file.txt', JSON.stringify(data), function (err: any) {
+  fs.writeFile('file.json', JSON.stringify(data), function (err: any) {
     if (err) {
       return console.error(err);
     }
@@ -27,13 +33,13 @@ const createFile = (data: number[]) => {
 
 const readAndSort = () => {
   let data = fs.readFileSync(
-    path.resolve(__dirname, './__tests__/testData.txt')
+    path.resolve(__dirname, './__tests__/testData.json')
   );
   const d = [...data].sort();
   console.log('[...data]', [...data]);
   console.log('d', d);
   fs.writeFile(
-    './__tests__/sortedTestData.txt',
+    './__tests__/sortedTestData.json',
     JSON.stringify(d),
     function (err: any) {
       if (err) {
