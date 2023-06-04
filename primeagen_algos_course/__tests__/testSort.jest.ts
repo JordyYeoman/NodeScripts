@@ -14,18 +14,18 @@ const timeframes = {
   bubbleSort: '',
 }
 
-describe('Search Algos', () => {
+describe('Sort Algos', () => {
   afterAll(()=> {
     // Return execution times
     console.log('Execution time: ', timeframes)
   });
 
-  test('linearSearch', () => {
+  test('BubbleSort', () => {
     const start = performance.now();
     const sortedArr = bubbleSort([...randomData]);
     const end = performance.now();
 
-    console.log('============== LINEAR SEARCH ==============');
+    console.log('============== BUBBLE SORT ==============');
     const executionTime = ((end - start) / 1000).toFixed(5);
     timeframes.bubbleSort = executionTime;
     console.log('Execution Time ===', executionTime);
