@@ -1,11 +1,11 @@
 import { describe, expect, test } from '@jest/globals';
-import { sum } from '../sum';
+import { sum } from '../search/sum';
 import * as fs from 'fs';
 import * as path from 'path';
-import { linearSearch } from '../linearSearch';
-import { binarySearch } from '../binarySearch';
-import { twoCrystalBalls } from '../magicBalls';
-import { bubbleSort } from '../bubbleSort';
+import { linearSearch } from '../search/linearSearch';
+import { binarySearch } from '../search/binarySearch';
+import { twoCrystalBalls } from '../search/magicBalls';
+import { bubbleSort } from '../sort/bubbleSort';
 
 // Reading in this json file using require instead of import executes atleast 20x faster, unsure why, but makes testing a lot easier. :D 
 const randomData = require('../__tests__/randomData.json');
