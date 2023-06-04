@@ -19,11 +19,20 @@ const generate = () => {
     }
   }
   // Write to file
-  createFile(x);
+  createFile('file', x);
 };
 
-const createFile = (data: number[]) => {
-  fs.writeFile('file.json', JSON.stringify(data), function (err: any) {
+const generateRandom = () => {
+  let x: any = [];
+  for (let i = 0; i < 500000; i++) {
+    x.push(randomIntFromInterval(0, i));
+  }
+  // Write to file
+  createFile('randomData', x);
+};
+
+const createFile = (fileName: string, data: unknown[]) => {
+  fs.writeFile(`${fileName}.json`, JSON.stringify(data), function (err: any) {
     if (err) {
       return console.error(err);
     }
@@ -50,4 +59,19 @@ const readAndSort = () => {
   );
 };
 
-generate();
+const createBoolArr = () => {
+  let arr: boolean[] = [];
+  for(let i = 0; i< 10000000; i++) {
+    if(i > 10000000 * 0.76) {
+      arr.push(true);
+      continue;
+    }
+      arr.push(false);
+  }
+  // Write out file
+  createFile('boolArr', arr);
+}
+
+// createBoolArr();
+// generate();
+generateRandom();
