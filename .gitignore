@@ -34,3 +34,5 @@ default.json
 *.csv
 
 .env
+primeagen_algos_course/__tests__/boolArr.json
+primeagen_algos_course/__tests__/randomData.json
