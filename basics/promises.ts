@@ -26,37 +26,41 @@ const doStuff = async () => {
 
 doStuff();
 
-const promise = () => {
+const promise = (t: number) => {
    return new Promise((resolve, reject) => {
     // executor (the producing code, "singer")
     setTimeout(() => {
-      resolve('YAYYAYA')
+      console.log('YAYYAYA');
+      resolve(t)
     }, 250);
   });
 }
 
-const promiseDos = () => {
+const promiseDos = (d: number) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      resolve('Stand by to get some')
+      console.log('Stand by to get some')
+      resolve(d + 1)
     }, 300);
   });
 }
 
-const doSomething = () => {
+const doSomething = (z: number) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-        resolve("Its Friday, we've made it through the week.")
+      console.log("Its Friday, we've made it through the week.")
+        resolve(z + 1);
       }, 400);
   });
 };
 
 // You have to return a promise
-doSomething()
-  .then(promise)
-  .then(promiseDos)
-  .then(() => {
+doSomething(1)
+  .then((res) => promise(res as number))
+  .then((res) => promiseDos(res as number))
+  .then((res) => {
     setTimeout(()=> {
       console.log("Violence, Speed and Momentum");
+      console.log('Final res: ', res);
     }, 1000);
   })
