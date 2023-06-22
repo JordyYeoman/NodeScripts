@@ -26,8 +26,37 @@ const doStuff = async () => {
 
 doStuff();
 
-// The constructor syntax for a promise object is:
+const promise = () => {
+   return new Promise((resolve, reject) => {
+    // executor (the producing code, "singer")
+    setTimeout(() => {
+      resolve('YAYYAYA')
+    }, 250);
+  });
+}
 
-let promise = new Promise(function(resolve, reject) {
-  // executor (the producing code, "singer")
-});
+const promiseDos = () => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve('Stand by to get some')
+    }, 300);
+  });
+}
+
+const doSomething = () => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+        resolve("Its Friday, we've made it through the week.")
+      }, 400);
+  });
+};
+
+// You have to return a promise
+doSomething()
+  .then(promise)
+  .then(promiseDos)
+  .then(() => {
+    setTimeout(()=> {
+      console.log("Violence, Speed and Momentum");
+    }, 1000);
+  })
