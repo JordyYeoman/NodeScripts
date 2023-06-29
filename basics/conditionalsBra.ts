@@ -17,3 +17,5 @@ const z = [1, 'h', 4, 'z', {}];
 console.log('z filtered: ', z.filter((k) => typeof k === 'object'));
 console.log('z filtered: ', z.filter((k) => typeof k === 'string'));
 console.log('z filtered: ', z.filter((k) => typeof k === 'number'));
+
+// Is there any methods faster than filter? 
