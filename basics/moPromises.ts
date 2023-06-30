@@ -1,9 +1,11 @@
-const moMoney = new Promise((resolve, reject) => {
+const moMoney: Promise<string> = new Promise((resolve, reject) => {
   setTimeout(() => {
-    resolve(1000);
+    resolve("Magic");
   }, 1000);
 });
 
 const doStuff = async () => {
   console.log("moMoney", await moMoney);
 };
+
+doStuff();
