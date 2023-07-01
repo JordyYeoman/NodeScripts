@@ -88,3 +88,95 @@ console.log("isEmpty notEmptyArr", isEmpty(notEmptyArr));
 const x: any = validateFields(testObj);
 console.log("x", x);
 console.log("x", JSON.stringify(x));
+
+/// Further obj comparison
+const user = {
+  advertiserDetails: {
+    primaryTags: [],
+    secondaryTags: [],
+    companyName: "Testing",
+    companyPhoneNumber: "04001101111",
+    companyAddress: "Deadly 123 Manjimup",
+    companyEmail: "test@gmail.com",
+    companyWebsite: "bigdog.com.au",
+  },
+  _id: "649bd5fdc229ff822cabeada",
+  email: "yeomanindustries@gmail.com",
+  __v: 0,
+  account_status: "pending",
+  articles: [],
+  chats: [],
+  events: [],
+  feeds: [],
+  firstName: "Jordy",
+  groups: [],
+  lastName: "Yeamannn",
+  products: [],
+  profilePicture:
+    "https://lh3.googleusercontent.com/a/AAcHTtejEVrs4c63qtg1acEvAgUzrxF-n3EtRJ_Kbj7_JXm7=s96-c",
+  profileProvider: "google",
+  projects: [],
+  tags: ["Flathead V8", "V8 Supercars", "V8", "V8 Touring Car", "V8 Engine"],
+  updatedAt: "2023-07-01T04:06:35.143Z",
+  userAccountType: "advertiser",
+  username: "5xihHGTX7WReLwgerUWVGy",
+  completedInitialProfileSetup: true,
+  referralCode: "SENDITHARDBABY",
+  state: "WA",
+};
+
+const fieldsToUpdate = {
+  firstName: "BigOrse",
+  lastName: "Yeamannn",
+  advertiserDetails: {
+    primaryTags: ["v8", "sendingit", "bro"],
+    secondaryTags: ["LSWorld", "always", "sendit"],
+    companyName: "Testing",
+    coverPhoto:
+      "http://res.cloudinary.com/my-hi-performance/image/upload/v1688184809/mhp_media/649bd5fdc229ff822cabeada/qkduipgejvizrosj00fa.jpg",
+    companyPhoneNumber: "04001101111",
+    companyAddress: "Deadly 123 Manjimup",
+    companyEmail: "test@gmail.com",
+    companyWebsite: "bigdog.com.au",
+  },
+};
+
+const isValidObject = (value: unknown): boolean =>
+  value !== undefined &&
+  value !== null &&
+  typeof value === "object" &&
+  !Array.isArray(value) &&
+  Object.keys(value).length > 0;
+
+// 1. Loop through the new object of key value pairs to update on the original object.
+const loopThroughNewFieldsObj = (newFieldsObj: any, objToUpdate: any) => {
+  // Obj to update
+  const updatedObj = objToUpdate;
+
+  for (const [key, value] of Object.entries(newFieldsObj)) {
+    // 2. If each key/value pair is another object, we need to loop through that object (recursive call)
+    if (isValidObject(value)) {
+      loopThroughNewFieldsObj(value, updatedObj);
+    } else if (!isEmpty(value)) {
+      // 3. If we find a key/value pair that is valid - we then find that existing key in the original object and update it
+      console.log("Value that should be updated: ", value);
+      // Find the pair in original object
+      for (const objToUpdateKey of Object.keys(updatedObj)) {
+        console.log("objToUpdateKey", objToUpdateKey);
+        if (objToUpdateKey === key) {
+          updatedObj[key] = value;
+          console.log("[objToUpdateKey, objToUpdateValue]", objToUpdateKey);
+        }
+      }
+    }
+  }
+
+  return updatedObj;
+};
+
+console.log("================================");
+console.log("================================");
+const pl = loopThroughNewFieldsObj(fieldsToUpdate, user);
+console.log("updated payload: ", pl);
+console.log("================================");
+console.log("================================");
