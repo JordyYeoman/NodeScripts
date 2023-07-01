@@ -28,10 +28,10 @@ const testObj = {
 // Null, undefined, '' (empty string)
 // empty array []
 
-const validateFields = (obj: Object): Object => {
-  const newObj = {}; // Used to write to DB.
+const validateFields = (obj: any): Object => {
+  const newObj: any = {}; // Used to write to DB.
 
-  Object.keys(obj).forEach((key) => {
+  Object.keys(obj).forEach((key: string) => {
     if (!isEmpty(obj[key])) {
       newObj[key] = obj[key];
     }
