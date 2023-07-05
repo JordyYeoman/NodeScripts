@@ -65,7 +65,7 @@ setInterval(() => {
 }, 15)
 
 server.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+  console.log(`Game server spun up on port ${port}`)
 })
 
 console.log('server did load')
