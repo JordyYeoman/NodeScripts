@@ -32,6 +32,7 @@ describe('Sort Algos', () => {
     expect(sortedArr[92]).toBe(9);
     expect(sortedArr[508]).toBe(63);
     expect(sortedArr[4800]).toBe(904);
+    expect(sortedArr[9800]).toBe(2230);
     console.log('===========================================');
   });
 });
