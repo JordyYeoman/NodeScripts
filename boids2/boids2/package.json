@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@types/p5": "^1.6.2",
     "p5": "^1.7.0",
     "vue": "^3.3.4"
   },
