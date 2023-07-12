@@ -1,3 +1,3 @@
-const helloWorld = "Yo"
-
-console.log(helloWorld);
+console.log('========================')
+console.log('- BOIDS WORLD STARTING -')
+console.log('========================')
