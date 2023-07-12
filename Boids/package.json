@@ -1,0 +1,14 @@
+{
+  "name": "boids",
+  "version": "1.0.0",
+  "description": "Boids simulation in javascript",
+  "main": "index.js",
+  "scripts": {
+    "build": "yarn tsc",
+    "dev": 
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.1.6"
+  }
+}
