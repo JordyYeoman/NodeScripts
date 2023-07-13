@@ -1,3 +1,8 @@
+function randomIntFromInterval(min: number, max: number) {
+  // min and max included
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
 export class Boid {
   x: number; // X position
   y: number; // Y position
@@ -6,6 +11,11 @@ export class Boid {
   r: number; // Rotation
   color: string;
   ctx: CanvasRenderingContext2D;
+  vx = 0; // X Velocity
+  vy = 0; // Y Velocity
+  ax = 0; // X Acceleration
+  ay = 0; // Y Acceleration
+  friction = 0.97; // Friction
 
   constructor(
     x: number,
@@ -13,6 +23,10 @@ export class Boid {
     h: number,
     w: number,
     r: number,
+    vx: number,
+    vy: number,
+    ax: number,
+    ay: number,
     color: string,
     ctx: CanvasRenderingContext2D
   ) {
@@ -21,70 +35,55 @@ export class Boid {
     this.h = h;
     this.w = w;
     this.r = r;
+    this.vx = vx;
+    this.vy = vy;
+    this.ax = ax;
+    this.ay = ay;
     this.color = color;
     this.ctx = ctx;
   }
 
   update() {
-    this.x += 2 * (Math.random() < 0.5 ? -1 : 1);
-    this.y += 2 * (Math.random() < 0.5 ? -1 : 1);
-    this.r += 2;
-  }
+    this.r += (Math.random() * randomIntFromInterval(0, 180)) / 50;
 
-  /* here, radius means the radius of circle, inside of which polygon is drawn */
-  drawTriangle(
-    context: CanvasRenderingContext2D,
-    PosX: number,
-    PosY: number,
-    radius: number,
-    rotate: number
-  ) {
-    context.beginPath();
+    // Update acceleration
+    this.ax = Math.cos(this.r) * 0.05;
+    this.ay = Math.sin(this.r) * 0.05;
 
-    /* number of vertices for polygon */
-    const sides = 3;
-    /* angle between vertices of polygon */
-    const a = (Math.PI * 2) / sides;
+    // calc velocity
+    this.vx += this.ax;
+    this.vy += this.ay;
 
-    for (let i = 0; i < sides; i++) {
-      context.lineTo(
-        PosX + radius * Math.cos(a * i + rotate),
-        PosY + radius * Math.sin(a * i + rotate)
-      );
-    }
+    // Apply friction
+    this.vx *= 0.97;
+    this.vy *= 0.97;
 
-    context.closePath();
-    context.stroke();
-
-    context.fillStyle = "#fff";
-    context.fill();
-
-    return true;
+    // update position
+    this.x += this.vx;
+    this.y += this.vy;
   }
 
   draw() {
     this.ctx.save();
-    this.drawTriangle(this.ctx, this.x, this.y, 20, Math.PI / this.r);
-    // this.ctx.beginPath();
-    // this.ctx.moveTo(this.x + this.w / 2, this.y);
-    // this.ctx.lineTo(this.x, this.y - this.h * 2);
-    // this.ctx.lineTo(this.x - this.w / 2, this.y);
-    // this.ctx.closePath();
 
-    // // the outline
-    // this.ctx.lineWidth = 1;
-    // this.ctx.strokeStyle = "#666666";
-    // this.ctx.stroke();
+    // Translate to the center of the triangle
+    this.ctx.translate(this.x + this.w / 2, this.y + this.h / 2);
 
-    // // the fill color
-    // this.ctx.fillStyle = "#fff";
-    // this.ctx.fill();
+    // Rotate the canvas
+    this.ctx.rotate((Math.PI / 180) * this.r);
 
-    // // Rotate boid
-    // this.ctx.translate(this.x / 2, this.y / 2);
-    // this.ctx.rotate(this.r);
+    // Translate back to the original position
+    this.ctx.translate(-(this.x + this.w / 2), -(this.y + this.h / 2));
 
-    // this.ctx.closePath();
+    // Draw the rotated triangle
+    this.ctx.beginPath();
+    this.ctx.moveTo(this.x, this.y);
+    this.ctx.lineTo(this.x + this.w, this.y + this.h / 2);
+    this.ctx.lineTo(this.x, this.y + this.h);
+    this.ctx.closePath();
+    this.ctx.fillStyle = "blue";
+    this.ctx.fill();
+
     this.ctx.restore();
   }
 }

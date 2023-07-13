@@ -2,6 +2,12 @@ import { Simulation } from "./Simulation";
 import { Boid } from "./shapes/Boid";
 import { Ship } from "./shapes/Ship";
 
+function randomIntFromInterval(min: number, max: number) {
+  const flip = Math.random() > 0.5 ? -1 : 1;
+  // min and max included
+  return Math.floor(Math.random() * (max - min + 1) + min) * flip;
+}
+
 export const setupCanvas = (canvasRef: React.RefObject<HTMLCanvasElement>) => {
   const canvas = canvasRef.current;
 
@@ -27,7 +33,19 @@ export const setupCanvas = (canvasRef: React.RefObject<HTMLCanvasElement>) => {
   const boids = [];
   for (let i = 0; i < 1000; i++) {
     boids.push(
-      new Boid(canvas.width / 2, canvas.height / 2, 5, 5, 1, "#fff", ctx)
+      new Boid(
+        canvas.width / 2, // x
+        canvas.height / 2, // y
+        15, // height
+        15, // width
+        0, // rotation
+        randomIntFromInterval(0, 10), // x velocity
+        randomIntFromInterval(0, 10), // y velocity
+        20, // x acceleration
+        1, // y acceleration
+        "#fff",
+        ctx
+      )
     );
   }
 

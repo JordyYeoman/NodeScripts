@@ -1,5 +1,3 @@
-import { KeyboardInput } from "../KeyboardInput";
-
 export class Ship {
   x: number;
   y: number;
