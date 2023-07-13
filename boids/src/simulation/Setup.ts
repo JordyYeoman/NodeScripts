@@ -1,5 +1,6 @@
 import { Simulation } from "./Simulation";
 import { Boid } from "./shapes/Boid";
+import { Ship } from "./shapes/Ship";
 
 export const setupCanvas = (canvasRef: React.RefObject<HTMLCanvasElement>) => {
   const canvas = canvasRef.current;
@@ -10,26 +11,29 @@ export const setupCanvas = (canvasRef: React.RefObject<HTMLCanvasElement>) => {
 
   if (!ctx) return;
 
+  // Create a spaceship for user controller
+  const ship = new Ship(
+    canvas.width / 2,
+    canvas.height / 2,
+    -10,
+    0,
+    0,
+    0,
+    5,
+    ctx
+  );
+
   // Create a bunch of boids to draw
-  //   const boids = [];
-  //   for (let i = 0; i < 1000; i++) {
-  //     boids.push(new Boid(canvas.width / 2, canvas.height / 2, 1, "#fff", ctx));
-  //   }
-  //   const sim = new Simulation(boids, ctx);
+  const boids = [];
+  for (let i = 0; i < 1000; i++) {
+    boids.push(
+      new Boid(canvas.width / 2, canvas.height / 2, 5, 5, 1, "#fff", ctx)
+    );
+  }
 
-  //   simulationLoop(ctx, canvas, sim);
+  const sim = new Simulation(boids, ship, ctx);
 
-  // Drawing a spaceship with velocity vector
-
-  addEventListener("keydown", (e) => {
-    console.log("keydown: ", e.code);
-  });
-
-  // Resize when window changes
-  //   window.onresize = function () {
-  //     canvas.width = window.innerWidth;
-  //     canvas.height = window.innerHeight;
-  //   };
+  simulationLoop(ctx, canvas, sim);
 };
 
 function simulationLoop(
