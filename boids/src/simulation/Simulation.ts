@@ -22,7 +22,7 @@ export class Simulation {
   update() {
     // Loop over all boids an update their positions
     this.boids.map((boid: Boid | Boid2) => {
-      // boid.update();
+      boid.update();
     });
     this.ship.update(this.keyboardInput.keys);
   }

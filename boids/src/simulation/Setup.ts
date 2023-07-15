@@ -32,8 +32,16 @@ export const setupCanvas = (canvasRef: React.RefObject<HTMLCanvasElement>) => {
 
   // Create a bunch of boids to draw
   const boids = [];
-  for (let i = 0; i < 1; i++) {
-    boids.push(new Boid2(ctx));
+  for (let i = 0; i < 10; i++) {
+    boids.push(
+      new Boid2(
+        Math.random() * canvas.width,
+        Math.random() * canvas.height,
+        10,
+        15,
+        ctx
+      )
+    );
   }
 
   const sim = new Simulation(boids, ship, ctx);

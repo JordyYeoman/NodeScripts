@@ -1,8 +1,11 @@
-const point = (x: number, y: number) => ({ x, y });
+const point: (x: number, y: number) => Point = (x: number, y: number) => ({
+  x,
+  y,
+});
 
-function createPath(points: { x: number; y: number }[]) {
-  let cy = 0;
+const createBoid = (points: Point[]) => {
   let cx = 0;
+  let cy = 0;
 
   for (const p of points) {
     cx += p.x;
@@ -16,46 +19,93 @@ function createPath(points: { x: number; y: number }[]) {
     path.lineTo(p.x - cx, p.y - cy);
   }
   path.closePath();
+
   return path;
-}
+};
 
-function drawPath_V2(
-  path: Path2D,
-  x: number,
-  y: number,
-  scale: number,
-  angle: number,
-  strokeStyle: string,
-  fillStyle: string,
-  ctx: CanvasRenderingContext2D
-) {
-  ctx.setTransform(scale, 0, 0, scale, x, y);
-  ctx.rotate(angle);
-  fillStyle && ((ctx.fillStyle = fillStyle), ctx.fill(path));
-  strokeStyle && ((ctx.strokeStyle = strokeStyle), ctx.stroke(path));
-}
-
+export type Point = { x: number; y: number };
 export class Boid2 {
-  boid2: Path2D;
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  boid: Path2D;
+  vertices: Point[];
+  // boid2: Path2D;
   ctx: CanvasRenderingContext2D;
+  r = 90;
+  vx = 0; // X Velocity
+  vy = 0; // Y Velocity
+  ax = 0; // X Acceleration
+  ay = 0; // Y Acceleration
+  friction = 0.97; // Friction
 
-  constructor(ctx: CanvasRenderingContext2D) {
-    this.boid2 = createPath([point(0, -25), point(-50, -75), point(-100, -25)]);
+  constructor(
+    x: number,
+    y: number,
+    w: number,
+    h: number,
+    ctx: CanvasRenderingContext2D
+  ) {
+    this.x = x;
+    this.y = y;
+    this.w = w;
+    this.h = h;
     this.ctx = ctx;
+    this.vertices = [
+      point(this.x, this.y),
+      point(this.x - this.w / 2, this.y - this.h),
+      point(this.x + this.w / 2, this.y - this.h),
+    ];
+    this.boid = createBoid(this.vertices);
   }
 
-  //   update() {}
+  update() {
+    // Calculate the angle based on the velocity
+    this.r = Math.atan2(this.vy, this.vx) * 100;
+
+    // Update acceleration
+    // this.ax = Math.cos(this.r) * 0.05;
+    // this.ay = Math.sin(this.r) * 0.05;
+
+    // Update acceleration with a random factor
+    const randomFactor = 0.00001; // Adjust this value to control the randomness
+    this.ax = this.r * randomFactor;
+    this.ay = this.r * randomFactor;
+
+    // calc velocity
+    this.vx += this.ax;
+    this.vy += this.ay;
+
+    // Apply friction
+    this.vx *= this.friction;
+    this.vy *= this.friction;
+
+    // update position
+    this.x += this.vx;
+    this.y += this.vy;
+  }
+
+  drawPath_V2(
+    path: Path2D,
+    x: number,
+    y: number,
+    scale: number,
+    angle: number,
+    strokeStyle: string,
+    fillStyle: string
+  ) {
+    this.ctx.setTransform(scale, 0, 0, scale, x, y);
+    this.ctx.rotate(angle);
+    fillStyle && ((this.ctx.fillStyle = fillStyle), this.ctx.fill(path));
+    strokeStyle &&
+      ((this.ctx.strokeStyle = strokeStyle), this.ctx.stroke(path));
+  }
 
   draw() {
-    drawPath_V2(
-      this.boid2,
-      125,
-      100,
-      1,
-      ((Math.random() * 100) / 3000) * Math.PI,
-      "",
-      "black",
-      this.ctx
-    );
+    this.drawPath_V2(this.boid, this.x, this.y, 1, this.r, "white", "white");
+
+    // Reset transform
+    this.ctx.setTransform(1, 0, 0, 1, 0, 0);
   }
 }
