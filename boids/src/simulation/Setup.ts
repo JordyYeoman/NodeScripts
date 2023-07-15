@@ -1,5 +1,6 @@
 import { Simulation } from "./Simulation";
 import { Boid } from "./shapes/Boid";
+import { Boid2 } from "./shapes/Boid2";
 import { Ship } from "./shapes/Ship";
 
 function randomIntFromInterval(min: number, max: number) {
@@ -31,22 +32,8 @@ export const setupCanvas = (canvasRef: React.RefObject<HTMLCanvasElement>) => {
 
   // Create a bunch of boids to draw
   const boids = [];
-  for (let i = 0; i < 100; i++) {
-    boids.push(
-      new Boid(
-        canvas.width / 2, // x
-        canvas.height / 2, // y
-        10, // height
-        10, // width
-        0, // rotation
-        randomIntFromInterval(0, 10), // x velocity
-        randomIntFromInterval(0, 10), // y velocity
-        20, // x acceleration
-        1, // y acceleration
-        "#fff",
-        ctx
-      )
-    );
+  for (let i = 0; i < 1; i++) {
+    boids.push(new Boid2(ctx));
   }
 
   const sim = new Simulation(boids, ship, ctx);

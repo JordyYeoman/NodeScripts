@@ -1,67 +1,61 @@
-export class Boid2 {
-  x: number; // X position
-  y: number; // Y position
-  h: number; // Height
-  w: number; // Width
-  r: number; // Rotation
-  color: string;
-  ctx: CanvasRenderingContext2D;
-  vx = 0; // X Velocity
-  vy = 0; // Y Velocity
-  ax = 0; // X Acceleration
-  ay = 0; // Y Acceleration
-  friction = 0.97; // Friction
+const point = (x: number, y: number) => ({ x, y });
 
-  constructor(
-    x: number,
-    y: number,
-    h: number,
-    w: number,
-    r: number,
-    vx: number,
-    vy: number,
-    ax: number,
-    ay: number,
-    color: string,
-    ctx: CanvasRenderingContext2D
-  ) {
-    this.x = x;
-    this.y = y;
-    this.h = h;
-    this.w = w;
-    this.r = r;
-    this.vx = vx;
-    this.vy = vy;
-    this.ax = ax;
-    this.ay = ay;
-    this.color = color;
+function createPath(points: { x: number; y: number }[]) {
+  let cy = 0;
+  let cx = 0;
+
+  for (const p of points) {
+    cx += p.x;
+    cy += p.y;
+  }
+  cx /= points.length;
+  cy /= points.length;
+
+  const path = new Path2D();
+  for (const p of points) {
+    path.lineTo(p.x - cx, p.y - cy);
+  }
+  path.closePath();
+  return path;
+}
+
+function drawPath_V2(
+  path: Path2D,
+  x: number,
+  y: number,
+  scale: number,
+  angle: number,
+  strokeStyle: string,
+  fillStyle: string,
+  ctx: CanvasRenderingContext2D
+) {
+  ctx.setTransform(scale, 0, 0, scale, x, y);
+  ctx.rotate(angle);
+  fillStyle && ((ctx.fillStyle = fillStyle), ctx.fill(path));
+  strokeStyle && ((ctx.strokeStyle = strokeStyle), ctx.stroke(path));
+}
+
+export class Boid2 {
+  boid2: Path2D;
+  ctx: CanvasRenderingContext2D;
+
+  constructor(ctx: CanvasRenderingContext2D) {
+    this.boid2 = createPath([point(0, -25), point(-50, -75), point(-100, -25)]);
     this.ctx = ctx;
   }
 
-  update() {
-    // Calculate the angle based on the velocity
-    this.r = Math.atan2(this.vy, this.vx) / 10;
-
-    // calc velocity
-    this.vx += this.ax;
-    this.vy += this.ay;
-
-    // Apply friction
-    this.vx *= this.friction;
-    this.vy *= this.friction;
-
-    // update position
-    this.x += this.vx;
-    this.y += this.vy;
-  }
+  //   update() {}
 
   draw() {
-    this.ctx.beginPath();
-    this.ctx.moveTo(this.x, this.y);
-    this.ctx.lineTo(this.x - this.w / 2, this.y - this.h);
-    this.ctx.lineTo(this.x + this.w / 2, this.y - this.h);
-    this.ctx.closePath();
-    this.ctx.fillStyle = "blue";
-    this.ctx.fill();
+    drawPath_V2(
+      this.boid2,
+      125,
+      100,
+      1,
+      ((Math.random() * 100) / 3000) * Math.PI,
+      "",
+      "black",
+      this.ctx
+    );
   }
 }
