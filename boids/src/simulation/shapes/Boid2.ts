@@ -1,9 +1,4 @@
-function randomIntFromInterval(min: number, max: number) {
-  // min and max included
-  return Math.floor(Math.random() * (max - min + 1) + min);
-}
-
-export class Boid {
+export class Boid2 {
   x: number; // X position
   y: number; // Y position
   h: number; // Height
@@ -47,15 +42,6 @@ export class Boid {
     // Calculate the angle based on the velocity
     this.r = Math.atan2(this.vy, this.vx) / 10;
 
-    // Update acceleration
-    // this.ax = Math.cos(this.r) * 0.05;
-    // this.ay = Math.sin(this.r) * 0.05;
-
-    // Update acceleration with a random factor
-    const randomFactor = 0.15; // Adjust this value to control the randomness
-    this.ax = this.r * randomFactor * Math.random();
-    this.ay = this.r * randomFactor * Math.random();
-
     // calc velocity
     this.vx += this.ax;
     this.vy += this.ay;
@@ -69,31 +55,7 @@ export class Boid {
     this.y += this.vy;
   }
 
-  drawTriangle(PosX: number, PosY: number, radius: number, rotate: number) {
-    this.ctx.beginPath();
-
-    /* number of vertices for polygon */
-    const sides = 3;
-    /* angle between vertices of polygon */
-    const a = (Math.PI * 2) / sides;
-
-    for (let i = 0; i < sides; i++) {
-      this.ctx.lineTo(
-        PosX + radius * Math.cos(a * i + rotate),
-        PosY + radius * Math.sin(a * i + rotate)
-      );
-    }
-
-    this.ctx.fillStyle = this.color;
-    this.ctx.fill();
-    this.ctx.closePath();
-  }
-
   draw() {
-    this.ctx.save();
-    // Draw the rotated triangle
-    // Translate to the center of the triangle
-
     this.ctx.beginPath();
     this.ctx.moveTo(this.x, this.y);
     this.ctx.lineTo(this.x - this.w / 2, this.y - this.h);
@@ -101,9 +63,5 @@ export class Boid {
     this.ctx.closePath();
     this.ctx.fillStyle = "blue";
     this.ctx.fill();
-
-    this.drawTriangle(this.x, this.y, 10, this.r);
-
-    this.ctx.restore();
   }
 }

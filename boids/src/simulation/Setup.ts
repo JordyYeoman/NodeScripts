@@ -13,7 +13,7 @@ export const setupCanvas = (canvasRef: React.RefObject<HTMLCanvasElement>) => {
 
   if (!canvas) return;
 
-  const ctx = canvas.getContext("2d");
+  const ctx = canvas.getContext("2d", { alpha: false });
 
   if (!ctx) return;
 
@@ -31,13 +31,13 @@ export const setupCanvas = (canvasRef: React.RefObject<HTMLCanvasElement>) => {
 
   // Create a bunch of boids to draw
   const boids = [];
-  for (let i = 0; i < 1000; i++) {
+  for (let i = 0; i < 100; i++) {
     boids.push(
       new Boid(
         canvas.width / 2, // x
         canvas.height / 2, // y
-        15, // height
-        15, // width
+        10, // height
+        10, // width
         0, // rotation
         randomIntFromInterval(0, 10), // x velocity
         randomIntFromInterval(0, 10), // y velocity
