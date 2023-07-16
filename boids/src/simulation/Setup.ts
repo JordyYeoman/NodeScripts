@@ -1,7 +1,8 @@
-import { Simulation } from "./Simulation";
-import { Boid } from "./shapes/Boid";
-import { Boid2 } from "./shapes/Boid2";
-import { Ship } from "./shapes/Ship";
+import { Simulation } from './Simulation';
+import { Boid } from './shapes/Boid';
+import { Boid2 } from './shapes/Boid2';
+import { Ship } from './shapes/Ship';
+import { fps } from '../../fps';
 
 function randomIntFromInterval(min: number, max: number) {
   const flip = Math.random() > 0.5 ? -1 : 1;
@@ -14,7 +15,7 @@ export const setupCanvas = (canvasRef: React.RefObject<HTMLCanvasElement>) => {
 
   if (!canvas) return;
 
-  const ctx = canvas.getContext("2d", { alpha: false });
+  const ctx = canvas.getContext('2d', { alpha: false });
 
   if (!ctx) return;
 
@@ -54,8 +55,11 @@ function simulationLoop(
   canvas: HTMLCanvasElement,
   simulation: Simulation
 ) {
+  // Add FPS
+  fpsCounter();
+
   // Draw BG
-  ctx.fillStyle = "#000000";
+  ctx.fillStyle = '#000000';
   ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
   // Update elements
@@ -65,4 +69,18 @@ function simulationLoop(
   simulation.draw();
 
   requestAnimationFrame(() => simulationLoop(ctx, canvas, simulation));
+}
+
+function fpsCounter() {
+  // set FPS calulation based in the last 120 loop cicles
+  fps.sampleSize = 120;
+
+  let fpsValue = fps.tick();
+  console.log('fpsValue: ', fpsValue);
+  // Update html element
+  const fpsEl = document.getElementById('fps');
+
+  if (!fpsEl) return;
+
+  fpsEl.innerHTML = fpsValue.toString();
 }
