@@ -3,6 +3,7 @@ import { Boid } from './shapes/Boid';
 import { Boid2 } from './shapes/Boid2';
 import { Ship } from './shapes/Ship';
 import { fps } from '../../fps';
+import { Ball } from './shapes/Ball';
 
 function randomIntFromInterval(min: number, max: number) {
   const flip = Math.random() > 0.5 ? -1 : 1;
@@ -44,22 +45,23 @@ export const setupCanvas = (canvasRef: React.RefObject<HTMLCanvasElement>) => {
       )
     );
   }
-
+  const b = new Ball(200, 200, 30, ctx);
   const sim = new Simulation(boids, ship, ctx);
 
-  simulationLoop(ctx, canvas, sim);
+  simulationLoop(ctx, canvas, sim, b);
 };
 
 function simulationLoop(
   ctx: CanvasRenderingContext2D,
   canvas: HTMLCanvasElement,
-  simulation: Simulation
+  simulation: Simulation,
+  b: Ball
 ) {
   // Add FPS
   fpsCounter();
 
   // Draw BG
-  ctx.fillStyle = '#000000';
+  ctx.fillStyle = '#e3e3e3';
   ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
   // Update elements
@@ -67,8 +69,10 @@ function simulationLoop(
 
   // Redraw elements
   simulation.draw();
+  b.drawBall();
+  b.display();
 
-  requestAnimationFrame(() => simulationLoop(ctx, canvas, simulation));
+  requestAnimationFrame(() => simulationLoop(ctx, canvas, simulation, b));
 }
 
 function fpsCounter() {
@@ -76,7 +80,6 @@ function fpsCounter() {
   fps.sampleSize = 120;
 
   let fpsValue = fps.tick();
-  console.log('fpsValue: ', fpsValue);
   // Update html element
   const fpsEl = document.getElementById('fps');
 

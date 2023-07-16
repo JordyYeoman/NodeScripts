@@ -1,3 +1,5 @@
+import { Vector } from '../Vector';
+
 const point: (x: number, y: number) => Point = (x: number, y: number) => ({
   x,
   y,
@@ -30,14 +32,12 @@ export class Boid2 {
   w: number;
   h: number;
   boid: Path2D;
+  velocity: Vector;
+  acceleration: Vector;
   vertices: Point[];
   // boid2: Path2D;
   ctx: CanvasRenderingContext2D;
   r = 90;
-  vx = 0; // X Velocity
-  vy = 0; // Y Velocity
-  ax = 0; // X Acceleration
-  ay = 0; // Y Acceleration
   friction = 0.97; // Friction
 
   constructor(
@@ -58,32 +58,13 @@ export class Boid2 {
       point(this.x + this.w / 2, this.y - this.h),
     ];
     this.boid = createBoid(this.vertices);
+    this.velocity = new Vector(0, 0, this.ctx);
+    this.acceleration = new Vector(0, 0, this.ctx);
   }
 
   update() {
-    // Calculate the angle based on the velocity
-    this.r = Math.atan2(this.vy, this.vx) * 100;
-
-    // Update acceleration
-    // this.ax = Math.cos(this.r) * 0.05;
-    // this.ay = Math.sin(this.r) * 0.05;
-
-    // Update acceleration with a random factor
-    const randomFactor = 0.00001; // Adjust this value to control the randomness
-    this.ax = this.r * randomFactor;
-    this.ay = this.r * randomFactor;
-
-    // calc velocity
-    this.vx += this.ax;
-    this.vy += this.ay;
-
-    // Apply friction
-    this.vx *= this.friction;
-    this.vy *= this.friction;
-
-    // update position
-    this.x += this.vx;
-    this.y += this.vy;
+    this.velocity.add(new Vector(0.01, 0.051, this.ctx));
+    this.acceleration.add(new Vector(0.051, 0.01, this.ctx));
   }
 
   drawPath_V2(
@@ -103,9 +84,10 @@ export class Boid2 {
   }
 
   draw() {
-    this.drawPath_V2(this.boid, this.x, this.y, 1, this.r, "white", "white");
-
+    this.drawPath_V2(this.boid, this.x, this.y, 1, this.r, 'white', 'white');
     // Reset transform
     this.ctx.setTransform(1, 0, 0, 1, 0, 0);
+    // Draw vectors - after transform (since transform is only for drawing the triangle)
+    this.velocity.drawVec(this.x, this.y, 100, 'green');
   }
 }

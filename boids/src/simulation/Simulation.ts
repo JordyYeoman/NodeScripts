@@ -1,7 +1,7 @@
-import { KeyboardInput } from "./KeyboardInput";
-import { Boid } from "./shapes/Boid";
-import { Boid2 } from "./shapes/Boid2";
-import { Ship } from "./shapes/Ship";
+import { KeyboardInput } from './KeyboardInput';
+import { Boid } from './shapes/Boid';
+import { Boid2 } from './shapes/Boid2';
+import { Ship } from './shapes/Ship';
 
 export class Simulation {
   boids: Boid[] | Boid2[];

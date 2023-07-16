@@ -10,20 +10,21 @@ export class Vector {
   }
 
   add(v: Vector) {
-    return new Vector(this.x + v.x, this.y + v.y, this.ctx);
+    (this.x = this.x + v.x), (this.y = this.y + v.y);
   }
 
-  sub(v: Vector) {
-    return new Vector(this.x + v.x, this.y + v.y, this.ctx);
+  subtr(v: Vector) {
+    this.x -= v.x;
+    this.y -= v.y;
   }
 
-  mag() {
-    return Math.sqrt(this.x ** 2 + this.y ** 2);
-  }
+  // mag() {
+  //   return Math.sqrt(this.x ** 2 + this.y ** 2);
+  // }
 
-  mult(n: number) {
-    return new Vector(this.x * n, this.y * n, this.ctx);
-  }
+  // mult(n: number) {
+  //   return new Vector(this.x * n, this.y * n, this.ctx);
+  // }
 
   drawVec(start_x: number, start_y: number, n: number, color: string) {
     this.ctx.beginPath();
