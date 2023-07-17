@@ -80,8 +80,16 @@ export class Walker {
       this.directionY *= -1;
     }
 
-    this.x += this.stepDistance * this.directionX;
-    this.y += this.stepDistance * this.directionY;
+    this.velocity.add(
+      new Vector(
+        this.stepDistance * this.directionX,
+        this.stepDistance * this.directionY,
+        this.ctx
+      )
+    );
+
+    this.x = this.velocity.x;
+    this.y = this.velocity.y;
 
     // Can certainly be improved perf wise :D
     this.vertices = [
@@ -90,12 +98,8 @@ export class Walker {
       point(this.x + this.w / 2, this.y - this.h),
     ];
 
-    // Update velocity based on random direction
-    this.velocity.add(new Vector(this.x, this.y, this.ctx));
-
     // Calculate angle based on velocity
-    this.rotation =
-      (Math.atan2(this.velocity.y, this.velocity.x) * 180) / Math.PI;
+    this.rotation = Math.atan2(this.velocity.y, this.velocity.x);
   }
 
   draw() {
@@ -120,6 +124,7 @@ export class Walker {
     this.ctx.translate(-centerX, -centerY);
 
     // Draw triangle
+    this.ctx.beginPath();
     this.ctx.strokeStyle = this.color;
     this.ctx.moveTo(centerX + this.w, centerY);
     this.ctx.lineTo(centerX - this.w / 2, centerY + this.h / 2);
@@ -136,12 +141,22 @@ export class Walker {
     this.ctx.fill();
     this.ctx.closePath();
 
-    // Draw observation window
-    this.ctx.strokeStyle = "rgb(238, 130, 238, 0.8)";
+    // Draw observation window - larger outside circle
+    this.ctx.strokeStyle = "rgb(138, 230, 238, 0.8)";
+    this.ctx.beginPath();
+    this.ctx.arc(centerX, centerY, this.h + this.w * 2, 0, 2 * Math.PI);
+    this.ctx.stroke();
+    this.ctx.closePath();
+
+    // Draw collision window size
+    this.ctx.strokeStyle = "rgb(238, 30, 238, 0.5)";
     this.ctx.beginPath();
     this.ctx.arc(centerX, centerY, this.h + this.w / 2, 0, 2 * Math.PI);
     this.ctx.stroke();
     this.ctx.closePath();
+
+    // Draw velocity vector
+    this.velocity.drawVec(centerX, centerY, 1, "red");
 
     this.ctx.restore();
   }
