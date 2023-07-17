@@ -10,7 +10,8 @@ export class Vector {
   }
 
   add(v: Vector) {
-    (this.x = this.x + v.x), (this.y = this.y + v.y);
+    this.x = this.x + v.x;
+    this.y = this.y + v.y;
   }
 
   subtr(v: Vector) {
@@ -18,13 +19,14 @@ export class Vector {
     this.y -= v.y;
   }
 
-  // mag() {
-  //   return Math.sqrt(this.x ** 2 + this.y ** 2);
-  // }
+  mag() {
+    return Math.sqrt(this.x ** 2 + this.y ** 2);
+  }
 
-  // mult(n: number) {
-  //   return new Vector(this.x * n, this.y * n, this.ctx);
-  // }
+  mult(n: number) {
+    this.x *= n;
+    this.y *= n;
+  }
 
   drawVec(start_x: number, start_y: number, n: number, color: string) {
     this.ctx.beginPath();

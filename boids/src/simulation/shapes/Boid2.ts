@@ -1,4 +1,4 @@
-import { Vector } from '../Vector';
+import { Vector } from "../Vector";
 
 const point: (x: number, y: number) => Point = (x: number, y: number) => ({
   x,
@@ -84,10 +84,12 @@ export class Boid2 {
   }
 
   draw() {
-    this.drawPath_V2(this.boid, this.x, this.y, 1, this.r, 'white', 'white');
+    this.ctx.save();
+    this.drawPath_V2(this.boid, this.x, this.y, 1, this.r, "white", "white");
     // Reset transform
     this.ctx.setTransform(1, 0, 0, 1, 0, 0);
     // Draw vectors - after transform (since transform is only for drawing the triangle)
-    this.velocity.drawVec(this.x, this.y, 100, 'green');
+    this.velocity.drawVec(this.x, this.y, 100, "green");
+    this.ctx.restore();
   }
 }

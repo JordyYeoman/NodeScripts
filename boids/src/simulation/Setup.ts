@@ -1,9 +1,10 @@
-import { Simulation } from './Simulation';
-import { Boid } from './shapes/Boid';
-import { Boid2 } from './shapes/Boid2';
-import { Ship } from './shapes/Ship';
-import { fps } from '../../fps';
-import { Ball } from './shapes/Ball';
+import { Simulation } from "./Simulation";
+import { Boid } from "./shapes/Boid";
+import { Boid2 } from "./shapes/Boid2";
+import { Ship } from "./shapes/Ship";
+import { fps } from "../../fps";
+import { Ball } from "./shapes/Ball";
+import { Walker } from "./shapes/Walker";
 
 function randomIntFromInterval(min: number, max: number) {
   const flip = Math.random() > 0.5 ? -1 : 1;
@@ -16,21 +17,12 @@ export const setupCanvas = (canvasRef: React.RefObject<HTMLCanvasElement>) => {
 
   if (!canvas) return;
 
-  const ctx = canvas.getContext('2d', { alpha: false });
+  const ctx = canvas.getContext("2d", { alpha: false });
 
   if (!ctx) return;
 
   // Create a spaceship for user controller
-  const ship = new Ship(
-    canvas.width / 2,
-    canvas.height / 2,
-    -10,
-    0,
-    0,
-    0,
-    5,
-    ctx
-  );
+  const ship = new Ship(canvas.width / 2, canvas.height / 2, 5, ctx);
 
   // Create a bunch of boids to draw
   const boids = [];
@@ -45,23 +37,37 @@ export const setupCanvas = (canvasRef: React.RefObject<HTMLCanvasElement>) => {
       )
     );
   }
-  const b = new Ball(200, 200, 30, ctx);
-  const sim = new Simulation(boids, ship, ctx);
+  // Create a bunch of random walkers
+  const walkers = [];
+  for (let i = 0; i < 100; i++) {
+    walkers.push(
+      new Walker(
+        Math.random() * canvas.width,
+        Math.random() * canvas.height,
+        15,
+        20,
+        ctx,
+        canvas
+      )
+    );
+  }
 
-  simulationLoop(ctx, canvas, sim, b);
+  // const w = new Walker(canvas.width / 2, canvas.height / 2, ctx);
+  const sim = new Simulation([], walkers, ship, ctx);
+
+  simulationLoop(ctx, canvas, sim);
 };
 
 function simulationLoop(
   ctx: CanvasRenderingContext2D,
   canvas: HTMLCanvasElement,
-  simulation: Simulation,
-  b: Ball
+  simulation: Simulation
 ) {
   // Add FPS
   fpsCounter();
 
   // Draw BG
-  ctx.fillStyle = '#e3e3e3';
+  ctx.fillStyle = "#c3c3c3";
   ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
   // Update elements
@@ -69,19 +75,17 @@ function simulationLoop(
 
   // Redraw elements
   simulation.draw();
-  b.drawBall();
-  b.display();
 
-  requestAnimationFrame(() => simulationLoop(ctx, canvas, simulation, b));
+  requestAnimationFrame(() => simulationLoop(ctx, canvas, simulation));
 }
 
 function fpsCounter() {
   // set FPS calulation based in the last 120 loop cicles
   fps.sampleSize = 120;
 
-  let fpsValue = fps.tick();
+  const fpsValue = fps.tick();
   // Update html element
-  const fpsEl = document.getElementById('fps');
+  const fpsEl = document.getElementById("fps");
 
   if (!fpsEl) return;
 

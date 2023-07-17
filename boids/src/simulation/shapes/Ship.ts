@@ -1,30 +1,19 @@
+import { Vector } from "../Vector";
+
 export class Ship {
   x: number;
   y: number;
-  vx: number; // Velocity in x direction
-  vy: number; // Velocity in y direction
-  ax: number; // Acceleration in x direction
-  ay: number; // Acceleration in y direction
+  vel: Vector;
+  acc: Vector;
   r: number; // rotation
   ctx: CanvasRenderingContext2D;
   friction = 0.97; // default value
 
-  constructor(
-    x: number,
-    y: number,
-    vx: number,
-    vy: number,
-    ax: number,
-    ay: number,
-    r: number,
-    ctx: CanvasRenderingContext2D
-  ) {
+  constructor(x: number, y: number, r: number, ctx: CanvasRenderingContext2D) {
     this.x = x;
     this.y = y;
-    this.vx = vx;
-    this.vy = vy;
-    this.ax = ax;
-    this.ay = ay;
+    this.vel = new Vector(0, 0, ctx);
+    this.acc = new Vector(0, 0, ctx);
     this.r = r;
     this.ctx = ctx;
   }
@@ -38,33 +27,52 @@ export class Ship {
       this.r += 0.05;
     }
     if (keys["ArrowUp"]) {
-      this.ax = Math.cos(this.r) * 0.05;
-      this.ay = Math.sin(this.r) * 0.05;
+      this.acc.add(
+        new Vector(
+          Math.cos(this.r) * 0.0005,
+          Math.sin(this.r) * 0.0005,
+          this.ctx
+        )
+      );
     }
     if (!keys["ArrowUp"] || keys["ArrowDown"]) {
-      this.ax = 0;
-      this.ay = 0;
+      this.acc.subtr(new Vector(this.acc.x, this.acc.y, this.ctx));
     }
 
     // update velocity
-    this.vx += this.ax;
-    this.vy += this.ay;
+    this.vel.add(this.acc);
 
     // Apply friction
-    this.vx *= this.friction;
-    this.vy *= this.friction;
+    this.vel.mult(0.97);
 
     // update position
-    this.x += this.vx;
-    this.y += this.vy;
+    this.x += this.vel.x;
+    this.y += this.vel.y;
   }
 
   draw() {
+    // this.ctx.save();
+    // this.ctx.translate(this.x, this.y);
+    // this.ctx.rotate(this.r);
+    // this.ctx.fillStyle = "white";
+    // this.ctx.fillRect(-5, -2.5, 10, 5);
+    // this.ctx.restore();
+    // this.vel.drawVec(this.x, this.y, 10, "green");
+    // this.acc.drawVec(this.x, this.y, 100, "red");
+    // this.ctx.restore();
     this.ctx.save();
-    this.ctx.translate(this.x, this.y);
-    this.ctx.rotate(this.r);
-    this.ctx.fillStyle = "white";
-    this.ctx.fillRect(-5, -2.5, 10, 5);
+    // draw centroid of shape
+    // this.ctx.arc(this.x, this.y, 4, 0, Math.PI * 2, false);
+    this.ctx.fillStyle = "red";
+    this.ctx.fill();
+
+    this.ctx.moveTo(this.x + 30, this.y);
+    this.ctx.lineTo(this.x - 10, this.y - 10);
+    this.ctx.lineTo(this.x - 10, this.y + 10);
+    this.ctx.closePath();
+
+    this.ctx.strokeStyle = "white";
+    this.ctx.stroke();
     this.ctx.restore();
   }
 }

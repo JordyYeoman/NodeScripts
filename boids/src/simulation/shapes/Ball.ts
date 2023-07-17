@@ -1,4 +1,4 @@
-import { Vector } from '../Vector';
+import { Vector } from "../Vector";
 
 export class Ball {
   x: number;
@@ -20,19 +20,23 @@ export class Ball {
   }
 
   drawBall() {
-    this.vel.add(new Vector(0.01, 0.051, this.ctx));
-    this.acc.add(new Vector(0.051, 0.01, this.ctx));
+    this.ctx.save();
+    this.vel.add(new Vector(0.001, 0.0051, this.ctx));
+    this.acc.add(new Vector(0.0051, 0.001, this.ctx));
     this.ctx.beginPath();
     this.ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
-    this.ctx.strokeStyle = 'black';
+    this.ctx.strokeStyle = "black";
     this.ctx.stroke();
-    this.ctx.fillStyle = 'red';
+    this.ctx.fillStyle = "red";
     this.ctx.fill();
     this.ctx.closePath();
+    this.ctx.restore();
   }
 
   display() {
-    this.vel.drawVec(this.x, this.y, 10, 'green');
-    this.acc.drawVec(this.x, this.y, 100, 'blue');
+    this.vel.drawVec(this.x, this.y, 10, "green");
+    this.acc.drawVec(this.x, this.y, 100, "blue");
+    this.x += this.vel.x;
+    this.y += this.vel.y;
   }
 }
