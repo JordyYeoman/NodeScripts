@@ -39,7 +39,7 @@ export const setupCanvas = (canvasRef: React.RefObject<HTMLCanvasElement>) => {
   }
   // Create a bunch of random walkers
   const walkers = [];
-  for (let i = 0; i < 1; i++) {
+  for (let i = 0; i < 100; i++) {
     walkers.push(
       new Walker(
         Math.random() * canvas.width,

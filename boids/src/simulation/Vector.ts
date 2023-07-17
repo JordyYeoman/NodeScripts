@@ -28,10 +28,21 @@ export class Vector {
     this.y *= n;
   }
 
+  multX(n: number) {
+    this.x *= n;
+  }
+
+  multY(n: number) {
+    this.y *= n;
+  }
+
   drawVec(start_x: number, start_y: number, n: number, color: string) {
     this.ctx.beginPath();
     this.ctx.moveTo(start_x, start_y);
-    this.ctx.lineTo(start_x + this.x * n, start_y + this.y * n);
+    this.ctx.lineTo(
+      start_x + Math.abs(this.x * n),
+      start_y + Math.abs(this.y * n)
+    );
     this.ctx.strokeStyle = color;
     this.ctx.stroke();
     this.ctx.closePath();

@@ -42,7 +42,7 @@ export class Walker {
   velocity: Vector;
   canvas: HTMLCanvasElement;
   ctx: CanvasRenderingContext2D;
-  stepDistance = 2;
+  stepDistance = 0.4;
   color = `rgba(0,0,0, ${Math.random() * 1 + 0.1}`;
   rotation = 0;
   directionX = 1;
@@ -88,8 +88,18 @@ export class Walker {
       )
     );
 
-    this.x = this.velocity.x;
-    this.y = this.velocity.y;
+    this.velocity.multX(this.directionX);
+    this.velocity.multY(this.directionY);
+
+    // Apply randomly tweaked angle
+    if (Math.random() > 0.99) {
+      this.velocity.add(
+        new Vector(Math.random() * 2, Math.random() * 2, this.ctx)
+      );
+    }
+
+    this.x = Math.abs(this.velocity.x);
+    this.y = Math.abs(this.velocity.y);
 
     // Can certainly be improved perf wise :D
     this.vertices = [
@@ -156,7 +166,7 @@ export class Walker {
     this.ctx.closePath();
 
     // Draw velocity vector
-    this.velocity.drawVec(centerX, centerY, 1, "red");
+    // this.velocity.drawVec(centerX, centerY, 1, "red");
 
     this.ctx.restore();
   }
