@@ -31,7 +31,7 @@ export class Simulation {
     this.walkers.map((w: Walker) => {
       w.update();
     });
-    // this.ship.update(this.keyboardInput.keys);
+    this.ship.update(this.keyboardInput.keys);
   }
 
   draw() {
@@ -41,6 +41,6 @@ export class Simulation {
     this.walkers.map((w: Walker) => {
       w.draw();
     });
-    // this.ship.draw();
+    this.ship.draw();
   }
 }

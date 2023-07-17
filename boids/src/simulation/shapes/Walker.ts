@@ -47,6 +47,7 @@ export class Walker {
   rotation = 0;
   directionX = 1;
   directionY = 1;
+  framesRendered = 0;
 
   constructor(
     x: number,
@@ -82,8 +83,8 @@ export class Walker {
 
     this.velocity.add(
       new Vector(
-        this.stepDistance * this.directionX,
-        this.stepDistance * this.directionY,
+        Math.cos(this.rotation) * this.stepDistance,
+        Math.sin(this.rotation) * this.stepDistance,
         this.ctx
       )
     );
@@ -91,15 +92,16 @@ export class Walker {
     this.velocity.multX(this.directionX);
     this.velocity.multY(this.directionY);
 
-    // Apply randomly tweaked angle
-    if (Math.random() > 0.99) {
-      this.velocity.add(
-        new Vector(Math.random() * 2, Math.random() * 2, this.ctx)
-      );
-    }
-
-    this.x = Math.abs(this.velocity.x);
-    this.y = Math.abs(this.velocity.y);
+    // Apply randomly tweaked angle every x amount of frames
+    // this.framesRendered++;
+    // if (this.framesRendered > 100) {
+    //   this.framesRendered = 0;
+    //   if (Math.random() > 0.5) {
+    //     this.velocity.add(new Vector(-1, 1, this.ctx));
+    //   } else {
+    //     this.velocity.add(new Vector(-2, -2, this.ctx));
+    //   }
+    // }
 
     // Can certainly be improved perf wise :D
     this.vertices = [
@@ -108,8 +110,18 @@ export class Walker {
       point(this.x + this.w / 2, this.y - this.h),
     ];
 
+    // Apply friction
+    this.velocity.mult(0.97);
+
     // Calculate angle based on velocity
     this.rotation = Math.atan2(this.velocity.y, this.velocity.x);
+
+    // Update position
+    this.x += this.velocity.x;
+    this.y += this.velocity.y;
+
+    console.log("this.velocity.x", this.velocity.x);
+    console.log("this.velocity.y", this.velocity.y);
   }
 
   draw() {

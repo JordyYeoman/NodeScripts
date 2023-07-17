@@ -51,21 +51,11 @@ export class Ship {
   }
 
   draw() {
-    // this.ctx.save();
-    // this.ctx.translate(this.x, this.y);
-    // this.ctx.rotate(this.r);
-    // this.ctx.fillStyle = "white";
-    // this.ctx.fillRect(-5, -2.5, 10, 5);
-    // this.ctx.restore();
-    // this.vel.drawVec(this.x, this.y, 10, "green");
-    // this.acc.drawVec(this.x, this.y, 100, "red");
-    // this.ctx.restore();
     this.ctx.save();
-    // draw centroid of shape
-    // this.ctx.arc(this.x, this.y, 4, 0, Math.PI * 2, false);
-    this.ctx.fillStyle = "red";
-    this.ctx.fill();
-
+    this.ctx.translate(this.x, this.y);
+    this.ctx.rotate(this.r);
+    this.ctx.translate(-this.x, -this.y);
+    this.ctx.beginPath();
     this.ctx.moveTo(this.x + 30, this.y);
     this.ctx.lineTo(this.x - 10, this.y - 10);
     this.ctx.lineTo(this.x - 10, this.y + 10);
