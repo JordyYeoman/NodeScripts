@@ -117,8 +117,9 @@ export class Walker {
     this.rotation = Math.atan2(this.velocity.y, this.velocity.x);
 
     // Update position
-    this.x += this.velocity.x;
-    this.y += this.velocity.y;
+    // this.x += this.velocity.x;
+    // this.y += this.velocity.y;
+    //
 
     console.log("this.velocity.x", this.velocity.x);
     console.log("this.velocity.y", this.velocity.y);
