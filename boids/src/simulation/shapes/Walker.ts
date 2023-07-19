@@ -114,12 +114,14 @@ export class Walker {
     this.velocity.mult(0.97);
 
     // Calculate angle based on velocity
-    this.rotation = Math.atan2(this.velocity.y, this.velocity.x);
+    // this.rotation = Math.atan2(this.velocity.y, this.velocity.x);
 
     // Update position
-    // this.x += this.velocity.x;
-    // this.y += this.velocity.y;
+    this.x += this.velocity.x;
+    this.y += this.velocity.y;
     //
+
+    this.rotation += 0.01;
 
     console.log("this.velocity.x", this.velocity.x);
     console.log("this.velocity.y", this.velocity.y);
