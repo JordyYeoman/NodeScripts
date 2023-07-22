@@ -123,8 +123,8 @@ export class Walker {
 
     this.rotation += 0.01;
 
-    console.log("this.velocity.x", this.velocity.x);
-    console.log("this.velocity.y", this.velocity.y);
+    // console.log("this.velocity.x", this.velocity.x);
+    // console.log("this.velocity.y", this.velocity.y);
   }
 
   draw() {

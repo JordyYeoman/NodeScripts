@@ -67,7 +67,8 @@ function simulationLoop(
   fpsCounter();
 
   // Draw BG
-  ctx.fillStyle = "#c3c3c3";
+  // ctx.fillStyle = "#c3c3c3";
+  ctx.fillStyle = "#030303";
   ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
   // Update elements

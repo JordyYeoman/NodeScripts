@@ -1,3 +1,8 @@
+export type VectorInput = {
+  x: number;
+  y: number;
+}
+
 export class Vector {
   x: number;
   y: number;
@@ -9,12 +14,12 @@ export class Vector {
     this.ctx = ctx;
   }
 
-  add(v: Vector) {
+  add(v: VectorInput) {
     this.x = this.x + v.x;
     this.y = this.y + v.y;
   }
 
-  subtr(v: Vector) {
+  subtr(v: VectorInput) {
     this.x -= v.x;
     this.y -= v.y;
   }
