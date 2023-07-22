@@ -1,7 +1,7 @@
 export type VectorInput = {
   x: number;
   y: number;
-}
+};
 
 export class Vector {
   x: number;
@@ -39,6 +39,16 @@ export class Vector {
 
   multY(n: number) {
     this.y *= n;
+  }
+
+  limit(n: number) {
+    this.y = this.y > n ? n : this.y;
+    this.x = this.x > n ? n : this.x;
+  }
+
+  random() {
+    this.y = Math.random() > 0.5 ? Math.random() : -1 * Math.random();
+    this.x = Math.random() > 0.5 ? Math.random() : -1 * Math.random();
   }
 
   drawVec(start_x: number, start_y: number, n: number, color: string) {

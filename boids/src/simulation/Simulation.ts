@@ -28,9 +28,9 @@ export class Simulation {
     this.boids.map((boid: Boid | Boid2) => {
       boid.update();
     });
-    this.walkers.map((w: Walker) => {
-      w.update();
-    });
+    // this.walkers.map((w: Walker) => {
+    //   w.update();
+    // });
     this.ship.update(this.keyboardInput.keys);
   }
 
@@ -38,9 +38,9 @@ export class Simulation {
     this.boids.map((boid: Boid | Boid2) => {
       boid.draw();
     });
-    this.walkers.map((w: Walker) => {
-      w.draw();
-    });
+    // this.walkers.map((w: Walker) => {
+    //   w.draw();
+    // });
     this.ship.draw();
   }
 }
