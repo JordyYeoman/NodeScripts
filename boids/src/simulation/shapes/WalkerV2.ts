@@ -31,22 +31,14 @@ export class WalkerV2 {
   update() {
     const mouseVec = new Vector(this.mousePos.x, this.mousePos.y, this.ctx);
 
-    if (this.count < 100) {
-      this.count++;
-    } else {
-      //   console.log("this.acc: ", this.acc);
-      //   console.log("this.vel: ", this.vel);
-      this.count = 0;
-    }
-
-    this.acc.subtr(mouseVec);
+    console.log("mousePOs: .", this.mousePos);
+    console.log("after this.vel: ", this.vel);
     this.acc.limit(this.maxAcc);
+    this.acc.subtr(mouseVec);
 
     // Hanlde velocity changes
-    // console.log("before this.vel: ", this.vel);
     this.vel.add(this.acc);
     this.vel.limit(this.maxVel);
-    console.log("after this.vel: ", this.vel);
 
     // Update position
     this.pos.add(this.vel);
