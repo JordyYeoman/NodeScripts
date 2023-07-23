@@ -49,7 +49,7 @@ export const setupCanvas = (canvasRef: React.RefObject<HTMLCanvasElement>) => {
 
   // const w = new Walker(canvas.width / 2, canvas.height / 2, ctx);
   const sim = new Simulation([], walkers, ship, ctx);
-  const walker2 = new WalkerV2(canvas.width / 2, canvas.height / 2, ctx);
+  const walker2 = new WalkerV2(canvas, ctx);
 
   simulationLoop(ctx, canvas, sim, walker2);
 };

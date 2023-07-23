@@ -42,8 +42,12 @@ export class Vector {
   }
 
   limit(n: number) {
-    this.y = this.y > n ? n : this.y;
-    this.x = this.x > n ? n : this.x;
+    // check if x or y are negative
+    const negX = this.x < 0;
+    const negY = this.y < 0;
+
+    this.y = Math.abs(this.y) > n ? (negY ? (n *= -1) : n) : this.y;
+    this.x = Math.abs(this.x) > n ? (negX ? (n *= -1) : n) : this.x;
   }
 
   random() {
