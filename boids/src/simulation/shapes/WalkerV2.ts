@@ -31,8 +31,8 @@ export class WalkerV2 {
   update() {
     const mouseVec = new Vector(this.mousePos.x, this.mousePos.y, this.ctx);
 
-    console.log("mousePOs: .", this.mousePos);
-    console.log("after this.vel: ", this.vel);
+    // console.log("mousePOs: .", this.mousePos);
+    // console.log("after this.vel: ", this.vel);
     this.acc.limit(this.maxAcc);
     this.acc.subtr(mouseVec);
 
