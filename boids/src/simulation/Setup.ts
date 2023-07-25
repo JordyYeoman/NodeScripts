@@ -48,20 +48,22 @@ export const setupCanvas = (canvasRef: React.RefObject<HTMLCanvasElement>) => {
     );
   }
 
-  // const w = new Walker(canvas.width / 2, canvas.height / 2, ctx);
-  const sim = new Simulation([], walkers, ship, ctx);
-  const walker2 = new WalkerV2(canvas, ctx);
-  const ballFollow = new BallFollow(ctx, canvas);
+  const followers = [];
+  for (let i = 0; i < 2; i++) {
+    followers.push(new BallFollow(ctx, canvas));
+  }
 
-  simulationLoop(ctx, canvas, sim, walker2, ballFollow);
+  const sim = new Simulation([], walkers, ship, followers, ctx);
+  const walker2 = new WalkerV2(canvas, ctx);
+
+  simulationLoop(ctx, canvas, sim, walker2);
 };
 
 function simulationLoop(
   ctx: CanvasRenderingContext2D,
   canvas: HTMLCanvasElement,
   simulation: Simulation,
-  walker2: WalkerV2,
-  ballFollow: BallFollow
+  walker2: WalkerV2
 ) {
   // Add FPS
   fpsCounter();
@@ -75,16 +77,12 @@ function simulationLoop(
   simulation.update();
   // Testing
   walker2.update();
-  ballFollow.update();
 
   // Redraw elements
   simulation.draw();
   walker2.draw();
-  ballFollow.draw();
 
-  requestAnimationFrame(() =>
-    simulationLoop(ctx, canvas, simulation, walker2, ballFollow)
-  );
+  requestAnimationFrame(() => simulationLoop(ctx, canvas, simulation, walker2));
 }
 
 function fpsCounter() {
