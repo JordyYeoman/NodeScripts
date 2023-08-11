@@ -38,5 +38,16 @@ const doMoreMagic = async () => {
   }
 };
 
-// doMagic();
+doMagic();
 doMoreMagic();
+
+const multiOddsArr = [0.1, 0.2, 0.11, 0.54, 0.12];
+
+const multiOdds =
+  multiOddsArr.length > 0
+    ? multiOddsArr.reduce((a, b) => (a ?? 0) * (b ?? 0)) ?? 0
+    : 0;
+
+
+
+console.log("multiOdds", multiOdds);
