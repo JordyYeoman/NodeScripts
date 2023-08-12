@@ -17,9 +17,6 @@ export class WalkerV2 {
   maxVel = 1;
   count = 0;
   mousePos = { x: 0, y: 0 };
-  offset = 0;
-  delay = 0;
-  maxTravelPerFrame = 0.1;
 
   constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
     this.pos = new Vector(canvas.width / 2, canvas.height / 2, ctx);
