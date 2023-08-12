@@ -1,4 +1,4 @@
-import { Vector } from "../Vector";
+import { Vector } from '../Vector';
 
 function getMousePos(canvas: HTMLCanvasElement, evt: MouseEvent) {
   const rect = canvas.getBoundingClientRect();
@@ -17,13 +17,16 @@ export class WalkerV2 {
   maxVel = 1;
   count = 0;
   mousePos = { x: 0, y: 0 };
+  offset = 0;
+  delay = 0;
+  maxTravelPerFrame = 0.1;
 
   constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
     this.pos = new Vector(canvas.width / 2, canvas.height / 2, ctx);
     this.ctx = ctx;
     this.vel = new Vector(Math.random() / 4, Math.random() / 4, this.ctx);
     this.acc = new Vector(Math.random() / 4, Math.random() / 4, this.ctx);
-    window.addEventListener("mousemove", (event) => {
+    window.addEventListener('mousemove', (event) => {
       this.mousePos = getMousePos(canvas, event);
     });
   }
@@ -46,7 +49,7 @@ export class WalkerV2 {
 
   draw() {
     this.ctx.rect(this.pos.x, this.pos.y, 5, 5);
-    this.ctx.strokeStyle = "#ffffff";
+    this.ctx.strokeStyle = '#ffffff';
     this.ctx.stroke();
   }
 }
