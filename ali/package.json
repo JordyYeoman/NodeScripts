@@ -1,0 +1,13 @@
+{
+  "name": "A.L.I",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/ws": "^8.5.5",
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "@fastify/websocket": "^8.2.0"
+  }
+}
