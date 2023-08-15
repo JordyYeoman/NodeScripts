@@ -38,9 +38,6 @@ const doMoreMagic = async () => {
   }
 };
 
-doMagic();
-doMoreMagic();
-
 const multiOddsArr = [0.1, 0.2, 0.11, 0.54, 0.12];
 
 const multiOdds =
@@ -49,5 +46,11 @@ const multiOdds =
     : 0;
 
 
+const sendIt = () => {
+  for(let i = 0; i < 10; i++) {
+    doMagic();
+    doMoreMagic();
+  }
+}
 
-console.log("multiOdds", multiOdds);
+sendIt();
