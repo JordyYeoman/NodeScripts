@@ -11,6 +11,8 @@ function maxSlidingWindow(nums: number[], k: number): number[] {
 
   // 1. Create a loop to go through all nums in arr
   for (let i = 0; i <= nums.length - k; i++) {
+    // Check the max number in current window size.
+    // EG pos 0, we want to check window size 3 - loop forward 3 and fix max
     resultingArr.push(Math.max(...nums.slice(i, i + k)));
   }
 
@@ -23,3 +25,7 @@ console.log(
 );
 
 console.log("sliding window 2: ", maxSlidingWindow([1, -1], 1));
+
+// TODO: Try take the average of the previous window size? could that work?
+// Or - can we just step forward by the window size instead of 1?
+// How about storing the values of the previous window?
