@@ -29,3 +29,6 @@ console.log("sliding window 2: ", maxSlidingWindow([1, -1], 1));
 // TODO: Try take the average of the previous window size? could that work?
 // Or - can we just step forward by the window size instead of 1?
 // How about storing the values of the previous window?
+
+// Hmmmm... using a set to remove any duplicates in the window then do a math.max?
+// Maybe math.max is the slowest way to find the highest number in windpw, maybe instead we sort and then grab the last element.
