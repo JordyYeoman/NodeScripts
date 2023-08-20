@@ -60,6 +60,7 @@ function maxSlidingWindow2(nums: number[], k: number): number[] {
   return result;
 }
 
+// My assumption here is - a deque is great if you only need to loop through the array once, you can do a combination of computes without doing additional traversal.
 function maxSlidingWindow3(nums: number[], k: number): number[] {
   // 1. create a deque
   return [];
