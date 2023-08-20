@@ -32,3 +32,35 @@ console.log("sliding window 2: ", maxSlidingWindow([1, -1], 1));
 
 // Hmmmm... using a set to remove any duplicates in the window then do a math.max?
 // Maybe math.max is the slowest way to find the highest number in windpw, maybe instead we sort and then grab the last element.
+
+// ChatGPT solution Deque:
+function maxSlidingWindow2(nums: number[], k: number): number[] {
+  const result: number[] = [];
+  const deque: number[] = []; // Store indices of elements
+
+  for (let i = 0; i < nums.length; i++) {
+    // Remove elements that are out of the current window
+    while (deque.length > 0 && deque[0] < i - k + 1) {
+      deque.shift();
+    }
+
+    // Remove elements that are smaller than the current element
+    while (deque.length > 0 && nums[deque[deque.length - 1]] < nums[i]) {
+      deque.pop();
+    }
+
+    deque.push(i);
+
+    // Add maximum to the result when the window size is reached
+    if (i >= k - 1) {
+      result.push(nums[deque[0]]);
+    }
+  }
+
+  return result;
+}
+
+function maxSlidingWindow3(nums: number[], k: number): number[] {
+  // 1. create a deque
+  return [];
+}
