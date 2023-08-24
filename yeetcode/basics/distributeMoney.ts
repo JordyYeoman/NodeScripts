@@ -23,11 +23,32 @@ function distMoney(money: number, children: number): number {
     })
     .filter((x) => x > 1).length;
 
-  console.log("tChildren: ", tChildren);
-
-  return 0;
+  return -1;
 }
 
-console.log(distMoney(100, 101)); // -1
-console.log(distMoney(20, 3)); // 1
-console.log(distMoney(16, 2)); // 2
+// Solution 2 - only want to do 1 pass through
+function distMoney2(money: number, children: number): number {
+  // If there is no way to distribute the money, return -1.
+  if (money / children < 1) return -1;
+
+  // Need to cover the 4 case
+
+  const totalMoneyRemaining = money - children;
+  const outcome = Math.floor(totalMoneyRemaining / 7);
+
+  // We know total kids who can get $8, now we need to check if any remaining kids recieve $4
+  const remainingKids = children - outcome;
+  console.log("remaining kids: ", remainingKids);
+
+  return outcome;
+}
+
+// console.log(distMoney(100, 101)); // -1
+// console.log(distMoney(20, 3)); // 1
+// console.log(distMoney(16, 2)); // 2
+// console.log(distMoney(24, 3)); // 3
+
+console.log(distMoney2(100, 101)); // -1
+console.log(distMoney2(20, 3)); // 1
+console.log(distMoney2(16, 2)); // 2
+console.log(distMoney2(24, 3)); // 3
