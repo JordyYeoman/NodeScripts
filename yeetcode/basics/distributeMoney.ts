@@ -52,3 +52,5 @@ console.log(distMoney2(100, 101)); // -1
 console.log(distMoney2(20, 3)); // 1
 console.log(distMoney2(16, 2)); // 2
 console.log(distMoney2(24, 3)); // 3
+
+// If Money = 2 * totalWith8Bucks + 4;
