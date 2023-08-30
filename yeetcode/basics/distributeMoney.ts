@@ -54,3 +54,4 @@ console.log(distMoney2(16, 2)); // 2
 console.log(distMoney2(24, 3)); // 3
 
 // If Money = 2 * totalWith8Bucks + 4;
+// What is the outcome??
