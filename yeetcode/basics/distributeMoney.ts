@@ -36,7 +36,7 @@ function distMoney2(money: number, children: number): number {
   const totalMoneyRemaining = money - children;
   const outcome = Math.floor(totalMoneyRemaining / 7);
 
-  // We know total kids who can get $8, now we need to check if any remaining kids recieve $4
+  // We know total kids who can get $8, now we need to check if any remaining kids receive $4
   const remainingKids = children - outcome;
   console.log("remaining kids: ", remainingKids);
 
