@@ -15,5 +15,6 @@ const doSomethingBra = (x: any[]) => {
 const az = ["0", 0, undefined, null, "hello"];
 
 console.log("filter: ", filterMeDaddy(az));
+console.log("Full send: ", filterMeDaddy(filterMeDaddy(az)));
 
 console.log("forEach", doSomethingBra(az));
