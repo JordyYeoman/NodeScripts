@@ -34,26 +34,45 @@ for (let line of currentStack) {
   });
 }
 
-console.log("before ordering: twoDimensionalArray", twoDimensionalArray);
 // Because of the order added to the array, we need to reverse all of the columns
 twoDimensionalArray.forEach((column) => column.reverse());
-console.log("after ordering: twoDimensionalArray", twoDimensionalArray);
 
 // Take messages and convert to commands
+// for (let command of commands) {
+//   const firstHalf = command.split("f");
+//   const moveTotalCrates = Number(firstHalf[0].match(/\d+/g)?.[0]);
+//   const fromColumn = Number(firstHalf[1].split("t")[0].match(/\d+/g)?.[0]) - 1; // Account for array indexing
+//   const toColumn = Number(firstHalf[1].split("t")[1].match(/\d+/g)?.[0]) - 1;
+
+//   for (let i = 0; i < moveTotalCrates; i++) {
+//     let elRemoved = twoDimensionalArray[fromColumn].pop();
+//     twoDimensionalArray[toColumn].push(elRemoved);
+//   }
+// }
+
+// Part 2
 for (let command of commands) {
   const firstHalf = command.split("f");
   const moveTotalCrates = Number(firstHalf[0].match(/\d+/g)?.[0]);
   const fromColumn = Number(firstHalf[1].split("t")[0].match(/\d+/g)?.[0]) - 1; // Account for array indexing
   const toColumn = Number(firstHalf[1].split("t")[1].match(/\d+/g)?.[0]) - 1;
 
-  for (let i = 0; i < moveTotalCrates; i++) {
-    // console.log("fromColumn: ", fromColumn);
-    // console.log("toColumn: ", toColumn);
+  if (moveTotalCrates === 1) {
     let elRemoved = twoDimensionalArray[fromColumn].pop();
     twoDimensionalArray[toColumn].push(elRemoved);
+  } else {
+    // Move all crates in specific order
+    let tempArr = [];
+    for (let z = 0; z < moveTotalCrates; z++) {
+      tempArr.push(twoDimensionalArray[fromColumn].pop());
+    }
+
+    // Reverse tempArr and push onto new stack
+    tempArr.reverse().forEach((x) => {
+      twoDimensionalArray[toColumn].push(x);
+    });
   }
 }
 
-console.log("twoDimensionalArray", twoDimensionalArray);
 const topCratesAtEnd = twoDimensionalArray.map((col) => col.pop());
 console.log("topCratesAtEnd", topCratesAtEnd.join(""));
