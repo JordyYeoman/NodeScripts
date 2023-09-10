@@ -15,31 +15,21 @@ function splitStringIntoChunks(inputString: string, chunkSize: number) {
 // Part 1
 // Create the 2D array with input
 const twoDimensionalArray: any[][] = Array.from(Array(9), () => []);
-// const lines = text.trim().split("\n");
-const lines = text.trim().split("\n"); // test with first line
+const lines = text.trim().split("\n");
+
 for (let line of lines) {
   if (line.trim() === "") {
     break;
   }
 
-  // Index at 1, 5, 9, 13, 17, 21, 25, 29, 34
-  let currCol = 0;
   // Split the line by column lengths
   const p = splitStringIntoChunks(line, 4);
   console.log("p", p);
-  // Separate each column from the line
-  Array.from(line).map((x, index) => {
-    if (x === "") return;
-
-    if (x === "[") {
-      if (index + 1 === 1) {
-        return twoDimensionalArray[0].push(line[index + 1]);
-      }
-
-      // Otherwise, lets get the divisible number (4 being distance apart from crates)
-      twoDimensionalArray[currCol].push(line[index + 1]);
+  p.forEach((l, index) => {
+    if (l?.length && l.includes("[") && l.includes("]")) {
+      twoDimensionalArray[index].push(l[1]); // Take the center character
     }
   });
 
-  //   console.log("twoDimensionalArray", twoDimensionalArray);
+  console.log("twoDimensionalArray", twoDimensionalArray);
 }
