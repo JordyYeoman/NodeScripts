@@ -1,9 +1,26 @@
 import figlet from 'figlet';
 
-const server = Bun.serve({
-  fetch() {
-    const body = figlet.textSync('A . L . I');
-    return new Response(body);
+const server = Bun.serve<{ authToken: string }>({
+  fetch(req, server) {
+    const success = server.upgrade(req);
+    if (success) {
+      // Bun automatically returns a 101 Switching Protocols
+      // if the upgrade succeeds
+      const body = figlet.textSync('A . L . I - Systems online');
+      return new Response(body);
+    }
+
+    // handle HTTP request normally
+    return new Response('Hello world!');
   },
-  port: 3000,
+  websocket: {
+    // this is called when a message is received
+    async message(ws, message) {
+      console.log(`Received ${message}`);
+      // send back a message
+      ws.send(`You said: ${message}`);
+    },
+  },
 });
+
+console.log(`Listening on ${server.hostname}:${server.port}`);
