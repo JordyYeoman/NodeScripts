@@ -8,6 +8,7 @@ type DogLover = {
     hasDog: boolean,
 }
 
+// Combination of types
 type PersonWhoLovesDogs = Person & DogLover;
 
 const jordy = {
