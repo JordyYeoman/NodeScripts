@@ -12,8 +12,12 @@ type BigDog = {
     horseSize: boolean,
 }
 
+type Traveller = {
+    leftCountryOfBirth: boolean,
+}
+
 // Combination of types
-type PersonWhoLovesDogs = Person & DogLover & BigDog;
+type PersonWhoLovesDogs = Person & DogLover & BigDog & Traveller;
 
 const jordy = {
     name: 'Jordy',
@@ -21,6 +25,7 @@ const jordy = {
     lovesDogs: true,
     hasDog: true,
     horseSize: true,
+    leftCountryOfBirth: true,
 } satisfies PersonWhoLovesDogs;
 
 const x = [1, 2, 3];
