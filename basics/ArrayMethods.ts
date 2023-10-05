@@ -12,3 +12,4 @@ const filterOnBool = (condition: boolean, arr: number[]): number[] => arr.filter
 
 console.log('Filter on true: ', filterOnBool(true, testArray));
 console.log('Filter on false: ', filterOnBool(false, testArray));
+console.log('Filter on true: ', filterOnBool(Boolean('True'), testArray));
