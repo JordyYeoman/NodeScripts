@@ -6,14 +6,20 @@ const myPromise = () =>
   });
 
 const waitNVueRenderCycles = async (numOfTicksToWait: number) => {
-  for(let i = 0; i < numOfTicksToWait; i++) {
+  for (let i = 0; i < numOfTicksToWait; i++) {
     await myPromise();
   }
-}
+};
 
 const doStuffSynchronously = async () => {
-    await waitNVueRenderCycles(3);
-    console.log('All done!');
-}
+  await waitNVueRenderCycles(3);
+  console.log("All done!");
+};
 
-doStuffSynchronously();
+const doStuffSynchronously2 = () => {
+  waitNVueRenderCycles(3);
+  console.log("All done 2!");
+};
+
+// doStuffSynchronously();
+doStuffSynchronously2();
