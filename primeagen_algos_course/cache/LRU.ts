@@ -4,6 +4,10 @@ type Node<T> = {
   previous?: Node<T>;
 };
 
+function createNode(value: V): Node<V> {
+  return { value };
+}
+
 // Least Recently Used
 export default class LRU<K, V> {
   private length: number;
@@ -12,9 +16,10 @@ export default class LRU<K, V> {
 
   private lookup: Map<K, Node<V>>;
 
-  constructor() {
+  constructor(private capacity: number = 10) {
     this.length = 0;
     this.head = this.tail = undefined;
+    this.lookup = new Map<K, Node<V>>();
   }
 
   update(key: K, value: V): void {
