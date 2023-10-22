@@ -10,6 +10,8 @@ export default class LRU<K, V> {
   private head?: Node<V>;
   private tail?: Node<V>;
 
+  private lookup: Map<K, Node<V>>;
+
   constructor() {
     this.length = 0;
     this.head = this.tail = undefined;
