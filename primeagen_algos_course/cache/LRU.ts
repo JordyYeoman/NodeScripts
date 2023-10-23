@@ -43,10 +43,6 @@ export default class LRU<K, V> {
       this.prepend(node);
       node.value = value;
     }
-
-    // - check capacity and evict if over
-    // if it does exist, we need to update to the front of the list
-    // and update the value
   }
 
   get(key: K): V | undefined {
