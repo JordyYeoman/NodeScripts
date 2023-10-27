@@ -1,33 +1,46 @@
-// Check if strictly increasing
-function isIncreasing(sequence: number[]): number {
-  for (let i = 0; i < sequence.length; i++) {
-    if (sequence[i] >= sequence[i + 1]) {
-      // Check the following 2 elements ensure the middle number is not the one to remove
-      if (sequence[i] < sequence[i + 2]) {
-        return i + 1;
-      }
+// def almostIncreasingSequence(sequence):
+//     removed = 0
+//     previous_maximum = maximum = float('-infinity')
+//     for s in sequence:
+//         if s > maximum:
+//             # All good
+//             previous_maximum = maximum
+//             maximum = s
+//         elif s > previous_maximum:
+//             # Violation - remove current maximum outlier
+//             removed += 1
+//             maximum = s
+//         else:
+//             # Violation - remove current item outlier
+//             removed += 1
+//         if removed > 1:
+//             return False
+//     return True
 
-      return i;
+function strictlyIncreasing(sequence: number[]): boolean {
+  let removed = 0;
+  let previousMaximum = Number.NEGATIVE_INFINITY;
+  let maximum = Number.NEGATIVE_INFINITY;
+
+  for (let i = 0; i < sequence.length; i++) {
+    if (sequence[i] > maximum) {
+      previousMaximum = maximum;
+      maximum = sequence[i];
+    } else if (sequence[i] > previousMaximum) {
+      removed += 1;
+      maximum = sequence[i];
+    } else {
+      removed += 1;
     }
   }
 
-  return -1;
-}
+  if (removed > 1) return false;
 
-function strictlyIncreasing(sequence: number[]): boolean {
-  // Check if numbers are in increasing order
-  const indexToRemove = isIncreasing(sequence);
-
-  // Splice returns a new array with removed elements but also modifies the original array
-  sequence.splice(indexToRemove, 1);
-  const resAfterRemove = isIncreasing(sequence);
-  if (resAfterRemove === -1) return true;
-
-  return false;
+  return true;
 }
 
 const testCases = [
-  [3, 5, 67, 98, 3], // false
+  [3, 5, 67, 98, 3], // true
   [123, -17, -5, 1, 2, 3, 12, 43, 45], // true
   [1, 2, 3, 4, 99, 5, 6], // true
   [1, 2, 1, 2], // false
