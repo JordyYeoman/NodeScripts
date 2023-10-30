@@ -7,9 +7,9 @@ const filterArrBasedOnNum = (
 
 console.log("result: ", filterArrBasedOnNum(15, testArray));
 
+const filterOnBool = (condition: boolean, arr: number[]): number[] =>
+  arr.filter((val) => condition);
 
-const filterOnBool = (condition: boolean, arr: number[]): number[] => arr.filter((val) => condition);
-
-console.log('Filter on true: ', filterOnBool(true, testArray));
-console.log('Filter on false: ', filterOnBool(false, testArray));
-console.log('Filter on true: ', filterOnBool(Boolean('True'), testArray));
+console.log("Filter on true: ", filterOnBool(true, testArray));
+console.log("Filter on false: ", filterOnBool(false, testArray));
+console.log("Filter on true: ", filterOnBool(Boolean("True"), testArray));
