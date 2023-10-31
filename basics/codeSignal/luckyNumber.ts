@@ -1,6 +1,4 @@
 function luckyNumber(n: number): boolean {
-  if (n % 2 > 0) return false;
-
   // Get single ints from number
   const listOfNumbers: number[] = [];
 
@@ -25,11 +23,11 @@ function luckyNumber(n: number): boolean {
   return x === y;
 }
 
-// console.log("true", luckyNumber(1230));
-// console.log("false", luckyNumber(123));
-// console.log("false", luckyNumber(239017));
-// console.log("true", luckyNumber(134008));
-// console.log("false", luckyNumber(10));
-// console.log("true", luckyNumber(1010));
-// console.log("false", luckyNumber(100000));
+console.log("true", luckyNumber(1230));
+console.log("false", luckyNumber(123));
+console.log("false", luckyNumber(239017));
+console.log("true", luckyNumber(134008));
+console.log("false", luckyNumber(10));
+console.log("true", luckyNumber(1010));
+console.log("false", luckyNumber(100000));
 console.log("true", luckyNumber(123321));
