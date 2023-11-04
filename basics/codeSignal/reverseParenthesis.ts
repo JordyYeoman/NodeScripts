@@ -33,7 +33,7 @@ function reverseParenthesis(inputString: string): string {
   return arr.filter((char) => char !== ")").join("");
 }
 
-console.log("rab", solution("(bar)"));
-console.log("arabz", solution("a(bar)z"));
-console.log("foorabbaz", solution("foo(bar)baz"));
-console.log("foorabbazmilb", solution("foo(bar)baz(blim)"));
+console.log("rab", reverseParenthesis("(bar)"));
+console.log("arabz", reverseParenthesis("a(bar)z"));
+console.log("foorabbaz", reverseParenthesis("foo(bar)baz"));
+console.log("foorabbazmilb", reverseParenthesis("foo(bar)baz(blim)"));
