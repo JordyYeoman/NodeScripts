@@ -38,4 +38,4 @@ console.log("arabz", reverseParenthesis("a(bar)z"));
 console.log("foorabbaz", reverseParenthesis("foo(bar)baz"));
 console.log("foorabbazmilb", reverseParenthesis("foo(bar)baz(blim)"));
 
-// TODO: Solve last test case
+// TODO: Solve last test case.
