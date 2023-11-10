@@ -15,10 +15,7 @@ function reverseParenthesis(inputString: string): string {
           openParentheses--;
         }
 
-        if (openParentheses > 0) {
-          stack.push(arr[pos2]);
-        }
-
+        stack.push(arr[pos2]);
         pos2++;
       }
 
@@ -35,4 +32,5 @@ function reverseParenthesis(inputString: string): string {
 console.log("rab", reverseParenthesis("(bar)"));
 console.log("arabz", reverseParenthesis("a(bar)z"));
 console.log("foorabbaz", reverseParenthesis("foo(bar)baz"));
+console.log("foozabmilbbar", reverseParenthesis("foo(bar(baz))blim"));
 console.log("foorabbazmilb", reverseParenthesis("foo(bar)baz(blim)"));
