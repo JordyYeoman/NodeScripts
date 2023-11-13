@@ -21,16 +21,18 @@ function reverseParenthesis(inputString: string): string {
 
       const reversed = stack.reverse();
       arr.splice(pos1, pos2 - pos1, ...reversed);
+      pos1 = pos2 - reversed.length - 1; // Update pos1 to the correct position
     }
 
     pos1++;
   }
 
-  return arr.filter((char) => char !== ")").join("");
+  return arr.filter((char) => char !== "(" && char !== ")").join("");
 }
 
-console.log("rab", reverseParenthesis("(bar)"));
-console.log("arabz", reverseParenthesis("a(bar)z"));
-console.log("foorabbaz", reverseParenthesis("foo(bar)baz"));
-console.log("foozabmilbbar", reverseParenthesis("foo(bar(baz))blim"));
-console.log("foorabbazmilb", reverseParenthesis("foo(bar)baz(blim)"));
+console.log("Answer: rab", reverseParenthesis("(bar)"));
+console.log("Answer: arabz", reverseParenthesis("a(bar)z"));
+console.log("Answer: foorabbaz", reverseParenthesis("foo(bar)baz"));
+console.log("Answer: foobazrabblim", reverseParenthesis("foo(bar(baz))blim"));
+console.log("Answer: foorabbazmilb", reverseParenthesis("foo(bar)baz(blim)"));
+console.log("Answer: abcdefg", reverseParenthesis("(abc)d(efg)"));
