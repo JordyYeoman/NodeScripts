@@ -13,3 +13,6 @@ console.log("Year 2001, century: ", solution(2001));
 
 console.log("10 % 2", 10 % 2); // 0
 console.log("11 % 2", 11 % 2); // 1
+console.log("12 % 2", 12 % 2); // 0
+console.log("12 % 3", 12 % 3); // 0
+console.log("13 % 3", 13 % 3); // 1
