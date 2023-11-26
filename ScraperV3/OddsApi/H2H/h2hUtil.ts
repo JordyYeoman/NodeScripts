@@ -3,14 +3,15 @@ import {
   Bookmaker,
   OddsApi,
   H2HMarketOdds,
-} from "../../types/OddsApi";
-import { getExpectedValue } from "../../utils";
+} from '../../types/OddsApi';
+import { getExpectedValue } from '../../utils';
 
 export const getH2HPositiveExpectedValues = (
   oddsApi: OddsApiH2HMarket,
   betfairOdds: Bookmaker | undefined,
   event: OddsApi,
   bookieKey: string
+  // TODO: Fix typing
 ): any[] => {
   let oddsApiPositiveEVH2HOutcomes = oddsApi?.outcomes?.map(
     (outcome: H2HMarketOdds, index: number) => {
@@ -59,7 +60,7 @@ export const getValidH2HMarkets = (data: OddsApi[]) => {
     };
 
     newData.betfair =
-      x?.bookmakers.find((z) => z?.key === "betfair") ?? ({} as Bookmaker);
+      x?.bookmakers.find((z) => z?.key === 'betfair') ?? ({} as Bookmaker);
     betfairDataMap.set(newData.id, newData.betfair);
   });
 
@@ -72,10 +73,10 @@ export const getValidH2HMarkets = (data: OddsApi[]) => {
 
     event.bookmakers.map((bookie) => {
       const { key, title, last_update } = bookie;
-      if (bookie.key === "betfair") return;
+      if (bookie.key === 'betfair') return;
 
       bookie.markets.map((oddsApi) => {
-        if (oddsApi.key === "h2h") {
+        if (oddsApi.key === 'h2h') {
           positiveExpectedValueLegs.push(
             ...getH2HPositiveExpectedValues(
               oddsApi,
