@@ -1,19 +1,19 @@
-import { Simulation } from "./Simulation";
-import { Boid } from "./shapes/Boid";
-import { Boid2 } from "./shapes/Boid2";
-import { Ship } from "./shapes/Ship";
-import { fps } from "../../fps";
-import { Ball } from "./shapes/Ball";
-import { Walker } from "./shapes/Walker";
-import { WalkerV2 } from "./shapes/WalkerV2";
-import { BallFollow } from "./shapes/BallFollow";
+import { Simulation } from './Simulation';
+import { Boid } from './shapes/Boid';
+import { Boid2 } from './shapes/Boid2';
+import { Ship } from './shapes/Ship';
+import { fps } from '../../fps';
+import { Ball } from './shapes/Ball';
+import { Walker } from './shapes/Walker';
+import { WalkerV2 } from './shapes/WalkerV2';
+import { BallFollow } from './shapes/BallFollow';
 
 export const setupCanvas = (canvasRef: React.RefObject<HTMLCanvasElement>) => {
   const canvas = canvasRef.current;
 
   if (!canvas) return;
 
-  const ctx = canvas.getContext("2d", { alpha: false });
+  const ctx = canvas.getContext('2d', { alpha: false });
 
   if (!ctx) return;
 
@@ -49,7 +49,7 @@ export const setupCanvas = (canvasRef: React.RefObject<HTMLCanvasElement>) => {
   }
 
   const followers = [];
-  for (let i = 0; i < 2; i++) {
+  for (let i = 0; i < 10; i++) {
     followers.push(new BallFollow(ctx, canvas));
   }
 
@@ -70,7 +70,7 @@ function simulationLoop(
 
   // Draw BG
   // ctx.fillStyle = "#c3c3c3";
-  ctx.fillStyle = "#030303";
+  ctx.fillStyle = '#030303';
   ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
   // Update elements
@@ -91,7 +91,7 @@ function fpsCounter() {
 
   const fpsValue = fps.tick();
   // Update html element
-  const fpsEl = document.getElementById("fps");
+  const fpsEl = document.getElementById('fps');
 
   if (!fpsEl) return;
 
