@@ -17,5 +17,9 @@ const testArr = [
 
 const s = new Set(testArr);
 console.log("s", s);
+console.log("s", (s as unknown as any[]).length);
+if ((s as unknown as any[]).length) {
+  console.log("full send");
+}
 
 // TLDR - Set removes duplicates of primitives but not, non-primitives.
