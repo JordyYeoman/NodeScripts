@@ -1,34 +1,38 @@
-import axios from "axios";
-import fastify from "fastify";
+import axios from 'axios';
+import fastify from 'fastify';
 import {
   H2HMarketOdds,
   OddsApi,
   OddsApiH2HMarket,
   OddsApiSpreadsMarket,
-} from "./types/OddsApi";
-import { Bookmaker } from "./types/OddsApi";
-import { loginBetfair } from "./BetfairApi/login";
-import { compareEvents, getExpectedValue, ingestData } from "./utils";
-require("dotenv").config();
+} from './types/OddsApi';
+import { Bookmaker } from './types/OddsApi';
+import { loginBetfair } from './BetfairApi/login';
+import { compareEvents, getExpectedValue, ingestData } from './utils';
+require('dotenv').config();
 
 // Test data
-import { d, oddsApi } from "./sampleData";
-import { params } from "./setup/config";
-import { getSportData } from "./OddsApi/api";
-import { OddsApiSportKey } from "./enums/OddsApi";
-import { getValidH2HMarkets } from "./OddsApi/H2H/h2hUtil";
-import { getData } from "./BetfairApi/utils";
+import { d, oddsApi } from './sampleData';
+import { params } from './setup/config';
+import { getSportData } from './OddsApi/api';
+import { OddsApiSportKey } from './enums/OddsApi';
+import { getValidH2HMarkets } from './OddsApi/H2H/h2hUtil';
+import { getData } from './BetfairApi/utils';
 
 const server = fastify({ logger: false });
 
 // Temporary caching while we get system working
 let cachedRes: undefined | (Map<string, object> | undefined)[];
 
-server.get("/", async (request, reply) => {
-  return "SERVER HEALTHY";
+// TODO: Clean up endpoints
+// 1. Create a correctly typed payload for effectively manipulating data + comparing between sites
+// 2.
+
+server.get('/', async (request, reply) => {
+  return 'SERVER HEALTHY';
 });
 
-server.get("/afl/data", async (request, reply) => {
+server.get('/afl/data', async (request, reply) => {
   try {
     // Fetch all sport specific data from Odds API
     // This will return each bookmakers odds for H2H & Spreads markets
@@ -45,16 +49,16 @@ server.get("/afl/data", async (request, reply) => {
     // let p = compareEvents(oddsApi, z);
 
     return reply.status(200).send({
-      message: "VALID",
+      message: 'VALID',
       payload: JSON.stringify(positiveH2H),
     });
   } catch (error: any) {
-    console.log("Error status", error.response);
+    console.log('Error status', error.response);
     reply.send(error.response);
   }
 });
 
-server.get("/nba/data", async (request, reply) => {
+server.get('/nba/data', async (request, reply) => {
   try {
     // Fetch all sport specific data from Odds API
     // This will return each bookmakers odds for H2H & Spreads markets
@@ -69,16 +73,16 @@ server.get("/nba/data", async (request, reply) => {
 
     if (betfairData) {
       let z = ingestData(betfairData);
-      console.log("z", z);
+      console.log('z', z);
       // let p = compareEvents(oddsApi, z);
     }
 
     return reply.status(200).send({
-      message: "VALID",
+      message: 'VALID',
       payload: betfairData,
     });
   } catch (error: any) {
-    console.log("Error status", error.response);
+    console.log('Error status', error.response);
     reply.send(error.response);
   }
 });
