@@ -1,4 +1,4 @@
-export type MarketDetails = {
+export type MarketDetailsMap = {
   marketName: string;
 };
 

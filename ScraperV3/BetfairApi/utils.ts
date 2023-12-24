@@ -8,31 +8,23 @@ import {
   listMarketTypes,
   listRunnerBook,
 } from "betfair-api-ts";
-import { EventDetails, MarketCatalogue, MarketDetails } from "../types";
+import { EventDetails, MarketCatalogue, MarketDetailsMap } from "../types";
 import { BetfairEventList } from "../types/Betfair";
-import { EventResult } from "betfair-api-ts/lib/types/bettingAPI/betting";
+import {
+  EventResult,
+  MarketBook,
+} from "betfair-api-ts/lib/types/bettingAPI/betting";
 import { competitionTypeIds } from "../constants/betfairConstants";
 
 export const getBetfairDataForCompetitionId = async (
   compIds: typeof competitionTypeIds
 ) => {
-  const params = {
-    filter: {
-      competitionIds: compIds,
-    },
-  };
-
-  // This gets all events for the markets matched by competition id (See constants file)
-  let eventsRes: EventResult[] = await listEvents(params);
-  const listOfEventIds: string[] = eventsRes.reduce(
-    (acc: any, event: EventResult) => acc.concat(event.event?.id),
-    []
-  );
+  const listOfEventIds = await getEventsForCompetitionId(compIds);
 
   // Return early if there are no event ids.
   if (!(listOfEventIds?.length > 0)) return;
 
-  // Get all markets available for sporting event using the event ID
+  // Get all markets available for event using the event ID
   // Param will be an array of event ids to get the relevant markets for each ID.
   //
   // This is a list of all markets available to bet / lay
@@ -68,12 +60,12 @@ export const getBetfairDataForCompetitionId = async (
     maxResults: 1000,
     marketProjection: ["EVENT"],
   });
-  console.log("Market Catalogue", marketCatalogueForEventIds);
 
-  const marketDetails = new Map<string, MarketCatalogue>();
+  const marketDetailsMap = new Map<string, MarketCatalogue>();
 
+  // Need to construct market objects so we can correctly fetch the books for each market.
   const marketIdsForEvent = marketCatalogueForEventIds.map((l) => {
-    marketDetails.set(l.marketId, {
+    marketDetailsMap.set(l.marketId, {
       marketName: l.marketName,
       marketId: l.marketId,
       totalMatched: l.totalMatched,
@@ -89,10 +81,10 @@ export const getBetfairDataForCompetitionId = async (
   const marketBookList = await getMarketBookList(marketIdsForEvent);
 
   // Match up marketNames to marketBooks
-  let updatedDeets = marketBookList.map((t) => {
+  const updatedDeets = marketBookList.map((t) => {
     return t.map((z: any) => {
-      let mName = marketDetails.get(z.marketId)?.marketName;
-      let eventName = marketDetails.get(z.marketId)?.event?.name;
+      let mName = marketDetailsMap.get(z.marketId)?.marketName;
+      let eventName = marketDetailsMap.get(z.marketId)?.event?.name;
 
       if (!mName || !eventName) return;
 
@@ -109,10 +101,14 @@ export const getBetfairDataForCompetitionId = async (
   return updatedDeets;
 };
 
+/*
+ * Fetch all market books for all events
+ *
+ */
 const getMarketBookList = async (
   marketIdsForEvent: string[]
-): Promise<any[]> => {
-  const splitElements = getSeperatedEventIds(marketIdsForEvent);
+): Promise<MarketBook[][]> => {
+  const splitElements = getMaxMarketsForEventIds(marketIdsForEvent);
   const promises: Promise<any>[] = [];
 
   splitElements.map((listOfMarketIds: string[]) => {
@@ -128,7 +124,7 @@ const getMarketBookList = async (
     promises.push(promise);
   });
 
-  const results = await Promise.all(promises);
+  const results = (await Promise.all(promises)) as MarketBook[][];
 
   return results;
 };
@@ -137,7 +133,10 @@ const getMarketBookList = async (
  * Returns an array of arrays split into x lengths.
  * Ideally, we want to seperate the marketIds into groups of ~25
  */
-const getSeperatedEventIds = (arr: any[], maxArrLength: number = 25): any[] => {
+const getMaxMarketsForEventIds = (
+  arr: any[],
+  maxArrLength: number = 25
+): any[] => {
   try {
     const finalArr = [];
 
@@ -161,4 +160,22 @@ const getSeperatedEventIds = (arr: any[], maxArrLength: number = 25): any[] => {
     console.warn("Error seperating event ids into groups, [ERROR]: ", e);
     return [];
   }
+};
+
+const getEventsForCompetitionId = async (
+  compIds: typeof competitionTypeIds
+) => {
+  // This gets all events for the markets matched by competition id (See constants file)
+  const eventsRes: EventResult[] = await listEvents({
+    filter: {
+      competitionIds: compIds,
+    },
+  });
+
+  const listOfEventIds: string[] = eventsRes.reduce(
+    (acc: any, event: EventResult) => acc.concat(event.event?.id),
+    []
+  );
+
+  return listOfEventIds;
 };

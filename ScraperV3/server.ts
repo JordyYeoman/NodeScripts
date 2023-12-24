@@ -8558,11 +8558,12 @@ server.get("/nba/data", async (request, reply) => {
       competitionIdsMap.get("nba") ?? "",
     ]);
 
-    // if (betfairData) {
-    //   let z = ingestData(betfairData);
-    //   console.log("z", z);
-    //   // let p = compareEvents(oddsApi, z);
-    // }
+    if (betfairData) {
+      // TODO: Clean this up
+      // let z = ingestData(betfairData);
+      // console.log("z", z);
+      // let p = compareEvents(oddsApi, z);
+    }
 
     return reply.status(200).send({
       message: "VALID",
