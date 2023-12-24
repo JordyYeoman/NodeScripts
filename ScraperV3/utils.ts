@@ -4,20 +4,26 @@ import { OddsApi } from "./types/OddsApi";
 export const ingestData = (data: any[]): any[] => {
   // Loop through each of the competition (sport) markets
   // Eg - nba events || afl events
-  return data
-    .map((x) => {
-      // Loop over each event market for that specific competition
-      return x
-        .map((y: any) => {
-          const { marketName, eventName, runners } = y;
-          // Only handle handicap markets (line markets) atm
-          if (marketName === "Handicap") {
-            return handleHandicap(eventName, runners, marketName);
-          }
-        })
-        .filter((x: unknown) => Boolean(x));
-    })
-    .filter((x: unknown) => Boolean(x));
+  return (
+    data
+      .map((x) => {
+        // Loop over each event market for that specific competition
+        return (
+          x
+            .map((y: any) => {
+              const { marketName, eventName, runners } = y;
+              // Only handle handicap markets (line markets) atm
+              if (marketName === "Handicap") {
+                return handleHandicap(eventName, runners, marketName);
+              }
+            })
+            // Strip out undefined data
+            .filter((x: unknown) => Boolean(x))
+        );
+      })
+      // Strip out undefined data
+      .filter((x: unknown) => Boolean(x))
+  );
 };
 
 const handleHandicap = (
