@@ -11,45 +11,68 @@ import {
 import { EventDetails, MarketCatalogue, MarketDetails } from "../types";
 import { BetfairEventList } from "../types/Betfair";
 import { EventResult } from "betfair-api-ts/lib/types/bettingAPI/betting";
+import { competitionTypeIds } from "../constants/betfairConstants";
 
-const competitionIds = new Map<string, string>([
-  ["afl", "11897406"],
-  ["nba", "10547864"],
-]);
-
-export const getData = async () => {
-  const competitionTypeIds = [
-    competitionIds.get("nba") ?? "",
-    competitionIds.get("afl") ?? "",
-  ];
-
+export const getBetfairDataForCompetitionId = async (
+  compIds: typeof competitionTypeIds
+) => {
   const params = {
     filter: {
-      competitionIds: competitionTypeIds,
+      competitionIds: compIds,
     },
   };
 
-  // This gets all events for the markets matched by competition id (afl & nba atm)
+  // This gets all events for the markets matched by competition id (See constants file)
   let eventsRes: EventResult[] = await listEvents(params);
-  const listOfEventIds = eventsRes.reduce(
+  const listOfEventIds: string[] = eventsRes.reduce(
     (acc: any, event: EventResult) => acc.concat(event.event?.id),
     []
   );
 
+  // Return early if there are no event ids.
   if (!(listOfEventIds?.length > 0)) return;
 
   // Get all markets available for sporting event using the event ID
-  let k = await listMarketCatalogue({
+  // Param will be an array of event ids to get the relevant markets for each ID.
+  //
+  // This is a list of all markets available to bet / lay
+  // EG: [
+  // {
+  //   marketId: '1.216968425',
+  //   marketName: 'Handicap',
+  //   totalMatched: 0,
+  //   event: {
+  //     id: '32548881',
+  //     name: 'Milwaukee Bucks @ New York Knicks',
+  //     countryCode: 'GB',
+  //     timezone: 'GMT',
+  //     openDate: '2023-12-25T17:10:00.000Z'
+  //   }
+  // },
+  // {
+  //   marketId: '1.216968697',
+  //   marketName: 'Total Points Line',
+  //   totalMatched: 0,
+  //   event: {
+  //     id: '32548881',
+  //     name: 'Milwaukee Bucks @ New York Knicks',
+  //     countryCode: 'GB',
+  //     timezone: 'GMT',
+  //     openDate: '2023-12-25T17:10:00.000Z'
+  //   }
+  // },
+  const marketCatalogueForEventIds = await listMarketCatalogue({
     filter: {
       eventIds: listOfEventIds,
     },
     maxResults: 1000,
     marketProjection: ["EVENT"],
   });
+  console.log("Market Catalogue", marketCatalogueForEventIds);
 
   const marketDetails = new Map<string, MarketCatalogue>();
 
-  const marketIdsForEvent = k.map((l) => {
+  const marketIdsForEvent = marketCatalogueForEventIds.map((l) => {
     marketDetails.set(l.marketId, {
       marketName: l.marketName,
       marketId: l.marketId,

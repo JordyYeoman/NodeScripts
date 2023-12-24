@@ -6,11 +6,11 @@ export const ingestData = (data: any[]): any[] => {
   // Eg - nba events || afl events
   return (
     data
-      .map((x) => {
+      ?.map((x) => {
         // Loop over each event market for that specific competition
         return (
           x
-            .map((y: any) => {
+            ?.map((y: any) => {
               const { marketName, eventName, runners } = y;
               // Only handle handicap markets (line markets) atm
               if (marketName === "Handicap") {
