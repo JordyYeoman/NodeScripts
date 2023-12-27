@@ -1,5 +1,5 @@
-import { AFLTeam } from "./enums/AFL";
-import { OddsApi } from "./types/OddsApi";
+import { AFLTeam } from './enums/AFL';
+import { OddsApi } from './types/OddsApi';
 
 export const ingestData = (data: any[]): any[] => {
   // Loop through each of the competition (sport) markets
@@ -13,7 +13,7 @@ export const ingestData = (data: any[]): any[] => {
             ?.map((y: any) => {
               const { marketName, eventName, runners } = y;
               // Only handle handicap markets (line markets) atm
-              if (marketName === "Handicap") {
+              if (marketName === 'Handicap') {
                 return handleHandicap(eventName, runners, marketName);
               }
             })
@@ -35,8 +35,8 @@ const handleHandicap = (
   // Get the fair price for each handicap pricepoint
 
   // Match the selection to team
-  const team1 = eventName?.split(" ")[0];
-  const team2 = eventName?.split(" ")[2];
+  const team1 = eventName?.split(' ')[0];
+  const team2 = eventName?.split(' ')[2];
 
   const team1Market: any[] = [];
   const team2Market: any[] = [];
@@ -95,7 +95,7 @@ export const compareEvents = (oddsApi: any, eventData: any) => {
     return x?.bookmakers?.map((bookmaker: any) => {
       const bookieName = bookmaker.title;
       return bookmaker?.markets.map((market: any) => {
-        if (market?.key === "spreads") {
+        if (market?.key === 'spreads') {
           try {
             return market?.outcomes?.find((u: any) => {
               const { name } = u;
@@ -108,7 +108,7 @@ export const compareEvents = (oddsApi: any, eventData: any) => {
               }
             });
           } catch (e) {
-            console.log("error", e);
+            console.log('error', e);
           }
         }
       });
@@ -133,10 +133,10 @@ export const compareEvents = (oddsApi: any, eventData: any) => {
       // Oncew we find a matching team, compare all market odds to find any
       // positive EV bets
       if (isTeamOneMatch) {
-        console.log("team1Bra!!");
+        console.log('team1Bra!!');
         return compareMarkets(team1, foundTeamOdds);
       } else if (isTeamTwoMatch) {
-        console.log("Tis be team 2 homie!");
+        console.log('Tis be team 2 homie!');
         return compareMarkets(team2, foundTeamOdds);
       }
     }
