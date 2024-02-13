@@ -28,7 +28,7 @@ export const ingestData = (data: any[]): any[] => {
 
 const handleHandicap = (
   eventName: string,
-  runners: any[],
+  runners: any[], // Can we type this?
   marketName: string
 ) => {
   // Get Bet & Lay prices for each selection
