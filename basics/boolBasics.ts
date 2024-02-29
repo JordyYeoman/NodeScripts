@@ -8,3 +8,4 @@ console.log("[DEBUG] !(x && z)", !(x && z)); // true
 console.log("[DEBUG] Boolean(x && z)", Boolean(x && z)); // false
 console.log("[DEBUG] !Boolean(x && z)", !Boolean(x && z)); // true
 console.log("[DEBUG] y && z", y && z); // false
+console.log("[DEBUG] y && z", !!!(y && z)); // false
