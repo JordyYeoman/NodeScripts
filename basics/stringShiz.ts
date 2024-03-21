@@ -6,3 +6,6 @@ function capitalizeFirstLetter(str: string) {
 
 console.log('testStr lowercase', testStr.toLowerCase());
 console.log('testStr capitalise', capitalizeFirstLetter(testStr.toLowerCase()));
+
+const pz: any[] = [];
+console.log('pz: [0]', pz[0])
