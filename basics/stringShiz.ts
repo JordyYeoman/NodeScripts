@@ -9,3 +9,12 @@ console.log('testStr capitalise', capitalizeFirstLetter(testStr.toLowerCase()));
 
 const pz: any[] = [];
 console.log('pz: [0]', pz[0])
+
+
+const x = {};
+const y = {1: 'hello'};
+
+const z = {
+    ...x,
+    ...y,
+}
