@@ -39,3 +39,4 @@ console.log('value1: ', value1.place_bet_response !== undefined); // false
 console.log('value1: ', value1.place_bet_response !== null); // true
 console.log('value2: ', value2.place_bet_response !== undefined); // true
 console.log('value2: ', value2.place_bet_response !== null); // false
+//
