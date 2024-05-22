@@ -1,3 +1,4 @@
+// Date -> String
 const expiry = "2024-05-22T05:35:59.051Z";
 const expiry2 = "2024-05-22T07:52:59.051Z";
 const currentTime = new Date().toISOString();
@@ -8,7 +9,7 @@ console.log('Past expiry time 2: ', currentTime > expiry2);
 console.log('Before expiry time: ', currentTime < expiry);
 
 
-// Mo money mo problems
+// Date -> Number
 const exp = Date.parse(expiry);
 const exp2 = Date.parse(expiry2);
 const currentTime2 = Date.now();
