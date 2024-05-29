@@ -42,3 +42,10 @@ console.log('x', x);
 // @ts-ignore
 const z = Number(undefined + 2);
 console.log('z', z)
+
+const bottom: undefined | number = 0;
+const bottom2: undefined | number = undefined;
+const v = bottom ? bottom / 2 : 0;
+const y = bottom2 ? bottom2 / 2 : 0;
+console.log('v', v);
+console.log('y', y);
