@@ -38,3 +38,7 @@ const ODDS = (odds: any, options?: { roundDown: boolean }): string => {
 
 let x = ODDS(odds);
 console.log('x', x);
+
+// @ts-ignore
+const z = Number(undefined + 2);
+console.log('z', z)
