@@ -11,3 +11,4 @@ if (![].length) {
 }
 
 console.log("El[0]", test2[0]?.test);
+console.log('test2', test2[0]);
