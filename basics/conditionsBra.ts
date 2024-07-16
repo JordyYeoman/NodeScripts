@@ -37,6 +37,17 @@ if({}) {
     console.log('Empty object truthy??');
 }
 
-if (undefined < 0) {
-    console.log('')
+const ttt = {
+    l: undefined,
+    j: 2,
+    h: 'i',
+} as {
+    l: unknown,
+    j: number,
+    h: string
+}
+
+console.log('ttt.l as number < 0', ttt.l as number < 0);
+if (ttt.l as number < 0) {
+    console.log('Is undefined less than 0?')
 }
