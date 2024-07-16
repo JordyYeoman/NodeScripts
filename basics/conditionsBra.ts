@@ -36,3 +36,7 @@ if(testObj?.tools?.axe?.dualWield?.length > 0) {
 if({}) {
     console.log('Empty object truthy??');
 }
+
+if (undefined < 0) {
+    console.log('')
+}
