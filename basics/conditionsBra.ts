@@ -51,3 +51,45 @@ console.log('ttt.l as number < 0', ttt.l as number < 0);
 if (ttt.l as number < 0) {
     console.log('Is undefined less than 0?')
 }
+
+const testArr = [
+    'hello',
+    'world',
+    'its',
+    'me',
+    'great',
+];
+const t: string[] = [];
+for (let i = 0; i < 100000; i++) {
+    t.push(...testArr)
+}
+console.log('t.length', t.length);
+
+// ForEach
+const perf = performance.now();
+t.forEach(x => x.indexOf(''));
+console.log('forEach perf: ', performance.now() - perf);
+
+// Some
+const perf2 = performance.now();
+t.some(x => x.indexOf(''));
+console.log('some perf: ', performance.now() - perf2);
+
+// Find
+const perf3 = performance.now();
+t.find(x => x.indexOf(''));
+console.log('find perf: ', performance.now() - perf3);
+
+// For 
+const perf4 = performance.now();
+for(let i = 0; i < t.length; i++) {
+    t[i].indexOf('');
+}
+console.log('basic for perf: ', performance.now() - perf4);
+
+// For in
+const perf5 = performance.now();
+for(let thing in t) {
+    thing.indexOf('');
+}
+console.log('for in perf: ', performance.now() - perf5);
