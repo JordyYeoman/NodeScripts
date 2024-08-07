@@ -21,3 +21,6 @@ console.log('x?.length > 0 truthy?', (x?.length > 0) ? 'true' : 'false'); // fal
 const y = undefined as any;
 console.log('y?.length truthy?', y?.length ? 'true' : 'false'); // false
 console.log('y?.length > 0 truthy?', (y?.length > 0) ? 'true' : 'false'); // false
+
+const p = undefined as any;
+console.log('!!p', !!p);
