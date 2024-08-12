@@ -22,5 +22,11 @@ const y = undefined as any;
 console.log('y?.length truthy?', y?.length ? 'true' : 'false'); // false
 console.log('y?.length > 0 truthy?', (y?.length > 0) ? 'true' : 'false'); // false
 
+// const p = undefined as any;
+// console.log('!!p', !!p);
+
 const p = undefined as any;
-console.log('!!p', !!p);
+let tuuu;
+console.log('p as undefined: ', `Get your x ${p} as a value`);
+console.log('tuuu: ', `Get your x ${tuuu} as a value`);
+// Output: p as undefined:  Get your x undefined as a value
