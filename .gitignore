@@ -36,3 +36,9 @@ default.json
 .env
 primeagen_algos_course/__tests__/boolArr.json
 primeagen_algos_course/__tests__/randomData.json
+instaScraper/images.json
+instaScraper/image_data.json
+basics/t.env
+basics/t.env
+
+downloaded_images/
