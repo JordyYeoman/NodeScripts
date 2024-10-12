@@ -11,4 +11,10 @@ const doStuff = async () => {
   }
 }
 
+const p2 = {
+  x: 'hello'
+} as any;
+
+console.log('Yoooo: ', p2.y);
+
 doStuff();
