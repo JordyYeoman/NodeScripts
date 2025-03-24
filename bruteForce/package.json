@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "@types/node-wifi": "^2.0.2",
+    "intruder": "^0.2.0",
     "node-wifi": "^2.0.16"
   }
 }
