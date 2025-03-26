@@ -4,6 +4,19 @@ import { JWT } from 'google-auth-library';
 import dotenv from 'dotenv';
 import cors from 'cors';
 
+type MetricData = {
+  date: String;
+  codeReviews: String;
+  subjectiveTeamContribution: String;
+  totalMergeRequests: String;
+  learnings: String;
+  timeSpentCoding: String;
+  discussionThreadsContributedTo: String;
+  courseTimeSpent: String;
+  programmingLanguage: String;
+  linkToLearningResource: String;
+}
+
 // Load environment variables
 dotenv.config();
 
@@ -24,7 +37,7 @@ const createJwtClient = () => {
 };
 
 // Endpoint to get entire spreadsheet data
-app.get('/api/sheets/metrics/all', async (req, res) => {
+app.get('/api/metrics/all', async (req, res) => {
   try {
     const spreadsheetId: string = process.env.METRICS_SPREADSHEET_ID ?? '';
     const { sheet } = req.query;
@@ -33,8 +46,36 @@ app.get('/api/sheets/metrics/all', async (req, res) => {
       spreadsheetId,
       sheet ? String(sheet) : undefined
     );
+    
+    const x = data['Entain Improvement'].slice(1, -1);
 
-    res.json({ data });
+    console.log('row 2', data['Entain Improvement'][2]);
+    console.log('row 3 ', data['Entain Improvement'][3]);
+    
+    // Convert to Metrics Data
+    const metricsData: MetricData[] = x.map((row: any[]) => {
+
+      // Skip empty rows (verify a few cells if fine)
+      if (row?.[1] == "" && row?.[2] == "" && row?.[3] == "") {
+        return null;
+      }
+
+      return {
+        date: row?.[0] ?? "",
+        codeReviews: row?.[1] ?? "",
+        subjectiveTeamContribution: row?.[2] ?? "",
+        totalMergeRequests: row?.[3] ?? "",
+        learnings: row?.[4] ?? "",
+        timeSpentCoding: row?.[5] ?? "",
+        discussionThreadsContributedTo: row?.[6] ?? "",
+        courseTimeSpent: row?.[7] ?? "",
+        programmingLanguage: row?.[8] ?? "",
+        linkToLearningResource: row?.[9] ?? "",
+      };
+    })
+    .filter((row) => row !== null);
+
+    res.json(metricsData);
   } catch (error) {
     res.status(500).json({
       error: 'Failed to fetch sheet data',
