@@ -17,6 +17,9 @@ type MetricData = {
   linkToLearningResource: String;
 }
 
+// Fake cache
+let fakeCache: MetricData[] | undefined
+
 // Load environment variables
 dotenv.config();
 
@@ -38,6 +41,13 @@ const createJwtClient = () => {
 
 // Endpoint to get entire spreadsheet data
 app.get('/api/metrics/all', async (req, res) => {
+  // check fake 'cache' if value exists already
+  if (fakeCache && fakeCache?.length > 0) {
+    console.log("Cache hit");
+    res.json(fakeCache);
+    return
+  }
+
   try {
     const spreadsheetId: string = process.env.METRICS_SPREADSHEET_ID ?? '';
     const { sheet } = req.query;
@@ -48,9 +58,6 @@ app.get('/api/metrics/all', async (req, res) => {
     );
     
     const x = data['Entain Improvement'].slice(1, -1);
-
-    console.log('row 2', data['Entain Improvement'][2]);
-    console.log('row 3 ', data['Entain Improvement'][3]);
     
     // Convert to Metrics Data
     const metricsData: MetricData[] = x.map((row: any[]) => {
@@ -74,6 +81,9 @@ app.get('/api/metrics/all', async (req, res) => {
       };
     })
     .filter((row) => row !== null);
+
+    // Cache result
+    fakeCache = metricsData;
 
     res.json(metricsData);
   } catch (error) {
