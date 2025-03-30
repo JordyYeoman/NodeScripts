@@ -63,7 +63,11 @@ app.get('/api/metrics/all', async (req, res) => {
     const metricsData: MetricData[] = x.map((row: any[]) => {
 
       // Skip empty rows (verify a few cells if fine)
-      if (row?.[1] == "" && row?.[2] == "" && row?.[3] == "") {
+      if (row?.[0] == "" || row?.[1] == "" && row?.[2] == "" && row?.[3] == "") {
+        return null;
+      }
+
+      if (row?.[0] == null || row?.[1] == null && row?.[2] == null && row?.[3] == null) {
         return null;
       }
 
